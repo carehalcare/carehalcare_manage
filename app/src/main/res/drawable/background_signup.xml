@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Rectangle 1 -->
+    <item
+        android:id="@+id/rectangle_1"
+        android:width="450dp"
+        android:height="800dp"
+        android:drawable="@drawable/rectangle_1" >
+
+    </item>
+
+    <!-- Ellipse 7 -->
+    <item
+        android:id="@+id/ellipse_7"
+        android:width="230dp"
+        android:height="236dp"
+        android:left="-138dp"
+        android:top="-26.49dp"
+        android:drawable="@drawable/ellipse_7" />
+
+
+    <!-- Ellipse 10 -->
+    <item
+        android:id="@+id/ellipse_10"
+        android:width="230dp"
+        android:height="236dp"
+        android:left="280dp"
+        android:top="450dp"
+        android:drawable="@drawable/ellipse_10" />
+
+    <!-- Ellipse 9 -->
+    <item
+        android:id="@+id/ellipse_9"
+        android:width="420dp"
+        android:height="420dp"
+        android:top="150dp"
+        android:drawable="@drawable/ellipse_9" />
+
+</layer-list>

@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Carehalcare_Manage"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".Feature_login.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Feature_login.KakaologinActivity" />
+        <activity android:name=".Feature_login.SignupActivity"/>
+        <activity android:name=".Feature_login.LoginActivity"/>
+        <activity android:name=".PatientinfoActivity"/>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".NoticeActivity"/>
+
     </application>
 
 </manifest>
