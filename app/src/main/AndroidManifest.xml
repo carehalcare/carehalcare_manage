@@ -24,9 +24,9 @@
         <activity android:name=".Feature_login.KakaologinActivity" />
         <activity android:name=".Feature_login.SignupActivity"/>
         <activity android:name=".Feature_login.LoginActivity"/>
-        <activity android:name=".PatientinfoActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".NoticeActivity"/>
+        <activity android:name=".Feature_mainpage.PatientinfoActivity"/>
+        <activity android:name=".Feature_mainpage.MainActivity"/>
+        <activity android:name=".Feature_mainpage.NoticeActivity"/>
 
     </application>
 
