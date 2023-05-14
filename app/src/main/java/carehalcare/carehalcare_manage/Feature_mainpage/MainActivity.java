@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import carehalcare.carehalcare_manage.R;
-import carehalcare.carehalcare_manage.RecordActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
          */
-        write.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RecordActivity.class);
-                startActivity(intent);
-            }
-        });
+//        write.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, RecordActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
