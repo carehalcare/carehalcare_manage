@@ -60,27 +60,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="환자 정보 작성"
+            android:text="환자 정보 수정"
             android:textColor="@color/black"
             android:textSize="8pt" />
 
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="400dp"
             android:layout_margin="30dp"
             android:background="@drawable/dialog_radius"
             android:backgroundTint="#EAEEFF"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -89,13 +88,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_gravity="center"
                         android:text="이름 :"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_id"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
                         android:ems="10"
@@ -104,7 +102,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -113,22 +111,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:layout_gravity="center"
                         android:text="생년월일 :"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_date"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:ems="10"
                         android:hint="0000/00/00"
                         android:inputType="date" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -153,15 +149,15 @@
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/btn_women"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/btn_woman"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="여성" />
 
                             <RadioButton
                                 android:id="@+id/btn_man"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:text="남성" />
@@ -170,7 +166,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -184,17 +180,17 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_hospital"
-                        android:layout_width="200dp"
+                        android:id="@+id/et_disease"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:ems="10"
                         android:hint="질환"
                         android:inputType="text" />
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -208,17 +204,16 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/et_name"
-                        android:layout_width="200dp"
+                        android:id="@+id/et_hospital"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:ems="10"
                         android:hint="담당 병원"
                         android:inputType="text" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
@@ -232,12 +227,11 @@
 
                     <EditText
                         android:id="@+id/et_medicine"
-                        android:layout_width="200dp"
+                        android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
                         android:layout_gravity="center"
-                        android:ems="10"
-                        android:hint="투약 정보 :"
+                        android:hint="투약 정보"
                         android:inputType="text" />
                 </LinearLayout>
 
@@ -254,20 +248,14 @@
                         android:text="성격"
                         android:textStyle="bold" />
 
-                    <androidx.core.widget.NestedScrollView
+
+                    <EditText
+                        android:id="@+id/et_personal"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp">
-
-                        <EditText
-                            android:id="@+id/et_personal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:background="@drawable/et_border"
-                            android:ems="10"
-                            android:hint="성격"
-                            android:inputType="text" />
-
-                    </androidx.core.widget.NestedScrollView>
+                        android:layout_height="100dp"
+                        android:background="@drawable/et_border"
+                        android:hint="성격"
+                        android:inputType="text" />
 
                 </LinearLayout>
 

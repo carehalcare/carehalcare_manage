@@ -30,6 +30,7 @@
         <activity android:name=".Feature_mainpage.PatientinfoActivity"/>
         <activity android:name=".Feature_mainpage.MainActivity"/>
         <activity android:name=".Feature_mainpage.NoticeActivity"/>
+        <activity android:name=".Feature_mainpage.PInfoEditActivity"/>
 
     </application>
 
