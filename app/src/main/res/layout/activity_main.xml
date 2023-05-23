@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginLeft="15dp"
-            android:text="홍길동 간병인님\n환영합니다."
+            android:text="홍길동님\n환영합니다."
             android:textSize="25dp"
             android:textColor="@color/white"
             android:textStyle="bold" />
@@ -45,52 +45,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="공지사항"
-            android:textColor="@color/black" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tv_noti1"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:padding="7dp"
-                android:textSize="6pt"
-                android:background="@drawable/dialog_radius"
-                android:textColor="@color/black" />
-
-            <TextView
-                android:id="@+id/tv_noti2"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:padding="7dp"
-                android:textSize="6pt"
-                android:background="@drawable/dialog_radius"
-                android:textColor="@color/black" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
         android:background="@drawable/radius_rec"
         android:orientation="vertical">
 

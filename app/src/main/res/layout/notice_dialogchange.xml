@@ -12,7 +12,7 @@
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="공지사항 작성"
+        android:text="공지사항 수정"
         android:textColor="@color/black" />
 
     <EditText
@@ -25,11 +25,28 @@
         android:hint="내용을 입력하세요."
         android:id="@+id/et_notice"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/btn_register"
-        android:text="등록"/>
+        android:layout_margin="10dp"
+        android:orientation="horizontal" >
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btn_undo"
+            android:text="돌아가기"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/btn_change"
+            android:text="수정"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -25,6 +24,11 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     public NoticeAdapter (List<Notice> notices){ this.notices = notices; };
 
     private String formatDate(String dateStr) {
+
+        if (dateStr == null) {
+            return ""; // 또는 다른 기본값을 반환할 수 있음
+        }
+
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.KOREA);
         SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.KOREA);
         String newDate = "";
@@ -49,15 +53,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Notice notice = notices.get(position);
-        if (notice != null) {
-            // Content 설정
-            String content = notice.getContent();
-            String date = notice.getCreatedDate();
-            String formattedDate = formatDate(date);
+        // Content 설정
+        String content = notice.getContent();
+        String date = notice.getModifiedDate();
+        String formattedDate = formatDate(date);
 
-            holder.tv_notititle.setText(content);
-            holder.tv_notidate.setText(formattedDate);
-        }
+        holder.tv_notititle.setText(content);
+        holder.tv_notidate.setText(formattedDate);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

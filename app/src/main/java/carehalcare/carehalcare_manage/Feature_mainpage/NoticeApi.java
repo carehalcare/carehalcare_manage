@@ -7,6 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface NoticeApi {
@@ -19,5 +20,8 @@ public interface NoticeApi {
 
     @DELETE("/notices/{id}")
     Call<List<Notice>> DelNotice(@Path("id") String id);
+
+    @PUT("/notices")
+    Call<List<Notice>> Change(@Body ChangeNotice changenotice);
 
 }

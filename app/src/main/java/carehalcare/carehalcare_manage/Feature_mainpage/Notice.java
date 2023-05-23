@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 public class Notice {
     @SerializedName("content") String content;
     @SerializedName("userId") String userId;
-    @SerializedName("createdDate") String createdDate;
+    @SerializedName("createdDateTime") String createdDateTime;
+    @SerializedName("modifiedDateTime") String modifiedDateTime;
     @SerializedName("id") String id;
 
 
@@ -17,17 +18,17 @@ public class Notice {
     public String getContent() {
         return content;
     }
-    public String getCreatedDate() {
-        return createdDate;
+    public String getModifiedDate() {
+        return modifiedDateTime;
     }
     public String getId() {
         return id;
     }
 
-    public String setCreatedDate(String newDateStr) {
-        this.createdDate = createdDate;
+    public String setModifiedDate(String newDateStr) {
+        this.modifiedDateTime = modifiedDateTime;
         return newDateStr;
     }
 
-
 }
+
