@@ -27,10 +27,10 @@
         <activity android:name=".Feature_login.KakaologinActivity" />
         <activity android:name=".Feature_login.SignupActivity"/>
         <activity android:name=".Feature_login.LoginActivity"/>
-        <activity android:name=".Feature_mainpage.PatientinfoActivity"/>
+        <activity android:name=".Feature_mainpage.Feature_pinfo.PatientinfoActivity"/>
         <activity android:name=".Feature_mainpage.MainActivity"/>
-        <activity android:name=".Feature_mainpage.NoticeActivity"/>
-        <activity android:name=".Feature_mainpage.PInfoEditActivity"/>
+        <activity android:name=".Feature_mainpage.Feature_notice.NoticeActivity"/>
+        <activity android:name=".Feature_mainpage.Feature_pinfo.PInfoEditActivity"/>
 
     </application>
 

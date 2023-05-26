@@ -1,11 +1,12 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,7 +41,7 @@ public class NoticeActivity extends AppCompatActivity {
     private RecyclerView notiview;
     private ArrayList<Notice> notiviewlist;
     private NoticeAdapter noticeadapter;
-    private static final String BASEURL = "http://172.20.5.38:8080/";
+    private static final String BASEURL = "http://172.30.1.55:8080/";
     private Retrofit retrofit;
     private NoticeApi noticeApi;
 
@@ -81,6 +84,7 @@ public class NoticeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Insertnoti();
+                getNoticeList();
             }
         });
 
@@ -90,10 +94,14 @@ public class NoticeActivity extends AppCompatActivity {
                 // 리스트 항목 클릭 시 동작할 코드 작성
                 Notice notice = notiviewlist.get(position);
 
-                Dialog dialog = new Dialog(NoticeActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(NoticeActivity.this);
+                View view = LayoutInflater.from(NoticeActivity.this)
+                        .inflate(R.layout.notice_detail, null, false);
+                builder.setView(view);
+                final AlertDialog dialog = builder.create();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.setContentView(R.layout.notice_detail);
+                dialog.show();
 
                 TextView notidetail = dialog.findViewById(R.id.tv_notidetail);
                 notidetail.setText(notice.getContent());
@@ -112,39 +120,54 @@ public class NoticeActivity extends AppCompatActivity {
                 btn_del.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Call<List<Notice>> call = noticeApi.DelNotice(notice.getId());
-                        call.enqueue(new Callback<List<Notice>>() {
-                            @Override
-                            public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
-                                if (response.isSuccessful()) {
-                                    // 삭제 요청이 성공적으로 처리되었을 경우의 동작을 정의합니다.
-                                    Toast.makeText(NoticeActivity.this, "공지가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-                                    // 공지 목록 갱신
-                                    getNoticeList();
-                                } else {
-                                    // 삭제 요청이 실패한 경우의 동작을 정의합니다.
-                                    Log.e("삭제 실패", "Status Code : " + response.code());
-                                }
-                                dialog.dismiss(); // 다이얼로그 닫기
-                            }
 
-                            @Override
-                            public void onFailure( Call<List<Notice>> call, Throwable t) {
-                                Log.e("통신 실패", t.getMessage());
-                                dialog.dismiss(); // 다이얼로그 닫기
-                            }
-                        });
+                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                        builder.setTitle("삭제하기")
+                                .setMessage("삭제하시겠습니까?")
+                                .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        Call<List<Notice>> call = noticeApi.DelNotice(notice.getId());
+                                        call.enqueue(new Callback<List<Notice>>() {
+                                            @Override
+                                            public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
+                                                if (response.isSuccessful()) {
+                                                    // 삭제 요청이 성공적으로 처리되었을 경우의 동작을 정의합니다.
+                                                    Toast.makeText(NoticeActivity.this, "공지가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                                    // 공지 목록 갱신
+                                                    getNoticeList();
+                                                } else {
+                                                    // 삭제 요청이 실패한 경우의 동작을 정의합니다.
+                                                    Log.e("삭제 실패", "Status Code : " + response.code());
+                                                }
+                                                dialog.dismiss(); // 다이얼로그 닫기
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<List<Notice>> call, Throwable t) {
+                                                Log.e("통신 실패", t.getMessage());
+
+                                            }
+                                        });
+                                    }
+                                })
+                                .setNeutralButton("취소", null)
+                                .show();
+                        dialog.dismiss();
                     }
                 });
 
                 btn_change.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Dialog changedialog = new Dialog(NoticeActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NoticeActivity.this);
+                        View cview = LayoutInflater.from(NoticeActivity.this)
+                                .inflate(R.layout.notice_dialogchange, null, false);
+                        builder.setView(cview);
+                        final AlertDialog changedialog = builder.create();
                         changedialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         changedialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                        changedialog.setContentView(R.layout.notice_dialogchange);
 
+                        changedialog.show();
                         Button bchange = changedialog.findViewById(R.id.btn_change);
                         Button undo = changedialog.findViewById(R.id.btn_undo);
                         EditText et_notice = changedialog.findViewById(R.id.et_notice);
@@ -191,52 +214,27 @@ public class NoticeActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onFailure(Call<List<Notice>> call, Throwable t) {
-                                        Log.e("통신 실패", t.getMessage());
+                                        Log.e("수정 통신 실패", t.getMessage());
                                         changedialog.dismiss();
                                     }
                                 });
                             }
                         });
-
-                        changedialog.show();
                     }
                 });
-
-                dialog.show();
             }
         });
     }
-
-    //notice 가져오기
-    private void getNoticeList() {
-        notiviewlist.clear();
-        Call<List<Notice>> call = noticeApi.getNotice("userid1");
-        call.enqueue(new Callback<List<Notice>>() {
-            @Override
-            public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
-
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Notice> notices = response.body();
-
-                    notiviewlist.addAll(notices);
-                }
-                noticeadapter.notifyDataSetChanged();
-                Log.d("연결 성공", "Status Code : " + response.code());
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Notice>> call, Throwable t) {
-                Log.e("통신 실패", t.getMessage());
-            }
-        });
-    }
-
-    // 공지사항 등록
+    //    공지사항 등록
     private void Insertnoti() {
-        Dialog dialog = new Dialog(NoticeActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(NoticeActivity.this);
+        View view = LayoutInflater.from(NoticeActivity.this)
+                .inflate(R.layout.notice_dialog, null, false);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
 
         dialog.setContentView(R.layout.notice_dialog);
         Button btn_reg = dialog.findViewById(R.id.btn_register);
@@ -252,27 +250,52 @@ public class NoticeActivity extends AppCompatActivity {
                 call.enqueue(new Callback<List<Notice>>() {
                     @Override
                     public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
+                        Log.e("보낼때====================", response.body()+"");
                         if (response.isSuccessful()) {
                             // POST 요청이 성공적으로 처리
                             Toast.makeText(NoticeActivity.this, "공지가 등록되었습니다.", Toast.LENGTH_SHORT).show();
-                            Log.d("연결 성공", "Status Code : " + response.code());
+                            Log.d("post 연결 성공", "Status Code : " + response.code());
                             getNoticeList();
+                            dialog.dismiss();
+
                         } else {
                             // POST 요청이 실패한 경우의 동작을 정의
-                            Log.e("연결 실패", "Status Code : " + response.code());
+                            Log.e("post 연결 실패", "Status Code : " + response.code());
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
                     }
-
                     @Override
                     public void onFailure(Call<List<Notice>> call, Throwable t) {
-                        Log.e("통신 실패", t.getMessage());
+                        Log.e("등록 통신 실패", t.getMessage());
                         dialog.dismiss();
                     }
                 });
+                dialog.dismiss();
             }
         });
-
-        dialog.show();
     }
+
+
+    //notice 가져오기
+    private void getNoticeList() {
+        notiviewlist.clear();
+        Call<List<Notice>> call = noticeApi.getNotice("userid1");
+        call.enqueue(new Callback<List<Notice>>() {
+            @Override
+            public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Notice> notices = response.body();
+                    notiviewlist.addAll(notices);
+                    noticeadapter.notifyDataSetChanged();
+                    Log.d("get 연결 성공", "Status Code : " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Notice>> call, Throwable t) {
+                Log.e("get 통신 실패", t.getMessage());
+            }
+        });
+    }
+
 }

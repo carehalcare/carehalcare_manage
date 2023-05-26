@@ -1,4 +1,4 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
 import android.view.LayoutInflater;
 import android.view.View;

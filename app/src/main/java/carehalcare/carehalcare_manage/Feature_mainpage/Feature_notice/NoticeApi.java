@@ -1,4 +1,4 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
 import java.util.List;
 
@@ -6,11 +6,13 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface NoticeApi {
+    @Headers("Content-Type: application/json")
 
     @POST("/notices")
     Call<List<Notice>> createNotice(@Body Notice notice);

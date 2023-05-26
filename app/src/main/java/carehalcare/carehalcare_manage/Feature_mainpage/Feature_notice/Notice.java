@@ -1,11 +1,10 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
 import com.google.gson.annotations.SerializedName;
 
 public class Notice {
     @SerializedName("content") String content;
     @SerializedName("userId") String userId;
-    @SerializedName("createdDateTime") String createdDateTime;
     @SerializedName("modifiedDateTime") String modifiedDateTime;
     @SerializedName("id") String id;
 
@@ -18,6 +17,7 @@ public class Notice {
     public String getContent() {
         return content;
     }
+    public String getuserId() {return userId;}
     public String getModifiedDate() {
         return modifiedDateTime;
     }

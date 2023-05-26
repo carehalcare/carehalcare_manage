@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice.NoticeActivity;
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_pinfo.PatientinfoActivity;
 import carehalcare.carehalcare_manage.R;
 
 public class MainActivity extends AppCompatActivity {
