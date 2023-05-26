@@ -1,4 +1,4 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_pinfo;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -31,6 +31,7 @@
         <activity android:name=".Feature_mainpage.MainActivity"/>
         <activity android:name=".Feature_mainpage.Feature_notice.NoticeActivity"/>
         <activity android:name=".Feature_mainpage.Feature_pinfo.PInfoEditActivity"/>
+        <activity android:name=".Feature_mainpage.Feature_pinfo.PInfoAddActivity"/>
 
     </application>
 

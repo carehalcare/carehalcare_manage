@@ -1,19 +1,18 @@
-package carehalcare.carehalcare_manage.Feature_mainpage;
+package carehalcare.carehalcare_manage.Feature_mainpage.Feature_pinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-
+import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,7 +23,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class PInfoEditActivity extends AppCompatActivity {
 
-    private static final String BASEURL = "http://192.168.35.197:8080/";
+    private static final String BASEURL = "http://172.30.1.55:8080/";
     private ImageButton btn_home;
     private Button btn_reg;
     private RadioButton btn_man, btn_woman;
@@ -47,7 +46,6 @@ public class PInfoEditActivity extends AppCompatActivity {
         btn_reg = (Button) findViewById(R.id.btn_register);
         btn_man = (RadioButton) findViewById(R.id.btn_man);
         btn_woman = (RadioButton) findViewById(R.id.btn_woman);
-
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASEURL)
@@ -75,7 +73,6 @@ public class PInfoEditActivity extends AppCompatActivity {
                 String medicine = et_medicine.getText().toString();
                 String personal = et_personal.getText().toString();
                 String userId = "userid1";
-
                 String psex;
                 if (btn_man.isChecked()) {
                     psex = "M";
@@ -86,40 +83,58 @@ public class PInfoEditActivity extends AppCompatActivity {
                     psex = "";
                 }
 
-                // PatientInfo 객체 생성 및 필드 설정
-                PatientInfo patientInfo = new PatientInfo();
-                patientInfo.setPname(pname);
-                patientInfo.setPbirthDate(pbirthDate);
-                patientInfo.setPsex(psex);
-                patientInfo.setDisease(disease);
-                patientInfo.setHospital(hospital);
-                patientInfo.setMedicine(medicine);
-                patientInfo.setRemark(personal);
-                patientInfo.setUserId(userId);
+                if (!pname.isEmpty() && !pbirthDate.isEmpty() && !disease.isEmpty() && !hospital.isEmpty() &&
+                        !medicine.isEmpty() && !personal.isEmpty() && !psex.isEmpty()) {
 
-                Call<PatientInfo> call = pInfoApi.putDataInfo(patientInfo);
-                call.enqueue(new Callback<PatientInfo>() {
-                    @Override
-                    public void onResponse(Call<PatientInfo> call, Response<PatientInfo> response) {
-                        if (response.isSuccessful()) {
+                    if (pbirthDate.length() != 8) {
+                        Toast.makeText(PInfoEditActivity.this, "생년월일은 8자리로 입력해주세요.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
-                            Log.d("연결 성공", "Status Code : " + response.code());
+                    // PatientInfo 객체 생성 및 필드 설정
+                    PatientInfo patientInfo = new PatientInfo();
+                    patientInfo.setPname(pname);
+                    patientInfo.setPbirthDate(pbirthDate);
+                    patientInfo.setPsex(psex);
+                    patientInfo.setDisease(disease);
+                    patientInfo.setHospital(hospital);
+                    patientInfo.setMedicine(medicine);
+                    patientInfo.setRemark(personal);
+                    patientInfo.setUserId(userId);
 
-                        } else {
-                            Log.e("연결 실패", "Status Code : " + response.code());
+                    Call<Long> call = pInfoApi.putDataInfo(patientInfo);
+                    call.enqueue(new Callback<Long>() {
+                        @Override
+                        public void onResponse(Call<Long> call, Response<Long> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("연결 성공", "Status Code : " + response.code());
+                                finish();
+                            } else {
+                                Log.e("연결 실패", "Status Code : " + response.code());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<PatientInfo> call, Throwable t) {
-                        Log.e("통신 실패", t.getMessage());
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<Long> call, Throwable t) {
+                            Log.e("통신 실패", t.getMessage());
+                        }
+                    });
+                }
+                else{
+                    // Check if any field is empty
+                    StringBuilder missingFields = new StringBuilder();
+                    if (pname.isEmpty()) {missingFields.append("이름 ");}
+                    if (pbirthDate.isEmpty()) {missingFields.append("생년월일 ");}
+                    if (disease.isEmpty()) {missingFields.append("질병 ");}
+                    if (hospital.isEmpty()) {missingFields.append("병원 ");}
+                    if (medicine.isEmpty()) {missingFields.append("약 ");}
+                    if (personal.isEmpty()) {missingFields.append("성격 ");}
+                    if (psex.isEmpty()) {missingFields.append("성별 ");}
 
-                Intent intent = new Intent(PInfoEditActivity.this, PatientinfoActivity.class);
-                startActivity(intent);
+                    Toast.makeText(PInfoEditActivity.this, missingFields.toString() +
+                            "항목이 입력되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
     }
 }

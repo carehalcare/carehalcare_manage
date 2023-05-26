@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="환자 정보 수정"
+            android:text="환자 정보 입력"
             android:textColor="@color/black"
             android:textSize="8pt" />
 
