@@ -189,15 +189,18 @@ public class NoticeActivity extends AppCompatActivity {
                                 String content = et_notice.getText().toString();
                                 ChangeNotice changenoti = new ChangeNotice(content, changeNotice.getId());
 
-                                Call<List<Notice>> call = noticeApi.Change(changenoti);
-                                call.enqueue(new Callback<List<Notice>>() {
+                                Call<Long> call = noticeApi.Change(changenoti);
+                                call.enqueue(new Callback<Long>() {
                                     @Override
-                                    public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
+                                    public void onResponse(Call<Long> call, Response<Long> response) {
                                         if (response.isSuccessful()) {
                                             // PUT
                                             Toast.makeText(NoticeActivity.this, "공지가 수정되었습니다.", Toast.LENGTH_SHORT).show();
                                             Log.d("수정 성공", "Status Code : " + response.code());
+                                            //상세 dialog를 닫고 리스트 update
+                                            dialog.dismiss();
                                             getNoticeList();
+
                                         } else {
                                             // PUT 실패
                                             Log.e("수정 실패", "Status Code : " + response.code());
@@ -213,7 +216,7 @@ public class NoticeActivity extends AppCompatActivity {
                                     }
 
                                     @Override
-                                    public void onFailure(Call<List<Notice>> call, Throwable t) {
+                                    public void onFailure(Call<Long> call, Throwable t) {
                                         Log.e("수정 통신 실패", t.getMessage());
                                         changedialog.dismiss();
                                     }
@@ -246,10 +249,10 @@ public class NoticeActivity extends AppCompatActivity {
                 String content = et_notice.getText().toString();
                 Notice notice = new Notice(content, "userid1");
 
-                Call<List<Notice>> call = noticeApi.createNotice(notice);
-                call.enqueue(new Callback<List<Notice>>() {
+                Call<Long> call = noticeApi.createNotice(notice);
+                call.enqueue(new Callback<Long>() {
                     @Override
-                    public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
+                    public void onResponse(Call<Long> call, Response<Long> response) {
                         Log.e("보낼때====================", response.body()+"");
                         if (response.isSuccessful()) {
                             // POST 요청이 성공적으로 처리
@@ -265,7 +268,7 @@ public class NoticeActivity extends AppCompatActivity {
                         }
                     }
                     @Override
-                    public void onFailure(Call<List<Notice>> call, Throwable t) {
+                    public void onFailure(Call<Long> call, Throwable t) {
                         Log.e("등록 통신 실패", t.getMessage());
                         dialog.dismiss();
                     }

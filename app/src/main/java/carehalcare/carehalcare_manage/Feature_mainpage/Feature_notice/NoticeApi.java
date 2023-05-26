@@ -15,7 +15,7 @@ public interface NoticeApi {
     @Headers("Content-Type: application/json")
 
     @POST("/notices")
-    Call<List<Notice>> createNotice(@Body Notice notice);
+    Call<Long> createNotice(@Body Notice notice);
 
     @GET("/notices/list/{puid}")
     Call<List<Notice>> getNotice(@Path("puid") String puid);
@@ -24,6 +24,6 @@ public interface NoticeApi {
     Call<List<Notice>> DelNotice(@Path("id") String id);
 
     @PUT("/notices")
-    Call<List<Notice>> Change(@Body ChangeNotice changenotice);
+    Call<Long> Change(@Body ChangeNotice changenotice);
 
 }
