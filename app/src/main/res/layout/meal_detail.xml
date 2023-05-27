@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_gravity="center"
+        android:layout_height="300dp"
+        android:id="@+id/iv_meal_detail"/>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="특이사항"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:background="@drawable/memo_border"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:id="@+id/tv_meal_detail"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_meal_detail"
+        android:background="@drawable/button_color"
+
+        android:text="닫기"/>
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="10dp"
+        android:background="@color/material_dynamic_neutral_variant30"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_meal_detail_delete"
+
+        android:text="삭제"/>
+    </LinearLayout>
+</LinearLayout>

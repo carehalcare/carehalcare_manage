@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_medicine"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시각"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="10dp">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:textColor="@color/black"
+            android:background="@drawable/item_list_round"
+            android:textStyle="bold"
+            android:layout_marginRight="30dp"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:text="아침"
+            android:id="@+id/cb_morning"/>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginRight="30dp"
+            android:text="점심"
+            android:background="@drawable/item_list_round"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:id="@+id/cb_lunch"/>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="저녁"
+            android:background="@drawable/item_list_round"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:id="@+id/cb_dinner"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="식사여부"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"/>
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_marginRight="30dp"
+            android:background="@drawable/item_list_round"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:text="공복"
+            android:id="@+id/cb_empty"/>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:layout_marginRight="30dp"
+            android:textColor="@color/black"
+            android:background="@drawable/item_list_round"
+            android:textStyle="bold"
+            android:text="식전"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:id="@+id/cb_before"/>
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:text="식후"
+            android:background="@drawable/item_list_round"
+            android:layout_width="100dp"
+            android:layout_height="48dp"
+            android:id="@+id/cb_after"/>
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="약종류"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp">
+
+        </TextView>
+        <EditText
+            android:id="@+id/et_medicine_name"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="@drawable/memo_border"
+            android:hint="약 종류를 입력하세요"
+            android:textColorHint="@color/black"
+            android:textAlignment="center"
+            android:textColor="@color/black">
+        </EditText>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
+        android:layout_width="250dp"
+        android:id="@+id/btn_medicine_save"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_color"
+        android:text="저장"></androidx.appcompat.widget.AppCompatButton>
+
+</LinearLayout>

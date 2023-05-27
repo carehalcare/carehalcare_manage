@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".EightMenuActivity"
+    android:orientation="horizontal"
+    android:background="@drawable/item_list_round"
+    >
+
+    <TextView
+        android:id="@+id/tv_todayClean"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:background="#aadbff"
+        android:padding="7dp"
+        android:textAlignment="center"
+        android:text="주변청결"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_todayCleanResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:text="result"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+
+
+
+</LinearLayout>

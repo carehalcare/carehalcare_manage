@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#53ACFF"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/radius_rec"
+        >
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:id="@+id/iv_meal_form"/>
+
+        <TextView
+            android:layout_marginLeft="-120dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="특이사항"
+            />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:hint="입력하려면 터치하세요"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:background="@drawable/memo_border"
+            android:id="@+id/et_meal_form"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="취소"
+                android:textColor="@color/white"
+                android:background="@drawable/button_color"
+                android:backgroundTint="@color/cardview_dark_background"
+                android:id="@+id/btn_nono_mealdetail"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="저장"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/button_color"
+                android:id="@+id/btn_save_mealdetail"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
