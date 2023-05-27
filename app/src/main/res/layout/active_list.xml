@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_active_list"
@@ -21,6 +20,7 @@
         android:scrollbarSize="5dp"
         android:scrollbarThumbVertical="@android:color/darker_gray"
         android:scrollbars="vertical"/>
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_active_insert"
         android:layout_width="match_parent"
@@ -32,7 +32,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerview_active_list"
         android:text="활동 기록하기"/>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

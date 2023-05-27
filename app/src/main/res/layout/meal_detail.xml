@@ -26,26 +26,22 @@
         android:textColor="@color/black"
         android:gravity="center"
         android:id="@+id/tv_meal_detail"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="10dp"
+        android:layout_margin="10dp"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:id="@+id/btn_meal_detail"
-        android:background="@drawable/button_color"
-
+        android:background="#64a5ff"
+        android:textStyle="bold"
+        android:layout_gravity="center"
         android:text="닫기"/>
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="10dp"
-        android:background="@color/material_dynamic_neutral_variant30"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_meal_detail_delete"
 
-        android:text="삭제"/>
     </LinearLayout>
 </LinearLayout>
