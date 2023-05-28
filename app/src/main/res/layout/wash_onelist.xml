@@ -12,10 +12,11 @@
 
     <TextView
         android:id="@+id/tv_todayWash"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#aadbff"
         android:padding="7dp"
+        android:layout_margin="5dp"
         android:textAlignment="center"
         android:text="환자청결"
         android:textColor="@color/black"
@@ -25,6 +26,7 @@
         android:id="@+id/tv_todayWashResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:padding="5dp"
         android:textAlignment="center"
         android:text="result"

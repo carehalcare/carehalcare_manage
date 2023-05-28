@@ -8,13 +8,13 @@
     tools:context=".Feature_carereport.RecordActivity"
     android:orientation="horizontal"
     android:elevation="4dp"
-    android:padding="4dp"
-    >
+    android:padding="4dp"  >
 
     <TextView
         android:id="@+id/tv_todayClean"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:background="#aadbff"
         android:padding="7dp"
         android:textAlignment="center"
@@ -26,6 +26,7 @@
         android:id="@+id/tv_todayCleanResult"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:padding="5dp"
         android:textAlignment="center"
         android:text="result"

@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/tv_date"
+        android:textColor="@color/black"/>
+
     <ImageView
         android:layout_marginTop="30dp"
         android:layout_width="300dp"
@@ -16,8 +25,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="특이사항"
-        android:textColor="@color/black"
-        />
+        android:textColor="@color/black" />
+
     <TextView
         android:background="@drawable/memo_border"
         android:layout_width="300dp"
