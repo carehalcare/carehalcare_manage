@@ -5,8 +5,6 @@ import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -14,12 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomViewHolder>{
@@ -65,27 +60,8 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
         }
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            // 3. 컨텍스트 메뉴를 생성하고 메뉴 항목 선택시 호출되는 리스너를 등록해줍니다.
-            // ID 1001, 1002로 어떤 메뉴를 선택했는지 리스너에서 구분하게 됩니다.
-            MenuItem Delete = menu.add(Menu.NONE, 1002, 2, "삭제");
-            Delete.setOnMenuItemClickListener(onEditMenu);
+
         }
-        // 4. 컨텍스트 메뉴에서 항목 클릭시 동작을 설정합니다.
-        private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case 1002:
-                        mList.remove(getAdapterPosition());
-                        notifyItemRemoved(getAdapterPosition());
-                        notifyItemRangeChanged(getAdapterPosition(), mList.size());
-
-                        break;
-                }
-                return true;
-            }
-        };
-
     }
 
     public Sleep_adapter(ArrayList<Sleep_text> list) {
@@ -102,26 +78,24 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
     }
 
 
-
-
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_todaySleep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        viewholder.tv_todaySleep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         viewholder.tv_todaySleepResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         viewholder.tv_todaySleep.setGravity(Gravity.CENTER);
         viewholder.tv_todaySleepResult.setGravity(Gravity.CENTER);
 
-        viewholder.tv_todaySleep.setText("수면상태");
-        //String seeText = mList.get(position).getSleepTodayResult();
-        //if (seeText.length() >= 25){seeText = seeText.substring(0,25);};
-        //viewholder.tv_todayCleanResult.setText(seeText+" ···");
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
-        String sleepTodayResult = format.format(today_date)+" 기록확인하기";
-        viewholder.tv_todaySleepResult.setText(sleepTodayResult);
+        // Content 설정
+        String date = mList.get(position).getCreatedDateTime();
+        String formattedDate = DateUtils.formatDate(date);
 
+        String state = mList.get(position).getState();
+        String content = mList.get(position).getContent();
+
+        viewholder.tv_todaySleep.setText(formattedDate);
+        viewholder.tv_todaySleepResult.setText( state + " " + content);
 
     }
 

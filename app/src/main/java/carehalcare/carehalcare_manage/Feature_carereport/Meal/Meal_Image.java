@@ -16,7 +16,7 @@ public class Meal_Image {
     @SerializedName("encodedString")
     String encodedString;
 
-    public Meal_Image(Long id, String originalFilename, String storeFilename, String filePath, Long mealId, String encodedString) {
+    public Meal_Image(String encodedString, String filePath, Long id, Long mealId, String originalFilename, String storeFilename ) {
         this.id = id;
         this.originalFilename = originalFilename;
         this.storeFilename = storeFilename;

@@ -13,7 +13,7 @@ public class Active_text {
     @SerializedName("position")    String position;
 
 
-    public Active_text(String createdDateTime, Long id,String userId, String puserId, String rehabilitation, String walkingAssistance, String position) {
+    public Active_text(String createdDateTime, Long id, String position, String puserId, String rehabilitation, String userId, String walkingAssistance) {
         this.createdDateTime = createdDateTime;
         this.id = id;
         this.userId = userId;
@@ -45,6 +45,12 @@ public class Active_text {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCreatedDateTime() {        return createdDateTime;}
+
+    public void setCreatedDateTime(String createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
     public String getRehabilitation() {

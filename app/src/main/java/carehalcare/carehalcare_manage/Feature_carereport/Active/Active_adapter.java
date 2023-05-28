@@ -14,12 +14,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomViewHolder> {
@@ -37,14 +34,14 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_todayActive;
-        protected TextView tv_todayActiveResult;
+        protected TextView tv_Activedate;
+        protected TextView tv_ActiveResult;
 
 
         public CustomViewHolder(View view) {
             super(view);
-            this.tv_todayActive = (TextView) view.findViewById(R.id.tv_todayActive);
-            this.tv_todayActiveResult = (TextView) view.findViewById(R.id.tv_todayActiveResult);
+            this.tv_Activedate = (TextView) view.findViewById(R.id.tv_todayActive);
+            this.tv_ActiveResult = (TextView) view.findViewById(R.id.tv_todayActiveResult);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -80,7 +77,6 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
 
                 switch (item.getItemId()) {
                     case 1002:
-
                         mList.remove(getAdapterPosition());
                         notifyItemRemoved(getAdapterPosition());
                         notifyItemRangeChanged(getAdapterPosition(), mList.size());
@@ -113,19 +109,21 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_todayActive.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.tv_todayActiveResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Activedate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_ActiveResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-        viewholder.tv_todayActive.setGravity(Gravity.CENTER);
-        viewholder.tv_todayActiveResult.setGravity(Gravity.CENTER);
+        viewholder.tv_Activedate.setGravity(Gravity.CENTER);
+        viewholder.tv_ActiveResult.setGravity(Gravity.CENTER);
 
+        String date = mList.get(position).getCreatedDateTime();
+        String formattedDate = DateUtils.formatDate(date);
 
-        viewholder.tv_todayActive.setText("오늘의 활동");
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
-        String activeTodayResult = format.format(today_date)+" 기록확인하기";
-        viewholder.tv_todayActiveResult.setText(activeTodayResult);
+        String reh = mList.get(position).getRehabilitation();
+        String walk= mList.get(position).getWalkingAssistance();
+        String pos = mList.get(position).getPosition();
 
+        viewholder.tv_Activedate.setText(formattedDate);
+        viewholder.tv_ActiveResult.setText(reh + " " + walk + " " + pos);
     }
 
     @Override

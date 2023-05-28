@@ -1,5 +1,7 @@
 package carehalcare.carehalcare_manage.Feature_carereport.Meal;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -15,8 +17,20 @@ public class Meal_ResponseDTO {
     String content;
     @SerializedName("images")
     List<Meal_Image> images;
-    @SerializedName("createdDate")
-    String createdDate;
+    @SerializedName("createdDateTime")
+    String createdDateTime;
+
+    Bitmap image;
+    public Meal_ResponseDTO(String content, String createdDateTime, Long id, List<Meal_Image> images, String puserId, String userId)
+    {
+        this.content = content;
+        this.createdDateTime = createdDateTime;
+        this.images = images;
+        this.id = id;
+        this.puserId = puserId;
+        this.userId = userId;
+    }
+
 
     public Long getId() {
         return id;
@@ -59,10 +73,10 @@ public class Meal_ResponseDTO {
     }
 
     public String getCreatedDate() {
-        return createdDate;
+        return createdDateTime;
     }
 
     public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+        this.createdDateTime = createdDateTime;
     }
 }

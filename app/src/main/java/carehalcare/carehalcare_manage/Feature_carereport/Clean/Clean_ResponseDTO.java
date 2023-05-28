@@ -4,27 +4,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class Clean_ResponseDTO {
     //간병인아이디
-    @SerializedName("userId")
-    String userId = "";
+    @SerializedName("userId") String userId = "";
     //보호자아이디
-    @SerializedName("puserId")
-    String puserId="";
+    @SerializedName("puserId") String puserId="";
+    @SerializedName("id") Long id;
+    @SerializedName("cleanliness") String cleanliness;
+    @SerializedName("content") String content;
+    @SerializedName("createdDateTime") String createdDateTime;
 
-    @SerializedName("id")
-    Long id;
-
-    @SerializedName("cleanliness")
-    String cleanliness;
-
-    @SerializedName("content")
-    String content;
-
-    public Clean_ResponseDTO(String userId, String puserId, String cleanliness, String content) {
-        this.userId = userId;
-        this.puserId = puserId;
+    public Clean_ResponseDTO(String cleanliness, String content, String createdDateTime, Long id, String puserId, String userId) {
         this.cleanliness = cleanliness;
         this.content = content;
+        this.createdDateTime = createdDateTime;
+        this.id = id;
+        this.puserId = puserId;
+        this.userId = userId;
     }
+
+    public String getCreatedDateTime() {return createdDateTime;}
 
     public String getUserId() {
         return userId;

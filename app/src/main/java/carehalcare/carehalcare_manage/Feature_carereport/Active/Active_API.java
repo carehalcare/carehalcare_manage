@@ -9,9 +9,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface Active_API {
-    String URL = "http://192.168.0.18:8080/";
-
-    @Headers("Content-Type: application/json")
+       @Headers("Content-Type: application/json")
 
     @GET("activities/{id}")
     Call<List<Active_text>> getDataActive_detail(@Query("id") int id);

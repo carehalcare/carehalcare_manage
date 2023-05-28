@@ -21,15 +21,17 @@ public class Wash_ResponseDTO {
     @SerializedName("id")
     Long id;
 
-    @SerializedName("createdDate")
-    String createdDate;
+    @SerializedName("createdDateTime")
+    String createdDateTime;
 
-    public Wash_ResponseDTO(String userId, String puserId, String cleanliness, String part, String content) {
+    public Wash_ResponseDTO(String cleanliness, String content, String createdDateTime, Long id, String part, String puserId, String userId) {
+        this.cleanliness = cleanliness;
+        this.content = content;
+        this.createdDateTime = createdDateTime;
+        this.id = id;
+        this.part = part;
         this.userId = userId;
         this.puserId = puserId;
-        this.cleanliness = cleanliness;
-        this.part = part;
-        this.content = content;
     }
 
     public String getUserId() {
@@ -80,11 +82,6 @@ public class Wash_ResponseDTO {
         this.id = id;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
+    public String getCreatedDateTime() {return createdDateTime;}
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
 }

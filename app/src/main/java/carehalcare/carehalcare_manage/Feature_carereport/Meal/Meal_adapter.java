@@ -1,8 +1,6 @@
 package carehalcare.carehalcare_manage.Feature_carereport.Meal;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
@@ -17,18 +15,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-import carehalcare.carehalcare.R;
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
+import carehalcare.carehalcare_manage.R;
 
 public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHolder>{
-    private ArrayList<Meal_text> mList;
+    private ArrayList<Meal_ResponseDTO> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -44,12 +37,12 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         protected ImageView iv_mealpic;
-        protected TextView tv_mealcontent;
-
-
+        protected TextView tv_mealcontent, tv_date;
 
         public CustomViewHolder(View view) {
             super(view);
+
+            this.tv_date = (TextView) view.findViewById(R.id.tv_date);
             this.iv_mealpic = (ImageView) view.findViewById(R.id.iv_mealpic);
             this.tv_mealcontent = (TextView) view.findViewById(R.id.tv_mealcontent);
 
@@ -82,13 +75,8 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         }
         // 4. 컨텍스트 메뉴에서 항목 클릭시 동작을 설정합니다.
         public final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
-
-
-
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
-
                 switch (item.getItemId()) {
                     case 1002:
 
@@ -104,11 +92,9 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         };
 
     }
-    public Meal_adapter(ArrayList<Meal_text> list) {
+    public Meal_adapter(ArrayList<Meal_ResponseDTO> list) {
         this.mList = list;
     }
-
-
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -123,35 +109,28 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
 
 
 
-
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
         viewholder.tv_mealcontent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-
         viewholder.tv_mealcontent.setGravity(Gravity.CENTER);
 
+//        List<Meal_Image> images = mList.get(position).getImages();
+//        Bitmap seeBitPhoto = mList.get(position).getPhotobitmap();
+//
+//        Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);
+//
+//        if (mList.get(position).getUripan() != null){
+//            Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);}
+//        else {
+//            Glide.with(viewholder.itemView).load(seeBitPhoto).into(viewholder.iv_mealpic);
+//        }
 
 
-        Uri seePhoto = mList.get(position).getPhotouri();
-        Bitmap seeBitPhoto = mList.get(position).getPhotobitmap();
-
-
-        Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);
-
-
-        if (mList.get(position).getUripan() != null){
-            Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);}
-        else {
-            Glide.with(viewholder.itemView).load(seeBitPhoto).into(viewholder.iv_mealpic);
-        }
-
-        //viewholder.iv_mealpic.setImageURI(seePhoto);
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일 : HH시 MM분", Locale.getDefault());
-        String seeText = format.format(today_date);
-        viewholder.tv_mealcontent.setText(seeText);
-
+        String date = mList.get(position).getCreatedDate();
+        String formattedDate = DateUtils.formatDate(date);
+        viewholder.tv_date.setText(formattedDate);
+        viewholder.tv_mealcontent.setText(mList.get(position).getContent());
     }
 
 

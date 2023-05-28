@@ -14,39 +14,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHolder>{
-    private ArrayList<Wash_text> mList;
+    private ArrayList<Wash_ResponseDTO> mList;
     private Context mContext;
+
+    public Wash_adapter(ArrayList<Wash_ResponseDTO> list) {
+        this.mList = list;
+    }
 
     //아이템 클릭 리스너 인터페이스
     public interface OnItemClickListener{
         void onItemClick(View v, int position); //뷰와 포지션값
     }
+
     //리스너 객체 참조 변수
     private OnItemClickListener mListener = null;
-    //리스너 객체 참조를 어댑터에 전달 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_todayWash;
-        protected TextView tv_todayWashResult;
-
-
+        protected TextView tv_Washdate;
+        protected TextView tv_Result;
 
         public CustomViewHolder(View view) {
             super(view);
-            this.tv_todayWash = (TextView) view.findViewById(R.id.tv_todayWash);
-            this.tv_todayWashResult = (TextView) view.findViewById(R.id.tv_todayWashResult);
+            this.tv_Washdate = (TextView) view.findViewById(R.id.tv_todayWash);
+            this.tv_Result = (TextView) view.findViewById(R.id.tv_todayWashResult);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -88,10 +87,6 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
 
     }
 
-    public Wash_adapter(ArrayList<Wash_text> list) {
-        this.mList = list;
-    }
-
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
@@ -102,25 +97,25 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
     }
 
 
-
-
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_todayWash.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.tv_todayWashResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Washdate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-        viewholder.tv_todayWash.setGravity(Gravity.CENTER);
-        viewholder.tv_todayWashResult.setGravity(Gravity.CENTER);
+        viewholder.tv_Washdate.setGravity(Gravity.CENTER);
+        viewholder.tv_Result.setGravity(Gravity.CENTER);
 
-        viewholder.tv_todayWash.setText("환자청결");
-        //if (seeText.length() >= 25){seeText = seeText.substring(0,25);};
-        //viewholder.tv_todayCleanResult.setText(seeText+" ···");
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
-        String washTodayResult = format.format(today_date)+" 기록확인하기";
-        viewholder.tv_todayWashResult.setText(washTodayResult);
+        // Content 설정
+        String date = mList.get(position).getCreatedDateTime();
+        String formattedDate = DateUtils.formatDate(date);
 
+        String cleanliness = mList.get(position).getCleanliness();
+        String part = mList.get(position).getPart();
+        String content = mList.get(position).getContent();
+
+        viewholder.tv_Washdate.setText(formattedDate);
+        viewholder.tv_Result.setText(cleanliness + " " + part + " " + content);
 
     }
 

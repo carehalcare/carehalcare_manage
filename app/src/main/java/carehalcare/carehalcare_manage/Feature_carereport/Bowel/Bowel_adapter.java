@@ -14,13 +14,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
-import carehalcare.carehalcare.R;
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
+import carehalcare.carehalcare_manage.R;
 
 public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomViewHolder>{
     private ArrayList<Bowel_text> mList;
@@ -38,15 +35,13 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_todayBowel;
-        protected TextView tv_todayBowelResult;
-
-
+        protected TextView tv_Boweldate;
+        protected TextView tv_BowelResult;
 
         public CustomViewHolder(View view) {
             super(view);
-            this.tv_todayBowel = (TextView) view.findViewById(R.id.tv_todayBowel);
-            this.tv_todayBowelResult = (TextView) view.findViewById(R.id.tv_todayBowelResult);
+            this.tv_Boweldate = (TextView) view.findViewById(R.id.tv_todayBowel);
+            this.tv_BowelResult = (TextView) view.findViewById(R.id.tv_todayBowelResult);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -70,6 +65,8 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
             MenuItem Delete = menu.add(Menu.NONE, 1002, 2, "삭제");
             Delete.setOnMenuItemClickListener(onEditMenu);
         }
+
+
         // 4. 컨텍스트 메뉴에서 항목 클릭시 동작을 설정합니다.
         private final MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -102,26 +99,23 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
     }
 
 
-
-
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_todayBowel.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.tv_todayBowelResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Boweldate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_BowelResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
-        viewholder.tv_todayBowel.setGravity(Gravity.CENTER);
-        viewholder.tv_todayBowelResult.setGravity(Gravity.CENTER);
+        viewholder.tv_Boweldate.setGravity(Gravity.CENTER);
+        viewholder.tv_BowelResult.setGravity(Gravity.CENTER);
 
-        viewholder.tv_todayBowel.setText("배변상태");
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
-        String bowelTodayResult = format.format(today_date)+" 기록확인하기";
-        //if (seeText.length() >= 25){seeText = seeText.substring(0,25);};
-        //viewholder.tv_todayCleanResult.setText(seeText+" ···");
-        viewholder.tv_todayBowelResult.setText(bowelTodayResult);
+        String date = mList.get(position).getCreatedDateTime();
+        String formattedDate = DateUtils.formatDate(date);
 
+        Long count= mList.get(position).getCount();
+        String content = mList.get(position).getContent();
 
+        viewholder.tv_Boweldate.setText(formattedDate);
+        viewholder.tv_BowelResult.setText(content + " " + count);
     }
 
     @Override
