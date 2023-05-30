@@ -1,6 +1,5 @@
 package carehalcare.carehalcare_manage.Feature_login;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,6 @@ import carehalcare.carehalcare_manage.R;
 public class SignupActivity extends AppCompatActivity{
 
     Button btn_signup;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
