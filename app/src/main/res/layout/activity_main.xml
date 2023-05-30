@@ -51,59 +51,117 @@
         android:background="@drawable/radius_rec"
         android:orientation="vertical">
 
+
         <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:layout_weight="1" >
+            android:gravity="center"
+            android:orientation="vertical" >
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/menu1"
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="출퇴근" />
+                android:layout_marginBottom="10dp">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/menu2"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_gravity="center"
+                        android:id="@+id/menu1"
+                        android:layout_width="170dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/commute_main_resize" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="6pt"
+                        android:text="출퇴근"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/menu2"
+                        android:layout_width="170dp"
+                        android:layout_gravity="center"
+                        android:layout_height="180dp"
+                        android:background="@drawable/record_main_resize"
+                        android:layout_margin="5dp" />
+
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="6pt"
+                        android:text="간병기록"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="간병기록"/>
-        </TableRow>
+                android:layout_marginTop="10dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/menu3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="환자정보"/>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/menu3"
+                        android:layout_width="170dp"
+                        android:layout_height="180dp"
+                        android:layout_margin="5dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/info_main_resize" />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="6pt"
+                        android:text="환자정보"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/menu4"
+                        android:layout_width="170dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/notice_main_resize" />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="6pt"
+                        android:text="공지사항"
+                        android:textColor="@color/black" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/menu4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="공지사항"/>
-        </TableRow>
-    </TableLayout>
-    </LinearLayout>
+                </LinearLayout>
+            </TableRow>
+        </TableLayout>
+
 </LinearLayout>
