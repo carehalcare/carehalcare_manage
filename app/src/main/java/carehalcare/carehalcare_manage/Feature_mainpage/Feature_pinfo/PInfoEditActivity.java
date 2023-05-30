@@ -66,20 +66,67 @@ public class PInfoEditActivity extends AppCompatActivity {
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //editText에 설정할 이전 값들
+                String userId = "userid1";
+
+                Call<PatientInfo> beforeInfo = pInfoApi.getDataInfo("userid1");
+                beforeInfo.enqueue(new Callback<PatientInfo>() {
+                    @Override
+                    public void onResponse(Call<PatientInfo> call, Response<PatientInfo> response) {
+                        if (response.isSuccessful()) {
+                            // 응답 받은 데이터를 가져옴
+                            PatientInfo bpInfo = response.body();
+
+                            String beforepname = bpInfo.getPname();
+                            String beforepbirthDate = bpInfo.getPbirthDate();
+                            String beforedisease = bpInfo.getDisease();
+                            String beforehospital = bpInfo.getHospital();
+                            String beforemedicine = bpInfo.getMedicine();
+                            String beforepersonal = bpInfo.getRemark();
+                            String beforepsex = bpInfo.getPsex();
+
+                            if (beforepsex.equals("M")) {
+                                btn_man.setChecked(true);
+                            } else if (beforepsex.equals("W")) {
+                                btn_woman.setChecked(true);
+                            } else {
+                                // 라디오 버튼이 선택되지 않은 경우에 대한 처리
+                                btn_woman.setChecked(false);
+                                btn_man.setChecked(false);
+                            }
+
+                            et_id.setText(beforepname);
+                            et_date.setText(beforepbirthDate);
+                            et_disease.setText(beforedisease);
+                            et_hospital.setText(beforehospital);
+                            et_medicine.setText(beforemedicine);
+                            et_personal.setText(beforepersonal);
+
+                            Log.e("EditText 값 설정", "Status Code : " + response.body().toString());
+                        } else {
+                            Log.e("EditText 설정 실패", "Status Code : " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<PatientInfo> call, Throwable t) {
+                        Log.e("API 통신 실패", t.getMessage());
+                    }
+                });
+
                 String pname = et_id.getText().toString();
                 String pbirthDate = et_date.getText().toString();
                 String disease = et_disease.getText().toString();
                 String hospital = et_hospital.getText().toString();
                 String medicine = et_medicine.getText().toString();
                 String personal = et_personal.getText().toString();
-                String userId = "userid1";
                 String psex;
                 if (btn_man.isChecked()) {
                     psex = "M";
                 } else if (btn_woman.isChecked()) {
                     psex = "F";
                 } else {
-                    // 라디오 버튼이 선택되지 않은 경우에 대한 처리
                     psex = "";
                 }
 
@@ -91,8 +138,10 @@ public class PInfoEditActivity extends AppCompatActivity {
                         return;
                     }
 
+
                     // PatientInfo 객체 생성 및 필드 설정
                     PatientInfo patientInfo = new PatientInfo();
+
                     patientInfo.setPname(pname);
                     patientInfo.setPbirthDate(pbirthDate);
                     patientInfo.setPsex(psex);

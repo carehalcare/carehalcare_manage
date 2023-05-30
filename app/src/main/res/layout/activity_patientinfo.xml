@@ -119,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:hint="0000/00/00"
+                        android:hint="8자리로 입력해주세요"
                         android:inputType="date" />
                 </LinearLayout>
 
@@ -184,7 +184,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:hint="질환"
+                        android:hint="질환에 대해 입력해주세요"
                         android:inputType="text" />
 
                 </LinearLayout>
@@ -208,7 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
-                        android:hint="담당 병원"
+                        android:hint="담당 병원을 입력해주세요"
                         android:inputType="text" />
                 </LinearLayout>
 
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="투약정보"
+                        android:text="투약정보 :"
                         android:textStyle="bold" />
 
                     <EditText
@@ -231,7 +231,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
                         android:layout_gravity="center"
-                        android:hint="투약 정보"
+                        android:hint="복용 중인 약을 입력해주세요 "
                         android:inputType="text" />
                 </LinearLayout>
 
@@ -254,7 +254,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
                         android:background="@drawable/et_border"
-                        android:hint="성격"
+                        android:hint="성격에 대해 입력해주세요"
                         android:inputType="text" />
 
                 </LinearLayout>
