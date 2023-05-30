@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/background_signup">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="10dp"
         android:textColor="@color/white"
+        android:textSize="25dp"
+        android:textStyle="bold"
         android:text="회원 가입" />
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/input"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:orientation="vertical">
 
         <TextView
@@ -27,90 +35,102 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:text="ID"
+            android:textColor="@color/white"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_id"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="ID를 입력하세요"
             android:inputType="textPersonName"
-            android:background="@drawable/et_border"/>
+            android:background="@drawable/et_round"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Password"
+            android:textColor="@color/white"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_pw"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="비밀번호를 입력하세요"
             android:inputType="textPassword"
-            android:background="@drawable/et_border"/>
+            android:background="@drawable/et_round"/>
 
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="이름"
+        android:textColor="@color/white"
+        android:textSize="16dp"
         android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_name"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="이름을 입력하세요"
             android:inputType="textPersonName"
-            android:background="@drawable/et_border"/>
+            android:background="@drawable/et_round"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="생년월일"
+            android:textColor="@color/white"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_date"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="0000/00/00"
             android:inputType="date"
-            android:background="@drawable/et_border"/>
+            android:background="@drawable/et_round"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="전화번호"
+            android:textColor="@color/white"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/et_phone"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
             android:hint="전화번호를 입력하세요"
             android:inputType="phone"
-            android:background="@drawable/et_border" />
+            android:background="@drawable/et_round" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="성별"
+            android:textColor="@color/white"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <LinearLayout
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
 
@@ -125,6 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginLeft="30dp"
                     android:text="여성" />
 
                 <RadioButton
@@ -132,18 +153,27 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:layout_marginRight="30dp"
                     android:text="남성" />
 
             </RadioGroup>
         </LinearLayout>
+    </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_signup"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/input"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="20dp"
-            android:text="등록" />
+            android:background="@drawable/round_border"
+            android:backgroundTint="@color/black"
+            android:text="회원가입"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
-    </LinearLayout>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
