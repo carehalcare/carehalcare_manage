@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/main_button_radius" />
+    <item
+        android:width="50dp"
+        android:height="50dp"
+        android:drawable="@drawable/info_main"
+        android:gravity="center|center_horizontal"
+     />
+
+</layer-list>

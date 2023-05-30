@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
@@ -23,7 +24,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class PInfoAddActivity extends AppCompatActivity {
 
-    private static final String BASEURL = "http://172.30.1.55:8080/";
     private ImageButton btn_home;
     private Button btn_reg;
     private RadioButton btn_man, btn_woman;
@@ -48,7 +48,7 @@ public class PInfoAddActivity extends AppCompatActivity {
         btn_woman = (RadioButton) findViewById(R.id.btn_woman);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASEURL)
+                .baseUrl(API_URL.url)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();

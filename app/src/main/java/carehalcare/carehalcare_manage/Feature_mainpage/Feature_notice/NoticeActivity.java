@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
@@ -41,7 +42,6 @@ public class NoticeActivity extends AppCompatActivity {
     private RecyclerView notiview;
     private ArrayList<Notice> notiviewlist;
     private NoticeAdapter noticeadapter;
-    private static final String BASEURL = "http://172.30.1.55:8080/";
     private Retrofit retrofit;
     private NoticeApi noticeApi;
 
@@ -51,7 +51,7 @@ public class NoticeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notice);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASEURL)
+                .baseUrl(API_URL.url)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();
