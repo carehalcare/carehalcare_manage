@@ -72,7 +72,7 @@ public class Meal_ResponseDTO {
         this.images = images;
     }
 
-    public String getCreatedDate() {
+    public String getCreatedDateTime() {
         return createdDateTime;
     }
 

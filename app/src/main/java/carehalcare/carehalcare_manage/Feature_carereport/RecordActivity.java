@@ -1,6 +1,7 @@
 package carehalcare.carehalcare_manage.Feature_carereport;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -35,6 +37,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_text;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_adapter;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.MealFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_adapter;
@@ -59,14 +62,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecordActivity extends AppCompatActivity {
     private FrameLayout container;
-    private static final int REQUEST_CODE = 1099;
-    private static final int MY_PERMISSION_CAMERA = 1111;
-    private static final int MY_PERMISSION_CAMERA2 = 1112;
-    String mCurrentPhotoPath;
-    Uri imageUri;
 
     LoadingDialog loadingDialog;
     Long ids;
+    private String userid , puserid;
 
     private Medicine_adapter medicineAdapter;
     private Active_adapter activeAdapter;
@@ -105,10 +104,10 @@ public class RecordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_writemain);
         container = (FrameLayout) findViewById(R.id.container_menu);
 
-//        if (Build.VERSION.SDK_INT < 23){}
-//        else {
-//            requestUserPermission();
-//        }
+        Intent intent = getIntent();
+        userid = intent.getStringExtra("userid1");
+        puserid = intent.getStringExtra("puserid1");
+
         loadingDialog = new LoadingDialog(this);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         loadingDialog.setCancelable(false);
@@ -271,7 +270,11 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Clean_ResponseDTO detail_clean_text = cleanArrayList.get(position);
-                cleanApi.getDataClean("userid1","puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
+
+                String sheet_cloth_ventilation = detail_clean_text.getCleanliness();
+                String content_detail = detail_clean_text.getContent();
+
+                cleanApi.getDataClean("userid1", "puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                         if (response.isSuccessful()) {
@@ -279,10 +282,12 @@ public class RecordActivity extends AppCompatActivity {
                                 List<Clean_ResponseDTO> datas = response.body();
                                 if (datas != null) {
                                     ids = response.body().get(position).getId();
-                                    Log.e("지금 position : ",position+"이고 DB ID는 : " + ids);
+                                    Log.e("지금 position : ", position + "이고 DB ID는 : " + ids);
                                 }
-                            }}
+                            }
+                        }
                     }
+
                     @Override
                     public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
                         Log.e("getSleep fail", "======================================");
@@ -300,8 +305,35 @@ public class RecordActivity extends AppCompatActivity {
 
                 final TextView detail_sheet = dialog.findViewById(R.id.tv_cleandatail_sheet);
                 final TextView detail_cloth = dialog.findViewById(R.id.tv_cleandatail_cloth);
-                final TextView detail_ventilationt = dialog.findViewById(R.id.tv_cleandatail_ventilation);
-                final TextView et_detail_clean  = dialog.findViewById(R.id.tv_cleandetail_et);
+                final TextView detail_ventilation = dialog.findViewById(R.id.tv_cleandatail_ventilation);
+                final TextView et_detail_clean = dialog.findViewById(R.id.tv_cleandetail_et);
+
+                if (sheet_cloth_ventilation != null && !sheet_cloth_ventilation.isEmpty()) {
+                    if (sheet_cloth_ventilation.contains("시트변경완료")) {
+                        detail_sheet.setText("시트변경완료");
+                    } else {
+                        detail_sheet.setText("해당사항 없음");
+                    }
+
+                    if (sheet_cloth_ventilation.contains("환의교체완료")) {
+                        detail_cloth.setText("환의교체완료");
+                    } else {
+                        detail_cloth.setText("해당사항 없음");
+                    }
+
+                    if (sheet_cloth_ventilation.contains("환기완료")) {
+                        detail_ventilation.setText("환기완료");
+                    } else {
+                        detail_ventilation.setText("해당사항 없음");
+                    }
+                } else {
+                    detail_sheet.setText("해당사항 없음");
+                    detail_cloth.setText("해당사항 없음");
+                    detail_ventilation.setText("해당사항 없음");
+                }
+                if (content_detail.equals("-"))
+                    et_detail_clean.setText("없음");
+                else et_detail_clean.setText(content_detail);
 
                 final Button btn_cleandetail = dialog.findViewById(R.id.btn_cleandtail);
 
@@ -382,6 +414,11 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Wash_ResponseDTO detail_wash_text = washArrayList.get(position);
+
+                String cleantype = detail_wash_text.getCleanliness();
+                String part = detail_wash_text.getPart();
+                String content_detail = detail_wash_text.getContent();
+
                 washApi.getDataWash("userid1","puserid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Wash_ResponseDTO>> call, Response<List<Wash_ResponseDTO>> response) {
@@ -409,26 +446,68 @@ public class RecordActivity extends AppCompatActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.show();
 
-                final TextView washdetail_face = dialog.findViewById(R.id.tv_washdetail_face);
-                final TextView washdetail_mouth = dialog.findViewById(R.id.tv_washdetail_mouth);
-                final TextView washdetail_nail = dialog.findViewById(R.id.tv_washdetail_nail);
-                final TextView washdetail_hair  = dialog.findViewById(R.id.tv_washdetail_hair);
-                final TextView washdetail_scrub  = dialog.findViewById(R.id.tv_washdetail_scrub);
-                final TextView washdetail_shave  = dialog.findViewById(R.id.tv_washdetail_shave);
-                final TextView washdetail_scrub_point  = dialog.findViewById(R.id.tv_washdetail_scrub_point);
-                final TextView washdetail_et  = dialog.findViewById(R.id.tv_washdetail_et);
+                final TextView tv_face = dialog.findViewById(R.id.tv_washdetail_face);
+                final TextView tv_mouth = dialog.findViewById(R.id.tv_washdetail_mouth);
+                final TextView tv_nail = dialog.findViewById(R.id.tv_washdetail_nail);
+                final TextView tv_hair  = dialog.findViewById(R.id.tv_washdetail_hair);
+                final TextView tv_scrub  = dialog.findViewById(R.id.tv_washdetail_scrub);
+                final TextView tv_shave  = dialog.findViewById(R.id.tv_washdetail_shave);
+                final TextView tv_scrub_point  = dialog.findViewById(R.id.tv_washdetail_scrub_point);
+                final TextView tv_et  = dialog.findViewById(R.id.tv_washdetail_et);
                 final TextView tv_date = dialog.findViewById(R.id.tv_date);
 
-//                washdetail_face.setText(detail_wash_text.getWashface());
-//                washdetail_mouth.setText(detail_wash_text.getWashmouth());
-//                washdetail_nail.setText(detail_wash_text.getNailcare());
-//                washdetail_hair.setText(detail_wash_text.getHaircare());
-//                washdetail_scrub.setText(detail_wash_text.getBodyscrub());
-//                washdetail_shave.setText(detail_wash_text.getShave());
-//                washdetail_scrub_point.setText(detail_wash_text.getEt_bodyscrub());
-//                washdetail_et.setText(detail_wash_text.getEt_washForm());
+                String date = detail_wash_text.getCreatedDateTime();
+                String formattedDate = DateUtils.formatDate(date);
 
-                final Button btn_washclose = dialog.findViewById(R.id.btn_wash_detail);
+                tv_date.setText(formattedDate);
+                tv_scrub_point.setText(part);
+
+                if (content_detail.equals("-"))
+                        tv_et.setText("없음");
+                else tv_et.setText(content_detail);
+
+                //조건
+                if (cleantype != null && !cleantype.isEmpty()) {
+                    if (cleantype.contains("세안 완료")) {
+                        tv_face.setText("세안 완료");
+                    } else {
+                        tv_face.setText("해당사항 없음");
+                    }
+
+                    if (cleantype.contains("구강청결 완료")) {
+                        tv_mouth.setText("구강청결 완료");
+                    } else {
+                        tv_mouth.setText("해당사항 없음");
+                    }
+
+                    if (cleantype.contains("손발톱관리 완료")) {
+                        tv_nail.setText("손발톱관리 완료");
+                    } else {
+                        tv_nail.setText("해당사항 없음");
+                    }
+
+                    if (cleantype.contains("세발간호 완료")) {
+                        tv_hair.setText("세발간호 완료");
+                    } else {
+                        tv_hair.setText("해당사항 없음");
+                    }
+                    if (cleantype.contains("세신 완료")) {
+                        tv_scrub.setText("세신 완료");
+                    } else {
+                        tv_scrub.setText("해당사항 없음");
+                    }
+                    if (cleantype.contains("면도 완료")) {
+                        tv_shave.setText("면도 완료");
+                    } else {
+                        tv_shave.setText("해당사항 없음");
+                    }
+
+                } else {
+                    tv_face.setText("해당사항 없음"); tv_mouth.setText("해당사항 없음"); tv_nail.setText("해당사항 없음");
+                    tv_hair.setText("해당사항 없음"); tv_scrub.setText("해당사항 없음"); tv_shave.setText("해당사항 없음");
+                }
+
+               final Button btn_washclose = dialog.findViewById(R.id.btn_wash_detail);
 
                 btn_washclose.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -531,7 +610,7 @@ public class RecordActivity extends AppCompatActivity {
                 String newdate = DateUtils.formatDate(date);
 
                 tv_date.setText(newdate);
-                boweldetail_count.setText(String.valueOf(detail_bowel_text.getCount()));
+                boweldetail_count.setText(String.valueOf(detail_bowel_text.getCount()) + "회");
                 boweldetail_et.setText(detail_bowel_text.getContent());
 
 
@@ -753,46 +832,17 @@ public class RecordActivity extends AppCompatActivity {
 
 
     //Meal
+    public void onMeal(View view) {
+        deleteview();
+        MealFragment mealFragment = new MealFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
 
-//    public void getMeal(){
-//        Meal_API meal_service = retrofit.create(Meal_API.class);
-//        loadingDialog.show();
-//        meal_service.getDatameal("userid2","userid1").enqueue(new Callback<List<Meal_ResponseDTO>>() {
-//            @Override
-//            public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
-//                if (response.body() != null) {
-//                    List<Meal_ResponseDTO> datas = response.body();
-//                    String encodedString;
-//                    byte[] encodeByte;
-//                    Bitmap mealbitmap;
-//                    for (int i = 0; i < datas.size(); i++) {
-//
-//                        encodedString = response.body().get(i).getImages().get(0).getEncodedString();
-//
-//                        encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-//                        mealbitmap = BitmapFactory.decodeByteArray( encodeByte, 0, encodeByte.length ) ;
-//
-//                        Meal_ResponseDTO dict_0 = new Meal_ResponseDTO(
-//                                datas.get(i).getContent(),
-//                                datas.get(i).getCreatedDate(), datas.get(i).getId(), datas.get(i).getImages() ,
-//                                datas.get(i).getPuserId(), datas.get(i).getUserId());
-//                        );
-//
-//                        mealArrayList.add(dict_0);
-//                        mealAdapter.notifyItemInserted(0);
-//                        Log.e("음식리스트 출력", "********1*************1*********!");
-//                    }
-//                    Log.e("getDatameal end", "======================================");
-//
-//                    loadingDialog.dismiss();
-//                }}
-//            @Override
-//            public void onFailure(Call<List<Meal_ResponseDTO>> call, Throwable t) {
-//                Log.e("통신에러","+"+t.toString());
-//                Toast.makeText(getApplicationContext(), "통신에러", Toast.LENGTH_SHORT).show();
-//                loadingDialog.dismiss();
-//            }
-//        });
-//
-//    }
+        mealFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, mealFragment);
+        transaction.commit();
+
+    }
 }

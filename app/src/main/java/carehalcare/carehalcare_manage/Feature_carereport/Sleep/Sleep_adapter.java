@@ -95,7 +95,7 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
         String content = mList.get(position).getContent();
 
         viewholder.tv_todaySleep.setText(formattedDate);
-        viewholder.tv_todaySleepResult.setText( state + " " + content);
+        viewholder.tv_todaySleepResult.setText( "수면 기록 확인하기");
 
     }
 

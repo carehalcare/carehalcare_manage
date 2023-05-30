@@ -15,7 +15,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
@@ -115,22 +118,20 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         viewholder.tv_mealcontent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         viewholder.tv_mealcontent.setGravity(Gravity.CENTER);
 
-//        List<Meal_Image> images = mList.get(position).getImages();
-//        Bitmap seeBitPhoto = mList.get(position).getPhotobitmap();
-//
-//        Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);
-//
-//        if (mList.get(position).getUripan() != null){
-//            Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_mealpic);}
-//        else {
-//            Glide.with(viewholder.itemView).load(seeBitPhoto).into(viewholder.iv_mealpic);
-//        }
 
+        List<Meal_Image> images = mList.get(position).getImages();
 
-        String date = mList.get(position).getCreatedDate();
+        String date = mList.get(position).getCreatedDateTime();
         String formattedDate = DateUtils.formatDate(date);
         viewholder.tv_date.setText(formattedDate);
         viewholder.tv_mealcontent.setText(mList.get(position).getContent());
+
+        if (images != null && !images.isEmpty()) {
+            String filePath = images.get(0).getFilePath();
+            Glide.with(viewholder.itemView.getContext()).load(filePath).into(viewholder.iv_mealpic);
+        } else {
+            // 이미지가 없는 경우 기본 이미지 설정 또는 처리 로직 추가
+        }
     }
 
 
