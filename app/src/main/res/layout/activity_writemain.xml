@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/home_btn"
+            android:text="홈"
+            android:textColor="#000000"
+            />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center|left"
+            android:gravity="center"
+            android:layout_marginLeft="125dp"
+            android:text="간병기록"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#53ACFF">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/radius_rec">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
+
+                <!--식사-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_meal"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onMeal"
+                        android:src="@drawable/meal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="식사"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                </FrameLayout>
+
+                <!--약-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_medicine"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onMedicine"
+                        android:src="@drawable/medicine" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="약"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                </FrameLayout>
+
+                <!--활동-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_active"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onActive"
+                        android:src="@drawable/activity" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="활동"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                    <!--산책-->
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_walk"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onWalk"
+                        android:src="@drawable/walk" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="산책"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+                </FrameLayout>
+
+
+                <!--수면-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_sleep"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onSleep"
+                        android:src="@drawable/sleep" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="수면"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                </FrameLayout>
+
+                <!--배변-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_toilet"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onToilet"
+                        android:src="@drawable/toilet" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="배변"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                </FrameLayout>
+
+                <!--환자청결-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_wash"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onWash"
+                        android:src="@drawable/wash" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="환자청결"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+
+                </FrameLayout>
+
+                <!--주변청결-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:id="@+id/btn_clean"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:contentDescription="하고 싶은 설명"
+                        android:onClick="onClean"
+                        android:src="@drawable/clean" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="주변청결"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"></TextView>
+                </FrameLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:id="@+id/container_menu">
+
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

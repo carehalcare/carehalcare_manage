@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"  >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/tv_medicine_detail_date"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="복용시각"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="-"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/detail_list"
+            android:textColor="@color/black"
+            android:id="@+id/tv_medicine_detail_time"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+        <TextView
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="복용 상태"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="-"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/detail_list"
+            android:textColor="@color/black"
+            android:id="@+id/tv_medicine_detail_state"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+        <TextView
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="약 종류(이름)"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="-"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/detail_list"
+            android:textColor="@color/black"
+            android:id="@+id/tv_medicine_detail_name"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_medicine_detail"
+            android:text="닫기"
+            android:background="#64a5ff"
+            android:textStyle="bold"
+            android:layout_gravity="center"  />
+    </LinearLayout>
+</LinearLayout>

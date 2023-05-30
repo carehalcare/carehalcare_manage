@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/tv_date"
+        android:textColor="@color/black"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+        <TextView
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:text="대변횟수"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+        <TextView
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="-"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@drawable/detail_list"
+            android:textColor="@color/black"
+            android:id="@+id/tv_boweldetail_count"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="특이사항"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <TextView
+            android:background="@drawable/detail_list"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:textColor="@color/black"
+            android:text="-"
+            android:id="@+id/tv_boweldetail_et"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_boweldetail"
+        android:text="닫기"
+        android:background="#64a5ff"
+        android:textStyle="bold"
+        android:layout_gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>

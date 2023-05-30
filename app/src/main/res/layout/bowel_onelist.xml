@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Feature_carereport.RecordActivity"
+    android:orientation="horizontal"
+    android:elevation="4dp"
+    android:padding="4dp"    >
+
+    <TextView
+        android:id="@+id/tv_todayBowel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="#aadbff"
+        android:padding="7dp"
+        android:textAlignment="center"
+        android:text="배변상태"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_todayBowelResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:text="result"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+</LinearLayout>
