@@ -49,6 +49,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.Walk.Walk_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_adapter;
+import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -90,7 +91,7 @@ public class RecordActivity extends AppCompatActivity {
             .create();
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(Meal_API.URL)
+            .baseUrl(API_URL.url)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
@@ -133,7 +134,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        medicineApi.getDatamedicine("userid2","userid1").enqueue(new Callback<List<Medicine_text>>() {
+        medicineApi.getDatamedicine("userid1","puserid1").enqueue(new Callback<List<Medicine_text>>() {
             @Override
             public void onResponse(Call<List<Medicine_text>> call, Response<List<Medicine_text>> response) {
                 if (response.isSuccessful()) {
@@ -233,7 +234,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        cleanApi.getDataClean("userid2","userid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
+        cleanApi.getDataClean("userid1","puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                 if (response.isSuccessful()) {
@@ -270,7 +271,7 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Clean_ResponseDTO detail_clean_text = cleanArrayList.get(position);
-                cleanApi.getDataClean("userid2","userid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
+                cleanApi.getDataClean("userid1","puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                         if (response.isSuccessful()) {
@@ -337,7 +338,7 @@ public class RecordActivity extends AppCompatActivity {
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        washApi.getDataWash("userid2","userid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
+        washApi.getDataWash("userid1","puserid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Wash_ResponseDTO>> call, Response<List<Wash_ResponseDTO>> response) {
                 if(response.isSuccessful()){
@@ -381,7 +382,7 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Wash_ResponseDTO detail_wash_text = washArrayList.get(position);
-                washApi.getDataWash("userid2","userid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
+                washApi.getDataWash("userid1","puserid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Wash_ResponseDTO>> call, Response<List<Wash_ResponseDTO>> response) {
                         if(response.isSuccessful()){
@@ -460,7 +461,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        bowelApi.getDataBowel("userid2","userid1").enqueue(new Callback<List<Bowel_text>>() {
+        bowelApi.getDataBowel("userid1","puserid1").enqueue(new Callback<List<Bowel_text>>() {
             @Override
             public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
                 if (response.isSuccessful()) {
@@ -494,7 +495,7 @@ public class RecordActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Bowel_text detail_bowel_text = bowelArrayList.get(position);
 
-                bowelApi.getDataBowel("userid2","userid1").enqueue(new Callback<List<Bowel_text>>() {
+                bowelApi.getDataBowel("userid1","puserid1").enqueue(new Callback<List<Bowel_text>>() {
                     @Override
                     public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
                         if (response.isSuccessful()) {
@@ -569,7 +570,7 @@ public class RecordActivity extends AppCompatActivity {
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        activeApi.getDataActive("userid2","userid1").enqueue(new Callback<List<Active_text>>() {
+        activeApi.getDataActive("userid1","puserid1").enqueue(new Callback<List<Active_text>>() {
             @Override
             public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
                 if (response.isSuccessful()) {
@@ -601,7 +602,7 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Active_text detail_active_text = activeArrayList.get(position);
-                activeApi.getDataActive("userid2","userid1").enqueue(new Callback<List<Active_text>>() {
+                activeApi.getDataActive("userid1","puserid1").enqueue(new Callback<List<Active_text>>() {
                     @Override
                     public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
                         if (response.isSuccessful()) {
@@ -668,7 +669,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        sleepApi.getDataSleep("userid2","userid1").enqueue(new Callback<List<Sleep_text>>() {
+        sleepApi.getDataSleep("userid1","puserid1").enqueue(new Callback<List<Sleep_text>>() {
             @Override
             public void onResponse(Call<List<Sleep_text>> call, Response<List<Sleep_text>> response) {
                 if (response.isSuccessful()) {
@@ -705,7 +706,7 @@ public class RecordActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Sleep_text detail_sleep_text = sleepArrayList.get(position);
 
-                sleepApi.getDataSleep("userid2","userid1").enqueue(new Callback<List<Sleep_text>>() {
+                sleepApi.getDataSleep("userid1","puserid1").enqueue(new Callback<List<Sleep_text>>() {
                     @Override
                     public void onResponse(Call<List<Sleep_text>> call, Response<List<Sleep_text>> response) {
                         if (response.isSuccessful()) {

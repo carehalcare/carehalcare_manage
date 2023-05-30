@@ -32,8 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import carehalcare.carehalcare.API_URL;
-import carehalcare.carehalcare.R;
+import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
+import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,10 +41,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CommuteActivity extends AppCompatActivity {
-    NfcAdapter nfcAdapter;
-    PendingIntent pendingIntent;
-    IntentFilter writingTagFilters[];
-    boolean writeMode;
     Tag myTag;
     Context context;
     public MaterialCalendarView calendarView;
@@ -55,7 +51,7 @@ public class CommuteActivity extends AppCompatActivity {
             .setLenient()
             .create();
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.URL)
+            .baseUrl(API_URL.url)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
@@ -65,7 +61,7 @@ public class CommuteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_commute);
         calendarView=findViewById(R.id.calendarView);
         diaryTextView=findViewById(R.id.tv_date);
-        check_Btn=findViewById(R.id.btn_check);
+//        check_Btn=findViewById(R.id.btn_check);
         tv_hello=findViewById(R.id.tv_hello);
         tv_bye=findViewById(R.id.tv_bye);
         tv_hello.setVisibility(View.INVISIBLE);
@@ -76,11 +72,11 @@ public class CommuteActivity extends AppCompatActivity {
 
         dialog01 = new Dialog(CommuteActivity.this);       // Dialog 초기화
         dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
-        dialog01.setContentView(R.layout.dialog_nfc_newcustom);
+//        dialog01.setContentView(R.layout.dialog_nfc_newcustom);
 
         dialog_ornot = new Dialog(CommuteActivity.this);       // Dialog 초기화
         dialog_ornot.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
-        dialog_ornot.setContentView(R.layout.dialog_nfc_ornot);
+//        dialog_ornot.setContentView(R.layout.dialog_nfc_ornot);
 
         calendarView.setSelectedDate(CalendarDay.today());
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
@@ -88,8 +84,8 @@ public class CommuteActivity extends AppCompatActivity {
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
                 tv_hello.setVisibility(View.VISIBLE);
                 tv_bye.setVisibility(View.VISIBLE);
-                check_Btn.setVisibility(View.VISIBLE);
-                check_Btn.setBackgroundResource(R.drawable.nfc_dialog_radius);
+//                check_Btn.setVisibility(View.VISIBLE);
+//                check_Btn.setBackgroundResource(R.drawable.nfc_dialog_radius);
                 int year = date.getYear();
                 int month = date.getMonth();
                 int dayOfMonth = date.getDay();
@@ -98,8 +94,8 @@ public class CommuteActivity extends AppCompatActivity {
                 diaryTextView.setText(String.format("%d년 %d월 %d일",year,month,dayOfMonth));
                 tv_hello.setText("출근기록이 없습니다");
                 tv_bye.setText("퇴근기록이 없습니다");
-                check_Btn.setEnabled(true);
-                check_Btn.setText("출근하기");
+//                check_Btn.setEnabled(true);
+//                check_Btn.setText("출근하기");
 
                 long now = System.currentTimeMillis();
                 Date mDate = new Date(now);
@@ -111,13 +107,13 @@ public class CommuteActivity extends AppCompatActivity {
                 int months = Integer.parseInt(simpleDateFormatMonth.format(mDate));
                 int days = Integer.parseInt(simpleDateFormatDay.format(mDate));
                 if(year<=years && month<=months && dayOfMonth<days){
-                    check_Btn.setEnabled(false);
-                    check_Btn.setText("기록할 수 없습니다");
-                    check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
+//                    check_Btn.setEnabled(false);
+//                    check_Btn.setText("기록할 수 없습니다");
+//                    check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
                 }else if(year>=years && month>=months && dayOfMonth>days){
-                    check_Btn.setEnabled(false);
-                    check_Btn.setText("기록할 수 없습니다");
-                    check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
+//                    check_Btn.setEnabled(false);
+//                    check_Btn.setText("기록할 수 없습니다");
+//                    check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
                 }
 
                 String smonth;
@@ -134,12 +130,12 @@ public class CommuteActivity extends AppCompatActivity {
                                 for (int i = 0; i < response.body().size(); i++) {
                                     if (response.body().get(i).getCategory().equals("0")){
                                         tv_hello.setText("출근시간 : "+response.body().get(i).getDate()+" "+response.body().get(i).getTime());
-                                        check_Btn.setText("퇴근하기");
+//                                        check_Btn.setText("퇴근하기");
 
                                     } else{
                                         tv_bye.setText("퇴근시간 : "+response.body().get(i).getDate()+" "+response.body().get(i).getTime());
-                                        check_Btn.setText("기록할 수 없습니다");
-                                        check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
+//                                        check_Btn.setText("기록할 수 없습니다");
+//                                        check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
                                     }
                                     Log.e("출퇴근여부 : " + i, response.body().get(i).getCategory()+" "+response.body().get(i).getDate() +
                                             " "+response.body().get(i).getTime());
@@ -158,23 +154,19 @@ public class CommuteActivity extends AppCompatActivity {
             }
         });
 
-        check_Btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (check_Btn.getText().toString().equals("출근하기")) {
-                    // Viewdialog alert = new Viewdialog();
-                    //alert.showDialog(CommuteActivity.this);
-                    showDialog01();
-                } else if (check_Btn.getText().toString().equals("퇴근하기")) {
-                    showDialog02();
-                }
-            }
-        });
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        readfromIntent(getIntent());
-        pendingIntent = PendingIntent.getActivity(this,0,
-                new Intent(this,getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
-                PendingIntent.FLAG_MUTABLE);
+//        check_Btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (check_Btn.getText().toString().equals("출근하기")) {
+//                    // Viewdialog alert = new Viewdialog();
+//                    //alert.showDialog(CommuteActivity.this);
+//                    showDialog01();
+//                } else if (check_Btn.getText().toString().equals("퇴근하기")) {
+//                    showDialog02();
+//                }
+//            }
+//        });
+
     }
     public void readfromIntent(Intent intent){
         String action = intent.getAction();
@@ -275,25 +267,21 @@ public class CommuteActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        WriteModeOff();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        WriteModeOff();
+//    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        WriteModeOff();
-    }
-    private void WriteModeOn(){
-        writeMode = true;
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent,writingTagFilters,null);
-    }
-    private void WriteModeOff(){
-        writeMode = false;
-        nfcAdapter.disableForegroundDispatch(this);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        WriteModeOff();
+//    }
+//    private void WriteModeOn(){
+//        writeMode = true;
+//        nfcAdapter.enableForegroundDispatch(this, pendingIntent,writingTagFilters,null);
+//    }
     public void  checkDay(int cYear,int cMonth,int cDay,String userID){
 
         try{
@@ -309,40 +297,6 @@ public class CommuteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public void showDialog01(){
-        WriteModeOn();
-        dialog01.show(); // 다이얼로그 띄우기
-        dialog01.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
-        // 아니오 버튼
-
-        Button noBtn = dialog01.findViewById(R.id.frmNo);
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                dialog01.dismiss(); // 다이얼로그 닫기
-            }
-        });
-    }
-    public void showDialog02(){
-        WriteModeOn();
-        dialog01.show(); // 다이얼로그 띄우기
-        dialog01.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
-        // 아니오 버튼
-        TextView tv_title = dialog01.findViewById(R.id.tv_title);
-        tv_title.setText("퇴근을 시작합니다");
-
-        Button noBtn = dialog01.findViewById(R.id.frmNo);
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                dialog01.dismiss(); // 다이얼로그 닫기
-            }
-        });
-    }
     public void DismissDialog01(){
         dialog01.dismiss(); // 다이얼로그 띄우기
     }
@@ -351,59 +305,59 @@ public class CommuteActivity extends AppCompatActivity {
         dialog_ornot.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
         // 아니오 버튼
 
-        Button noBtn = dialog_ornot.findViewById(R.id.ornot_No);
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                dialog_ornot.dismiss(); // 다이얼로그 닫기
-            }
-        });
+//        Button noBtn = dialog_ornot.findViewById(R.id.ornot_No);
+//        noBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 원하는 기능 구현
+//                WriteModeOff();
+//                dialog_ornot.dismiss(); // 다이얼로그 닫기
+//            }
+//        });
 
-        Button yesBtn = dialog_ornot.findViewById(R.id.ornot_yes);
-        yesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                setIntent(intent);
-                readfromIntent(intent);
-
-                WriteModeOff();
-                dialog_ornot.dismiss(); // 다이얼로그 닫기
-                check_Btn.setText("퇴근하기");
-            }
-        });
+//        Button yesBtn = dialog_ornot.findViewById(R.id.ornot_yes);
+//        yesBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 원하는 기능 구현
+//                WriteModeOff();
+//                setIntent(intent);
+//                readfromIntent(intent);
+//
+//                WriteModeOff();
+//                dialog_ornot.dismiss(); // 다이얼로그 닫기
+//                check_Btn.setText("퇴근하기");
+//            }
+//        });
     }
     public void ornotshow02(Intent intent){
         dialog_ornot.show(); // 다이얼로그 띄우기
         dialog_ornot.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
         // 아니오 버튼
 
-        Button noBtn = dialog_ornot.findViewById(R.id.ornot_No);
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                dialog_ornot.dismiss(); // 다이얼로그 닫기
-            }
-        });
+//        Button noBtn = dialog_ornot.findViewById(R.id.ornot_No);
+//        noBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 원하는 기능 구현
+//                WriteModeOff();
+//                dialog_ornot.dismiss(); // 다이얼로그 닫기
+//            }
+//        });
 
-        Button yesBtn = dialog_ornot.findViewById(R.id.ornot_yes);
-        yesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 원하는 기능 구현
-                WriteModeOff();
-                setIntent(intent);
-                readfromIntent(intent);
-                WriteModeOff();
-                dialog_ornot.dismiss(); // 다이얼로그 닫기
-                check_Btn.setText("출퇴근완료");
-                check_Btn.setEnabled(false);
-            }
-        });
+//        Button yesBtn = dialog_ornot.findViewById(R.id.ornot_yes);
+//        yesBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // 원하는 기능 구현
+//                WriteModeOff();
+//                setIntent(intent);
+//                readfromIntent(intent);
+//                WriteModeOff();
+//                dialog_ornot.dismiss(); // 다이얼로그 닫기
+//                check_Btn.setText("출퇴근완료");
+//                check_Btn.setEnabled(false);
+//            }
+//        });
     }
 }

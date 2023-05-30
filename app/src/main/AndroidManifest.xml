@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".Feature_carereport.RecordActivity"/>
+        <activity android:name=".Feature_mainpage.Feature_commute.CommuteActivity"/>
         <activity android:name=".Feature_login.KakaologinActivity" />
         <activity android:name=".Feature_login.SignupActivity"/>
         <activity android:name=".Feature_login.LoginActivity"/>

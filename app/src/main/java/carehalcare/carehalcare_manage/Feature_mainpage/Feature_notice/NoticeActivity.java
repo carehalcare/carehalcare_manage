@@ -247,7 +247,7 @@ public class NoticeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // NoticeApi를 사용하여 POST 요청
                 String content = et_notice.getText().toString();
-                Notice notice = new Notice(content, "userid1");
+                Notice notice = new Notice(content, "puserid1");
 
                 Call<Long> call = noticeApi.createNotice(notice);
                 call.enqueue(new Callback<Long>() {
@@ -282,7 +282,7 @@ public class NoticeActivity extends AppCompatActivity {
     //notice 가져오기
     private void getNoticeList() {
         notiviewlist.clear();
-        Call<List<Notice>> call = noticeApi.getNotice("userid1");
+        Call<List<Notice>> call = noticeApi.getNotice("puserid1");
         call.enqueue(new Callback<List<Notice>>() {
             @Override
             public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {

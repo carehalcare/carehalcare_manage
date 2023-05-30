@@ -1,5 +1,5 @@
 package carehalcare.carehalcare_manage.Feature_mainpage;
 
-public class API_URL {
-    public static String url = "http://192.168.0.69:8080/";
+public interface API_URL {
+    public static String url = "http://172.20.4.80:8080/";
 }
