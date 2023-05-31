@@ -115,7 +115,7 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
         String content = mList.get(position).getContent();
 
         viewholder.tv_Washdate.setText(formattedDate);
-        viewholder.tv_Result.setText(cleanliness + " " + part + " " + content);
+        viewholder.tv_Result.setText("청결 기록 확인하기");
 
     }
 

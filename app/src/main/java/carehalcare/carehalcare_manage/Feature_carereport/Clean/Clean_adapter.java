@@ -105,8 +105,7 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
         String content = mList.get(position).getContent();
 
         viewholder.tv_Cleandate.setText(formattedDate);
-        viewholder.tv_CleanResult.setText(cleanliness + " " + content);
-
+        viewholder.tv_CleanResult.setText("주변청결 기록 확인하기");
 
     }
 

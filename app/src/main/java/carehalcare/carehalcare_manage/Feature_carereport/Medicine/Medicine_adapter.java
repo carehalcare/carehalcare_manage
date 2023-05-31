@@ -66,8 +66,7 @@ public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.Cust
         String formattedDate = DateUtils.formatDate(date);
 
         holder.tv_medidate.setText(formattedDate);
-        holder.tv_result.setText(mList.get(position).gettime() + " " +
-                mList.get(position).getmealStatus()  + " " + mList.get(position).getmedicine());
+        holder.tv_result.setText("약 복용 기록 확인하기");
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {

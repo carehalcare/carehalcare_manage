@@ -123,7 +123,7 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
         String pos = mList.get(position).getPosition();
 
         viewholder.tv_Activedate.setText(formattedDate);
-        viewholder.tv_ActiveResult.setText(reh + " " + walk + " " + pos);
+        viewholder.tv_ActiveResult.setText("활동 기록 확인하기");
     }
 
     @Override

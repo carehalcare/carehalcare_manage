@@ -112,10 +112,12 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
         String formattedDate = DateUtils.formatDate(date);
 
         Long count= mList.get(position).getCount();
+        if (count.equals("-"))
+            count = Long.valueOf(0);
         String content = mList.get(position).getContent();
 
         viewholder.tv_Boweldate.setText(formattedDate);
-        viewholder.tv_BowelResult.setText(content + " " + count);
+        viewholder.tv_BowelResult.setText(count + "회 배변");
     }
 
     @Override

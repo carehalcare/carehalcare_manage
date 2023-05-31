@@ -55,6 +55,55 @@ public class PInfoEditActivity extends AppCompatActivity {
 
         pInfoApi = retrofit.create(PInfoApi.class);
 
+
+        String intent_pinfo = getIntent().getStringExtra("intent_pinfo");
+        String[] lines = intent_pinfo.split("\n"); // 개행 문자('\n')를 기준으로 텍스트를 분리하여 배열로 저장
+        Log.d("인텐트값 확인", "intent_pinfo: " + intent_pinfo);
+
+        String userId = "userid1";
+
+        for (String line : lines) {
+            if (line.contains(": ")) {
+                String[] parts = line.split(": "); // ':' 뒤의 값을 추출하기 위해 문자열을 분리하여 배열로 저장
+                if (parts.length >= 2) {
+                    String key = parts[0].trim(); // 변수 이름을 추출하고 공백을 제거하여 할당
+                    String value = parts[1].trim(); // ':' 뒤의 값을 추출하고 공백을 제거하여 할당
+
+                    // 변수 값에 따라 처리
+                    if (key.equals("이름")) {
+                        String beforepname = value;
+                        et_id.setText(beforepname);
+                    } else if (key.equals("생년월일")) {
+                        String beforepbirthDate = value.replaceAll("\\D", "");
+                        et_date.setText(beforepbirthDate);
+                    } else if (key.equals("질환")) {
+                        String beforedisease = value;
+                        et_disease.setText(beforedisease);
+                    } else if (key.equals("담당병원")) {
+                        String beforehospital = value;
+                        et_hospital.setText(beforehospital);
+                    } else if (key.equals("투약정보")) {
+                        String beforemedicine = value;
+                        et_medicine.setText(beforemedicine);
+                    } else if (key.equals("성격")) {
+                        String beforepersonal = value;
+                        et_personal.setText(beforepersonal);
+                    } else if (key.equals("성별")) {
+                        if (value.equals("남성")) {
+                            btn_man.setChecked(true);
+                        } else if (value.equals("여성")) {
+                            btn_woman.setChecked(true);
+                        } else {
+                            // 라디오 버튼이 선택되지 않은 경우에 대한 처리
+                            btn_woman.setChecked(false);
+                            btn_man.setChecked(false);
+                        }
+                    }
+                    Log.d("Value", "Key: " + key + ", Value: " + value);
+                }
+            }
+        }
+
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,22 +115,24 @@ public class PInfoEditActivity extends AppCompatActivity {
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String pname = et_id.getText().toString();
                 String pbirthDate = et_date.getText().toString();
                 String disease = et_disease.getText().toString();
                 String hospital = et_hospital.getText().toString();
                 String medicine = et_medicine.getText().toString();
                 String personal = et_personal.getText().toString();
-                String userId = "userid1";
                 String psex;
+
                 if (btn_man.isChecked()) {
                     psex = "M";
                 } else if (btn_woman.isChecked()) {
                     psex = "F";
                 } else {
-                    // 라디오 버튼이 선택되지 않은 경우에 대한 처리
                     psex = "";
                 }
+
+                //유효성 검사
 
                 if (!pname.isEmpty() && !pbirthDate.isEmpty() && !disease.isEmpty() && !hospital.isEmpty() &&
                         !medicine.isEmpty() && !personal.isEmpty() && !psex.isEmpty()) {
@@ -93,6 +144,7 @@ public class PInfoEditActivity extends AppCompatActivity {
 
                     // PatientInfo 객체 생성 및 필드 설정
                     PatientInfo patientInfo = new PatientInfo();
+
                     patientInfo.setPname(pname);
                     patientInfo.setPbirthDate(pbirthDate);
                     patientInfo.setPsex(psex);
