@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Struct;
+
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
@@ -50,6 +52,11 @@ public class PatientinfoActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(PatientinfoActivity.this, PInfoEditActivity.class);
+
+                String intent_pinfo = tv_info.getText().toString();
+                intent.putExtra("intent_pinfo", intent_pinfo);
+                //Log.d("인텐트값1", intent_pinfo);
+
                 startActivity(intent);
             }
         });
@@ -83,13 +90,19 @@ public class PatientinfoActivity extends AppCompatActivity {
 
                         PatientInfo patientInfo = response.body();
 
+                        String pname = patientInfo.getPname();
+                        String disease = patientInfo.getDisease();
+                        String hospital = patientInfo.getHospital();
+                        String medicine = patientInfo.getMedicine();
+                        String personal = patientInfo.getRemark();
+
                         String content = "";
-                        content += "이름: " + patientInfo.getPname() + "\n\n";
+                        content += "이름: " + pname + "\n\n";
 
                         //생년월일 출력 방식 변경 0000-00-00 -> 0000년 00월 00일
                         String birthDate = patientInfo.getPbirthDate();
                         if (birthDate.isEmpty() || birthDate.length() != 8) {
-                            content += "생년월일 정보 없음\n\n";
+                            content += "생년월일 정보 없음 \n\n";
                         } else {
                             String year = birthDate.substring(0, 4);
                             String month = birthDate.substring(4, 6);
@@ -109,12 +122,13 @@ public class PatientinfoActivity extends AppCompatActivity {
                             gender = "성별 정보 없음";
                         }
                         content += "성별: " + gender + "\n\n";
-                        content += "질환: " + patientInfo.getDisease() + "\n\n";
-                        content += "담당병원: " + patientInfo.getHospital() + "\n\n";
-                        content += "투약정보: " + patientInfo.getMedicine() + "\n\n";
-                        content += "성격: " + patientInfo.getRemark() + "\n\n";
+                        content += "질환: " + disease + "\n\n";
+                        content += "담당병원: " + hospital + "\n\n";
+                        content += "투약정보: " + medicine + "\n\n";
+                        content += "성격: " + personal + "\n\n";
 
                         tv_info.setText(content);
+
                     } else {
                         tv_info.setText("등록된 정보가 없습니다.\n 정보를 입력해주세요.");
                     }
