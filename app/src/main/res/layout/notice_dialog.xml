@@ -26,10 +26,12 @@
         android:id="@+id/et_notice"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_marginTop="10dp"
+        android:layout_margin="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btn_register"
+        android:background="@drawable/et_border"
+        android:backgroundTint="#86A1FF"
         android:text="등록"/>
 
 </LinearLayout>

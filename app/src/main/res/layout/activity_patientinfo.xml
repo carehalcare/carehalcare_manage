@@ -209,7 +209,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/et_border"
                         android:hint="담당 병원을 입력해주세요"
-                        android:inputType="text" />
+                        android:inputType="none" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -232,7 +232,7 @@
                         android:background="@drawable/et_border"
                         android:layout_gravity="center"
                         android:hint="복용 중인 약을 입력해주세요 "
-                        android:inputType="text" />
+                        android:inputType="none" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -255,7 +255,7 @@
                         android:layout_height="100dp"
                         android:background="@drawable/et_border"
                         android:hint="성격에 대해 입력해주세요"
-                        android:inputType="text" />
+                        android:inputType="none" />
 
                 </LinearLayout>
 
