@@ -28,7 +28,7 @@ import java.util.Locale;
 import carehalcare.carehalcare_manage.R;
 
 public class Walk_adapter extends RecyclerView.Adapter<Walk_adapter.CustomViewHolder>{
-    private ArrayList<Walk_text> mList;
+    private ArrayList<Walk_ResponseDTO> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -104,7 +104,7 @@ public class Walk_adapter extends RecyclerView.Adapter<Walk_adapter.CustomViewHo
         };
 
     }
-    public Walk_adapter(ArrayList<Walk_text> list) {
+    public Walk_adapter(ArrayList<Walk_ResponseDTO> list) {
         this.mList = list;
     }
 
@@ -129,18 +129,8 @@ public class Walk_adapter extends RecyclerView.Adapter<Walk_adapter.CustomViewHo
         viewholder.tv_walkcontent.setGravity(Gravity.CENTER);
 
 
-        Uri seePhoto = mList.get(position).getPhotouri();
-        Bitmap seeBitPhoto = mList.get(position).getPhotobitmap();
-
-
-        Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_walkpic);
-
-
-        if (mList.get(position).getUripan() != null){
-            Glide.with(viewholder.itemView).load(seePhoto).into(viewholder.iv_walkpic);}
-        else {
-            Glide.with(viewholder.itemView).load(seeBitPhoto).into(viewholder.iv_walkpic);
-        }
+        Glide.with(viewholder.itemView).load(mList.get(position).getImages().get(0).getFilePath()).
+                into(viewholder.iv_walkpic);
 
 
         Date today_date = Calendar.getInstance().getTime();

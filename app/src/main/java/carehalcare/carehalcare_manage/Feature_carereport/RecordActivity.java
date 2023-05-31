@@ -47,6 +47,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.Medicine.Medicine_text;
 import carehalcare.carehalcare_manage.Feature_carereport.Sleep.Sleep_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Sleep.Sleep_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Sleep.Sleep_text;
+import carehalcare.carehalcare_manage.Feature_carereport.Walk.WalkFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Walk.Walk_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Walk.Walk_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_API;
@@ -829,7 +830,19 @@ public class RecordActivity extends AppCompatActivity {
         });
 
     }
+    public void onWalk(View view) {
+        deleteview();
+        WalkFragment walkFragment = new WalkFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
 
+        walkFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, walkFragment);
+        transaction.commit();
+
+    }
 
     //Meal
     public void onMeal(View view) {
