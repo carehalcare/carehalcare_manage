@@ -1,4 +1,4 @@
-package carehalcare.carehalcare_manage.Feature_carereport.Meal;
+package carehalcare.carehalcare_manage.Feature_carereport.Walk;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,11 +23,14 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_Image;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_ResponseDTO;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_adapter;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.R;
 import retrofit2.Call;
@@ -36,12 +39,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MealFragment extends Fragment {
+public class WalkFragment extends Fragment {
     String userid,puserid;
     Long ids;
 
-    private ArrayList<Meal_ResponseDTO> mealArrayList;
-    private Meal_adapter mealAdapter;
+    private ArrayList<Walk_ResponseDTO> walkArrayList;
+    private Walk_adapter walkAdapter;
     Gson gson = new GsonBuilder()
             .setLenient()
             .create();
@@ -50,7 +53,7 @@ public class MealFragment extends Fragment {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
-    public MealFragment() {
+    public WalkFragment() {
         // Required empty public constructor
     }
 
@@ -72,27 +75,27 @@ public class MealFragment extends Fragment {
         LinearLayoutManager mlayoutManager = new LinearLayoutManager(getContext());
         mrecyclerView.setLayoutManager(mlayoutManager);
 
-        mealArrayList = new ArrayList<>();
-        mealAdapter = new Meal_adapter(mealArrayList);
-        mrecyclerView.setAdapter(mealAdapter);
+        walkArrayList = new ArrayList<>();
+        walkAdapter = new Walk_adapter(walkArrayList);
+        mrecyclerView.setAdapter(walkAdapter);
 
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecorator(ContextCompat.getDrawable(getContext(), R.drawable.divider));
         mrecyclerView.addItemDecoration(dividerItemDecoration);
 
         getmeallsit();
 
-        mealAdapter.setOnItemClickListener(new Meal_adapter.OnItemClickListener() {
+        walkAdapter.setOnItemClickListener(new Walk_adapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
 
-                Meal_ResponseDTO detail_meal_text = mealArrayList.get(position);
-                Meal_API meal_service = retrofit.create(Meal_API.class);
+                Walk_ResponseDTO detail_walk_text = walkArrayList.get(position);
+                Walk_API walk_service = retrofit.create(Walk_API.class);
 
-                meal_service.getDatameal("userid1", "puserid1").enqueue(new Callback<List<Meal_ResponseDTO>>() {
+                walk_service.getDataWalk("userid1", "puserid1").enqueue(new Callback<List<Walk_ResponseDTO>>() {
                     @Override
-                    public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
+                    public void onResponse(Call<List<Walk_ResponseDTO>> call, Response<List<Walk_ResponseDTO>> response) {
                         if (response.body() != null) {
-                            List<Meal_ResponseDTO> datas = response.body();
+                            List<Walk_ResponseDTO> datas = response.body();
                             if (datas != null) {
                                 String filePath;
                                 filePath = datas.get(0).getImages().get(0).getFilePath();
@@ -105,7 +108,7 @@ public class MealFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Meal_ResponseDTO>> call, Throwable t) {
+                    public void onFailure(Call<List<Walk_ResponseDTO>> call, Throwable t) {
                         Log.e("통신에러", "+" + t.toString());
                         Toast.makeText(getContext(), "통신에러", Toast.LENGTH_SHORT).show();
 
@@ -115,27 +118,22 @@ public class MealFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                 View view = LayoutInflater.from(getContext())
-                        .inflate(R.layout.meal_detail, null, false);
+                        .inflate(R.layout.walk_detail, null, false);
                 builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.show();
 
-                List<Meal_Image> images = detail_meal_text.getImages();
+                List<Walk_Image> images = detail_walk_text.getImages();
 
-                final ImageView iv_meal_detail = dialog.findViewById(R.id.iv_meal_detail);
-                final TextView tv_meal_detail = dialog.findViewById(R.id.tv_meal_detail);
-
-
-                Glide.with(getContext()).load(detail_meal_text.getImages().get(0).getFilePath()).into(iv_meal_detail);
+                final ImageView iv_walk_detail = dialog.findViewById(R.id.iv_walk_detail);
 
 
-                tv_meal_detail.setText(detail_meal_text.getContent());
+                Glide.with(getContext()).load(detail_walk_text.getImages().get(0).getFilePath()).into(iv_walk_detail);
 
-
-                final Button btn_meal_detail = dialog.findViewById(R.id.btn_meal_detail);
-                btn_meal_detail.setOnClickListener(new View.OnClickListener() {
+                final Button btn_walk_detail = dialog.findViewById(R.id.btn_walk_detail);
+                btn_walk_detail.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
@@ -147,18 +145,18 @@ public class MealFragment extends Fragment {
     }
 
     public void getmeallsit(){
-        Meal_API meal_service = retrofit.create(Meal_API.class);
-        meal_service.getDatameal("userid1", "puserid1").enqueue(new Callback<List<Meal_ResponseDTO>>() {
+        Walk_API walk_service = retrofit.create(Walk_API.class);
+        walk_service.getDataWalk("userid1", "puserid1").enqueue(new Callback<List<Walk_ResponseDTO>>() {
             @Override
-            public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
+            public void onResponse(Call<List<Walk_ResponseDTO>> call, Response<List<Walk_ResponseDTO>> response) {
                 if (response.body() != null) {
-                    List<Meal_ResponseDTO> datas = response.body();
+                    List<Walk_ResponseDTO> datas = response.body();
                     String times;
                     String filePath;
                     for (int i = 0; i < datas.size(); i++) {
 
-                        List<Meal_Image> images =datas.get(i).getImages();
-                        times = datas.get(i).getCreatedDateTime();
+                        List<Walk_Image> images =datas.get(i).getImages();
+                        times = datas.get(i).getCreatedDate();
                         Log.e("pic!",datas.get(i).getImages().get(0).getFilePath()+"   "+times);
 
                         filePath = "";
@@ -166,18 +164,18 @@ public class MealFragment extends Fragment {
                         {
                             filePath = images.get(0).getFilePath();
                         }
-                        Meal_ResponseDTO dict_0 = new Meal_ResponseDTO(datas.get(i).getContent(),
-                                times, datas.get(i).getId(), images, "puserid1", "userid1");
+                        Walk_ResponseDTO dict_0 = new Walk_ResponseDTO(datas.get(i).getId(),
+                                datas.get(i).getUserId(),datas.get(i).getPuserId(), images,
+                                datas.get(i).getCreatedDate());
 
-                        mealArrayList.add(dict_0);
-                        mealAdapter.notifyItemInserted(0);
-                        Log.e("음식리스트 날짜 출력", ""+response.body().get(i).getCreatedDateTime());
+                        walkArrayList.add(dict_0);
+                        walkAdapter.notifyItemInserted(0);
                     }
                     Log.e("getDatameal end", "======================================");
 
                 }}
             @Override
-            public void onFailure(Call<List<Meal_ResponseDTO>> call, Throwable t) {
+            public void onFailure(Call<List<Walk_ResponseDTO>> call, Throwable t) {
                 Log.e("통신에러","+"+t.toString());
                 //Toast.makeText(getContext(), "통신에러", Toast.LENGTH_SHORT).show();
             }

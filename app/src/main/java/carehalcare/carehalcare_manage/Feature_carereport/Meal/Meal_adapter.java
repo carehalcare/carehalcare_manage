@@ -45,7 +45,7 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         public CustomViewHolder(View view) {
             super(view);
 
-            this.tv_date = (TextView) view.findViewById(R.id.tv_date);
+            this.tv_date = (TextView) view.findViewById(R.id.iv_meal_title);
             this.iv_mealpic = (ImageView) view.findViewById(R.id.iv_mealpic);
             this.tv_mealcontent = (TextView) view.findViewById(R.id.tv_mealcontent);
 

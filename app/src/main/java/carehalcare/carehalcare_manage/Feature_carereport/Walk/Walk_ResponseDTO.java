@@ -16,6 +16,14 @@ public class Walk_ResponseDTO {
     @SerializedName("createdDate")
     String createdDate;
 
+    public Walk_ResponseDTO(Long id, String userId, String puserId, List<Walk_Image> images, String createdDate) {
+        this.id = id;
+        this.userId = userId;
+        this.puserId = puserId;
+        this.images = images;
+        this.createdDate = createdDate;
+    }
+
     public Long getId() {
         return id;
     }
