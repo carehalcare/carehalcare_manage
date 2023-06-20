@@ -46,7 +46,7 @@ public class MealFragment extends Fragment {
             .setLenient()
             .create();
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.url)
+            .baseUrl(API_URL.URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 

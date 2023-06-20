@@ -91,7 +91,7 @@ public class RecordActivity extends AppCompatActivity {
             .create();
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.url)
+            .baseUrl(API_URL.URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 

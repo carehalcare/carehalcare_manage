@@ -16,5 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="190dp"
+        android:text="케어할케어\n- 보호자용 -"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="8pt"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

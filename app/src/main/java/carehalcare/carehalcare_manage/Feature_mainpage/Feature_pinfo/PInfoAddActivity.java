@@ -48,7 +48,7 @@ public class PInfoAddActivity extends AppCompatActivity {
         btn_woman = (RadioButton) findViewById(R.id.btn_woman);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL.url)
+                .baseUrl(API_URL.URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();

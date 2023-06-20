@@ -47,11 +47,19 @@
             android:hint="ID를 입력하세요"
             android:inputType="textPersonName"
             android:background="@drawable/et_round"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_idcheck"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:background="@color/black"
+            android:textColor="@color/white"
+            android:text="중복확인"
+            android:textSize="5pt"
+            android:layout_gravity="right"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:text="Password"
             android:textColor="@color/white"
             android:textSize="16dp"
@@ -63,6 +71,23 @@
             android:layout_height="40dp"
             android:ems="10"
             android:hint="비밀번호를 입력하세요"
+            android:inputType="textPassword"
+            android:background="@drawable/et_round"/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 재입력"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/et_pwcheck"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:hint="비밀번호를 다시 입력해주세요"
             android:inputType="textPassword"
             android:background="@drawable/et_round"/>
 
@@ -167,7 +192,6 @@
             app:layout_constraintTop_toBottomOf="@+id/input"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="20dp"
             android:background="@drawable/round_border"
             android:backgroundTint="@color/black"
             android:text="회원가입"
