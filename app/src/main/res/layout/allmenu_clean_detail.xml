@@ -51,21 +51,7 @@
             android:text="-"
             android:id="@+id/tv_cleandetail_et_allmenu"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_clean_delete_detail"
-            android:text="삭제하기"
-            android:background="@color/material_dynamic_neutral_variant30"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-
-            />
         <androidx.appcompat.widget.AppCompatButton
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -74,8 +60,6 @@
             android:background="#64a5ff"
             android:textStyle="bold"
             android:layout_gravity="center"
-
             />
-    </LinearLayout>
 
 </LinearLayout>

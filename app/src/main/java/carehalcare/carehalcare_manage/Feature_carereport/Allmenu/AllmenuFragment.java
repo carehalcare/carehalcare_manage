@@ -45,24 +45,20 @@ import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_text;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_ResponseDTO;
-import carehalcare.carehalcare.Feature_write.DividerItemDecorator;
-import carehalcare.carehalcare.Feature_write.ErrorModel;
-import carehalcare.carehalcare.Feature_write.Meal.Meal_API;
-import carehalcare.carehalcare.Feature_write.Meal.Meal_ResponseDTO;
-import carehalcare.carehalcare.Feature_write.Meal.Meal_text;
-import carehalcare.carehalcare.Feature_write.Medicine.Medicine_API;
-import carehalcare.carehalcare.Feature_write.Medicine.Medicine_text;
-import carehalcare.carehalcare.Feature_write.Sleep.Sleep_API;
-import carehalcare.carehalcare.Feature_write.Sleep.Sleep_text;
-import carehalcare.carehalcare.Feature_write.Walk.Walk_API;
-import carehalcare.carehalcare.Feature_write.Walk.Walk_ResponseDTO;
-import carehalcare.carehalcare.Feature_write.Walk.Walk_text;
-import carehalcare.carehalcare.Feature_write.Wash.Wash_API;
-import carehalcare.carehalcare.Feature_write.Wash.Wash_ResponseDTO;
-import carehalcare.carehalcare.Feature_write.Wash.Wash_text;
-import carehalcare.carehalcare.R;
-import carehalcare.carehalcare.Retrofit_client;
-import carehalcare.carehalcare.TokenUtils;
+import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_ResponseDTO;
+import carehalcare.carehalcare_manage.Feature_carereport.Medicine.Medicine_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Medicine.Medicine_text;
+import carehalcare.carehalcare_manage.Feature_carereport.Sleep.Sleep_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Sleep.Sleep_text;
+import carehalcare.carehalcare_manage.Feature_carereport.Walk.Walk_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Walk.Walk_ResponseDTO;
+import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_ResponseDTO;
+import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -74,10 +70,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class AllmenuFragment extends Fragment {
     Active_text active_text;
     Bowel_text bowel_text;
-    Meal_text meal_text;
-    Clean_text clean_text;
-    Wash_text wash_text;
-    Walk_text walk_text;
     Medicine_text medicine_text;
     Sleep_text setText;
     String userid,puserid;
@@ -154,19 +146,9 @@ public class AllmenuFragment extends Fragment {
                         }
                     }
                 } else{
-                    Converter<ResponseBody, ErrorModel> converter = retrofit.responseBodyConverter(ErrorModel.class, new java.lang.annotation.Annotation[0]);
-                    ErrorModel errorModel = null;
-                    try {
-                        errorModel = converter.convert(response.errorBody());
-                        Log.e("error code???",""+errorModel.toString());
-                        Log.e("error code???",""+response.body());
-                        Log.e("error code???",""+response.message());
-                        Log.e("error YMC", "stringToJson msg: 실패" + response.code());
-                        Toast.makeText(getContext(), errorModel.toString(), Toast.LENGTH_SHORT).show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Log.e("제네릭타입 실패","");
                 }
+
             }
 
             @Override
@@ -224,7 +206,7 @@ public class AllmenuFragment extends Fragment {
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
         Log.e("활동기록 position id????",boardResponseDto.getId()+"");
 
-        activeApi.getDataActive_2(boardResponseDto.getId()).enqueue(new Callback<Active_text>() {
+        activeApi.getDataActive_detail(boardResponseDto.getId()).enqueue(new Callback<Active_text>() {
             @Override
             public void onResponse(Call<Active_text> call, Response<Active_text> response) {
                 if (response.isSuccessful()) {
@@ -253,38 +235,6 @@ public class AllmenuFragment extends Fragment {
                             activedetail_change.setText(getPosition);
 
                             final Button btn_active_detail = dialog.findViewById(R.id.btn_active_detail);
-                            final Button btn_active_delete = dialog.findViewById(R.id.btn_active_detail_delete);
-                            btn_active_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    activeApi.deleteDataActive(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_active_detail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -304,7 +254,7 @@ public class AllmenuFragment extends Fragment {
         Medicine_API medicineApi = Retrofit_client.createService(Medicine_API.class,TokenUtils.getAccessToken("Access_Token"));
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
 
-        medicineApi.getDatamedicine_2(boardResponseDto.getId()).enqueue(new Callback<Medicine_text>() {
+        medicineApi.getDatamedicine_detail(boardResponseDto.getId()).enqueue(new Callback<Medicine_text>() {
             @Override
             public void onResponse(Call<Medicine_text> call, Response<Medicine_text> response) {
                 if (response.isSuccessful()) {
@@ -326,7 +276,7 @@ public class AllmenuFragment extends Fragment {
                             dialog.show();
 
                             final TextView medicine_detail_date = dialog.findViewById(R.id.tv_medicine_detail_date);
-                            final TextView medicine_detail_timne = dialog.findViewById(R.id.tv_medicine_detail_timne);
+                            final TextView medicine_detail_timne = dialog.findViewById(R.id.tv_medicine_detail_time);
                             final TextView medicine_detail_state = dialog.findViewById(R.id.tv_medicine_detail_state);
                             final TextView medicine_detail_name = dialog.findViewById(R.id.tv_medicine_detail_name);
 
@@ -338,37 +288,6 @@ public class AllmenuFragment extends Fragment {
                             medicine_detail_name.setText(getmedicine);
 
                             final Button btn_medicinedetail = dialog.findViewById(R.id.btn_medicine_detail);
-                            final Button btn_delete_medicine = dialog.findViewById(R.id.btn_medicine__delete_detail);
-                            btn_delete_medicine.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    medicineApi.deleteDataMedicine(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_medicinedetail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -387,7 +306,7 @@ public class AllmenuFragment extends Fragment {
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
         Log.e("활동기록 position id????",boardResponseDto.getId()+"");
 
-        bowelApi.getDataBowel_2(boardResponseDto.getId()).enqueue(new Callback<Bowel_text>() {
+        bowelApi.getDataBowel_detail(boardResponseDto.getId()).enqueue(new Callback<Bowel_text>() {
             @Override
             public void onResponse(Call<Bowel_text> call, Response<Bowel_text> response) {
                 if (response.isSuccessful()) {
@@ -416,37 +335,6 @@ public class AllmenuFragment extends Fragment {
                             boweldetail_et.setText(getContent);
 
                             final Button btn_boweldetail = dialog.findViewById(R.id.btn_boweldetail);
-                            final Button btn_boweldelete = dialog.findViewById(R.id.btn_boweldetail_delete);
-                            btn_boweldelete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    bowelApi.deleteDataBowel(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_boweldetail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -465,7 +353,7 @@ public class AllmenuFragment extends Fragment {
         Wash_API washApi = Retrofit_client.createService(Wash_API.class,TokenUtils.getAccessToken("Access_Token"));
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
 
-        washApi.getDataWash_2(boardResponseDto.getId()).enqueue(new Callback<Wash_ResponseDTO>() {
+        washApi.getDataWash_detail(boardResponseDto.getId()).enqueue(new Callback<Wash_ResponseDTO>() {
             @Override
             public void onResponse(Call<Wash_ResponseDTO> call, Response<Wash_ResponseDTO> response) {
                 if (response.isSuccessful()) {
@@ -496,37 +384,6 @@ public class AllmenuFragment extends Fragment {
 
 
                             final Button btn_washdetail = dialog.findViewById(R.id.btn_wash_detail_allmenu);
-                            final Button btn_wash_delete = dialog.findViewById(R.id.btn_wash_detail_delete_allmenu);
-                            btn_wash_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    washApi.deleteDataWash(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_washdetail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -572,38 +429,7 @@ public class AllmenuFragment extends Fragment {
                             tv_sleepdetail_et.setText(getContent);
 
                             final Button btn_sleep_detail = dialog.findViewById(R.id.btn_sleep_detail);
-                            final Button btn_sleep_delete = dialog.findViewById(R.id.btn_sleep_delete_detail);
 
-                            btn_sleep_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    sleepApi.deleteDataSleep(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_sleep_detail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -622,7 +448,7 @@ public class AllmenuFragment extends Fragment {
         Clean_API cleanApi = Retrofit_client.createService(Clean_API.class,TokenUtils.getAccessToken("Access_Token"));
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
 
-        cleanApi.getDataClean_2(boardResponseDto.getId()).enqueue(new Callback<Clean_ResponseDTO>() {
+        cleanApi.getDataClean_detail(boardResponseDto.getId()).enqueue(new Callback<Clean_ResponseDTO>() {
             @Override
             public void onResponse(Call<Clean_ResponseDTO> call, Response<Clean_ResponseDTO> response) {
                 if (response.isSuccessful()) {
@@ -649,38 +475,7 @@ public class AllmenuFragment extends Fragment {
                             tv_cleandetail_et_allmenu.setText(getContent);
 
                             final Button btn_cleandetail = dialog.findViewById(R.id.btn_cleandtail);
-                            final Button btn_clean_delete = dialog.findViewById(R.id.btn_clean_delete_detail);
 
-                            btn_clean_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    cleanApi.deleteDataClean(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_cleandetail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -723,38 +518,7 @@ public class AllmenuFragment extends Fragment {
                             Glide.with(getContext()).load(getFilepath).into(iv_walk_detail);
 
                             final Button btn_walk_detail = dialog.findViewById(R.id.btn_walk_detail);
-                            final Button btn_walk_detail_delete = dialog.findViewById(R.id.btn_walk_detail_delete);
 
-                            btn_walk_detail_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    walkApi.deleteDataWalk(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_walk_detail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -773,7 +537,7 @@ public class AllmenuFragment extends Fragment {
         Meal_API mealApi = Retrofit_client.createService(Meal_API.class,TokenUtils.getAccessToken("Access_Token"));
         BoardResponseDto boardResponseDto = boardResponseDtoArrayList.get(position);
 
-        mealApi.getdatameal2(boardResponseDto.getId()).enqueue(new Callback<Meal_ResponseDTO>() {
+        mealApi.getDatameal_detail(boardResponseDto.getId()).enqueue(new Callback<Meal_ResponseDTO>() {
             @Override
             public void onResponse(Call<Meal_ResponseDTO> call, Response<Meal_ResponseDTO> response) {
                 if (response.isSuccessful()) {
@@ -799,38 +563,7 @@ public class AllmenuFragment extends Fragment {
                             tv_meal_detail.setText(getContent);
 
                             final Button btn_meal_detail = dialog.findViewById(R.id.btn_meal_detail);
-                            final Button btn_meal_delete = dialog.findViewById(R.id.btn_meal_detail_delete);
 
-                            btn_meal_delete.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                                    builder.setTitle("삭제하기")
-                                            .setMessage("삭제하시겠습니까?")
-                                            .setPositiveButton("삭제하기", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    mealApi.deleteData(boardResponseDto.getId()).enqueue(new Callback<Void>() {
-                                                        @Override
-                                                        public void onResponse(Call<Void> call, Response<Void> response) {
-                                                            if (response.isSuccessful()) {
-                                                                boardResponseDtoArrayList.remove(position);
-                                                                allmenu_adapter.notifyItemRemoved(position);
-                                                                allmenu_adapter.notifyDataSetChanged();
-                                                                return;
-                                                            }}
-                                                        @Override
-                                                        public void onFailure(Call<Void> call, Throwable t) {
-                                                            Toast.makeText(getContext(), "통신실패.", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                            })
-                                            .setNeutralButton("취소", null)
-                                            .show();
-                                    dialog.dismiss();
-                                }
-                            });
                             btn_meal_detail.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {

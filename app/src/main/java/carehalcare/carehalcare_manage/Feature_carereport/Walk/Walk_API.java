@@ -12,4 +12,9 @@ public interface Walk_API {
     Call<List<Walk_ResponseDTO>> getDataWalk(
             @Path("userId") String userId,
             @Path("puserId") String puserId);
+
+    @GET("meals/{id}")
+    Call<Walk_ResponseDTO> getdatawalk2(
+            @Path("id") Long id
+    );
 }

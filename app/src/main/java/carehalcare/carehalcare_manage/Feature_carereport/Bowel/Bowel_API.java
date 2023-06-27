@@ -13,7 +13,7 @@ public interface Bowel_API {
     @Headers("Content-Type: application/json")
 
     @GET("bowelmovements/{id}")
-    Call<List<Bowel_text>> getDataBowel_detail(@Query("id") int id);
+    Call<Bowel_text> getDataBowel_detail(@Query("id") Long id);
 
     @GET("bowelmovements/list/{userId}/{puserId}")
     Call<List<Bowel_text>> getDataBowel(

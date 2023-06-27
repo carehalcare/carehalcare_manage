@@ -15,7 +15,7 @@ public interface Meal_API {
             @Path("puserId") String puserId);
 
     @GET("meals/{id}")
-    Call<List<Meal_ResponseDTO>> getDatameal_detail(
+    Call<Meal_ResponseDTO> getDatameal_detail(
             @Path("id") Long id );
 
 }

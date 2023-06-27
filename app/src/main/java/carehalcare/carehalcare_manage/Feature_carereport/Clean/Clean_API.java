@@ -12,7 +12,7 @@ public interface Clean_API {
     @Headers("Content-Type: application/json")
 
     @GET("scleanliness/{id}")
-    Call<List<Clean_ResponseDTO>> getDataClean_detail(@Query("id") int id);
+    Call<Clean_ResponseDTO> getDataClean_detail(@Query("id") Long id);
 
 
     @GET("scleanliness/list/{userId}/{puserId}")
