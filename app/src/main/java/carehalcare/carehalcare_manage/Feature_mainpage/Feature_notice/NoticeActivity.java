@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ import java.util.List;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,11 +48,15 @@ public class NoticeActivity extends AppCompatActivity {
     private NoticeAdapter noticeadapter;
     private Retrofit retrofit;
     private NoticeApi noticeApi;
+    String userid,cuserid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+
+        userid = TokenUtils.getUser_Id("User_Id");
+        cuserid = TokenUtils.getUser_Id("CUser_Id");
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(API_URL.URL)
@@ -56,7 +64,8 @@ public class NoticeActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();
 
-        noticeApi = retrofit.create(NoticeApi.class);
+        //noticeApi = retrofit.create(NoticeApi.class);
+        noticeApi = Retrofit_client.createService(NoticeApi.class, TokenUtils.getAccessToken("Token_Access"));
 
         btn_home = (ImageButton) findViewById(R.id.btn_homenoti);
         btn_ok = (Button) findViewById(R.id.notice_insert);
@@ -247,7 +256,7 @@ public class NoticeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // NoticeApi를 사용하여 POST 요청
                 String content = et_notice.getText().toString();
-                Notice notice = new Notice(content, "puserid1");
+                Notice notice = new Notice(content, userid);
 
                 Call<Long> call = noticeApi.createNotice(notice);
                 call.enqueue(new Callback<Long>() {
@@ -260,6 +269,23 @@ public class NoticeActivity extends AppCompatActivity {
                             Log.d("post 연결 성공", "Status Code : " + response.code());
                             getNoticeList();
                             dialog.dismiss();
+//                            PushmsgAPI pushmsgAPI = Retrofit_client.createService(PushmsgAPI.class,TokenUtils.getAccessToken("Token_Access"));
+//                            pushmsgAPI.postMSG(cuserid, FirebaseMessaging.getInstance().getToken().getResult()).enqueue(new Callback<Object>() {
+//                                @Override
+//                                public void onResponse(Call<Object> call, Response<Object> response) {
+//                                    if (response.isSuccessful()){
+//                                        Log.e("msg 연결 성공", "Status Code : " + response.code());
+//                                        //Log.e("msg 연결 성공", "Status Code : " + response.body().toString());
+//                                    } else{
+//                                        Log.e("msg 연결 실패", "Status Code : " + response.code());
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<Object> call, Throwable t) {
+//                                    Log.e("통신오류","");
+//                                }
+//                            });
 
                         } else {
                             // POST 요청이 실패한 경우의 동작을 정의
@@ -282,7 +308,7 @@ public class NoticeActivity extends AppCompatActivity {
     //notice 가져오기
     private void getNoticeList() {
         notiviewlist.clear();
-        Call<List<Notice>> call = noticeApi.getNotice("puserid1");
+        Call<List<Notice>> call = noticeApi.getNotice(userid);
         call.enqueue(new Callback<List<Notice>>() {
             @Override
             public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {

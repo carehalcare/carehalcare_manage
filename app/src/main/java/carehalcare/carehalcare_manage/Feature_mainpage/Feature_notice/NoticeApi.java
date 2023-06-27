@@ -14,16 +14,16 @@ import retrofit2.http.Path;
 public interface NoticeApi {
     @Headers("Content-Type: application/json")
 
-    @POST("/notices")
+    @POST("notices")
     Call<Long> createNotice(@Body Notice notice);
 
-    @GET("/notices/list/{puid}")
+    @GET("notices/list/{puid}")
     Call<List<Notice>> getNotice(@Path("puid") String puid);
 
-    @DELETE("/notices/{id}")
+    @DELETE("notices/{id}")
     Call<List<Notice>> DelNotice(@Path("id") String id);
 
-    @PUT("/notices")
+    @PUT("notices")
     Call<Long> Change(@Body ChangeNotice changenotice);
 
 }

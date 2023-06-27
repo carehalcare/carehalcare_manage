@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +55,9 @@ public class PInfoAddActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();
 
-        pInfoApi = retrofit.create(PInfoApi.class);
+//        pInfoApi = retrofit.create(PInfoApi.class);
+        PInfoApi pInfoApi = Retrofit_client.createService(PInfoApi.class, TokenUtils.getAccessToken("Token_Access"));
+
 
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +76,7 @@ public class PInfoAddActivity extends AppCompatActivity {
                 String hospital = et_hospital.getText().toString();
                 String medicine = et_medicine.getText().toString();
                 String personal = et_personal.getText().toString();
-                String userId = "userid1";
+                String userId = TokenUtils.getUser_Id("User_Id");
                 String psex;
                 if (btn_man.isChecked()) {
                     psex = "M";

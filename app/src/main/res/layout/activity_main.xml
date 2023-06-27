@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:textSize="6pt"
-                        android:text="공지사항"
+                        android:text="전달사항"
                         android:textColor="@color/black" />
 
                 </LinearLayout>
