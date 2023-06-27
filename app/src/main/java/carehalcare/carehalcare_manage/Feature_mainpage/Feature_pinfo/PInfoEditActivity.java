@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -48,19 +50,21 @@ public class PInfoEditActivity extends AppCompatActivity {
         btn_woman = (RadioButton) findViewById(R.id.btn_woman);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL.url)
+                .baseUrl(API_URL.URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();
 
-        pInfoApi = retrofit.create(PInfoApi.class);
+//        pInfoApi = retrofit.create(PInfoApi.class);
+        PInfoApi pInfoApi = Retrofit_client.createService(PInfoApi.class, TokenUtils.getAccessToken("Token_Access"));
+
 
 
         String intent_pinfo = getIntent().getStringExtra("intent_pinfo");
         String[] lines = intent_pinfo.split("\n"); // 개행 문자('\n')를 기준으로 텍스트를 분리하여 배열로 저장
         Log.d("인텐트값 확인", "intent_pinfo: " + intent_pinfo);
 
-        String userId = "userid1";
+        String userId = TokenUtils.getUser_Id("User_Id");
 
         for (String line : lines) {
             if (line.contains(": ")) {

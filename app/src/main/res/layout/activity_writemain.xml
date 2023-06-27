@@ -55,6 +55,32 @@
                 android:layout_marginRight="15dp"
                 android:orientation="horizontal">
 
+                <!--전체-->
+                <FrameLayout
+                    android:layout_width="90dp"
+                    android:layout_height="110dp"
+                    android:layout_marginRight="15dp">
+
+                    <ImageButton
+                        android:onClick="onall"
+                        android:id="@+id/btn_all"
+                        android:contentDescription="하고 싶은 설명"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/button_state"
+                        android:src="@drawable/btn_allmenu"
+                        />
+                    <TextView
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal|bottom"
+                        android:text="전체보기"
+                        android:textStyle="bold">
+                    </TextView>
+
+                </FrameLayout>
+
                 <!--식사-->
                 <FrameLayout
                     android:layout_width="90dp"

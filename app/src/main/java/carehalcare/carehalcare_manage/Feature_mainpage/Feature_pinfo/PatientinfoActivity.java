@@ -15,6 +15,8 @@ import java.sql.Struct;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,13 +76,15 @@ public class PatientinfoActivity extends AppCompatActivity {
         super.onResume();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL.url)
+                .baseUrl(API_URL.URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create()) //파싱등록
                 .build();
 
-        PInfoApi infoApi = retrofit.create(PInfoApi.class);
-        call = infoApi.getDataInfo("userid1");
+        //PInfoApi infoApi = retrofit.create(PInfoApi.class);
+        PInfoApi infoApi = Retrofit_client.createService(PInfoApi.class, TokenUtils.getAccessToken("Token_Access"));
+
+        call = infoApi.getDataInfo(TokenUtils.getUser_Id("User_Id"));
         call.enqueue(new Callback<PatientInfo>() {
             @Override
             public void onResponse(Call<PatientInfo> call, Response<PatientInfo> response) {

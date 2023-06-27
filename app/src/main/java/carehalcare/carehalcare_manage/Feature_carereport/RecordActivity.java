@@ -31,6 +31,7 @@ import java.util.List;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_text;
+import carehalcare.carehalcare_manage.Feature_carereport.Allmenu.AllmenuFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_text;
@@ -91,7 +92,7 @@ public class RecordActivity extends AppCompatActivity {
             .create();
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.url)
+            .baseUrl(API_URL.URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
@@ -855,6 +856,19 @@ public class RecordActivity extends AppCompatActivity {
 
         mealFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, mealFragment);
+        transaction.commit();
+
+    }
+    public void onall(View view) {
+        deleteview();
+        AllmenuFragment allmenuFragment = new AllmenuFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
+
+        allmenuFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, allmenuFragment);
         transaction.commit();
 
     }

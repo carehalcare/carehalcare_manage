@@ -25,11 +25,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_centerInParent="true"
-            android:text="공지사항"
-            android:textSize="10pt"
-            android:textColor="@color/black" />
+            android:gravity="center"
+            android:text="전달사항"
+            android:textColor="@color/black"
+            android:textSize="10pt" />
 
     </RelativeLayout>
 
@@ -58,9 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:textSize="8pt"
-            android:text="공지사항 작성"
-            android:textColor="@color/black" />
+            android:text="전달사항 작성"
+            android:textColor="@color/black"
+            android:textSize="8pt" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/notice_list"
-                    android:text="공지사항 등록하기"/>
+                    android:text="전달사항 등록하기"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
