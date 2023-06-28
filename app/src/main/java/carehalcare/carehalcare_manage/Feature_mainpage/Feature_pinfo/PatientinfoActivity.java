@@ -28,7 +28,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class PatientinfoActivity extends AppCompatActivity {
     private ImageButton btn_home;
     private Button btn_edit, btn_add;
-    private TextView tv_info;
+    private TextView tv_info, tv_name;
     Call <PatientInfo> call;
 
     @Override
@@ -40,6 +40,7 @@ public class PatientinfoActivity extends AppCompatActivity {
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_edit = (Button) findViewById(R.id.btn_edit);
         tv_info = (TextView) findViewById(R.id.tv_info);
+        tv_name = (TextView) findViewById(R.id.tv_name);
 
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +57,9 @@ public class PatientinfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(PatientinfoActivity.this, PInfoEditActivity.class);
 
                 String intent_pinfo = tv_info.getText().toString();
+                String intent_pname = tv_name.getText().toString();
                 intent.putExtra("intent_pinfo", intent_pinfo);
-                //Log.d("인텐트값1", intent_pinfo);
+                intent.putExtra("intent_pname", intent_pname);
 
                 startActivity(intent);
             }

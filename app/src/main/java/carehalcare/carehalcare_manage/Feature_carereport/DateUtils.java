@@ -25,4 +25,22 @@ public class DateUtils {
         return newDate;
     }
 
+    public static String formatDateTime(String dateStr) {
+
+        if (dateStr == null) {
+            return "";
+        }
+
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.KOREA);
+        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+        String newDate = "";
+        try {
+            Date date = originalFormat.parse(dateStr);
+            newDate = newFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return newDate;
+    }
+
 }

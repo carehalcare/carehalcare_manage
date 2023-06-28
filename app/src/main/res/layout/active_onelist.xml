@@ -7,8 +7,10 @@
     android:layout_height="wrap_content"
     tools:context=".Feature_carereport.RecordActivity"
     android:orientation="horizontal"
+    android:background="@drawable/radius_small"
+    android:layout_margin="10dp"
     android:elevation="4dp"
-    android:padding="4dp"  >
+    android:padding="4dp" >
 
     <TextView
         android:id="@+id/tv_todayActive"
@@ -29,6 +31,7 @@
         android:layout_margin="5dp"
         android:padding="5dp"
         android:textAlignment="center"
+        android:maxLines="1"
         android:text="result"
         android:textColor="@color/black"
 

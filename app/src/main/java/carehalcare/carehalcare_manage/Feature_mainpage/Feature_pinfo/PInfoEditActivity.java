@@ -61,8 +61,25 @@ public class PInfoEditActivity extends AppCompatActivity {
 
 
         String intent_pinfo = getIntent().getStringExtra("intent_pinfo");
+        String intent_pname = getIntent().getStringExtra("intent_pname");
         String[] lines = intent_pinfo.split("\n"); // 개행 문자('\n')를 기준으로 텍스트를 분리하여 배열로 저장
+        String[] info = intent_pname.split(" ");
         Log.d("인텐트값 확인", "intent_pinfo: " + intent_pinfo);
+        Log.d("인텐트값 확인", "intent_pinfo: " + intent_pname);
+
+        String beforepname = info[0];
+        et_id.setText(beforepname);
+
+        if (info[1].equals("(남)")) {
+            btn_man.setChecked(true);
+        } else if (info[1].equals("(여)")) {
+            btn_woman.setChecked(true);
+        } else {
+            // 라디오 버튼이 선택되지 않은 경우에 대한 처리
+            btn_woman.setChecked(false);
+            btn_man.setChecked(false);
+        }
+
 
         String userId = TokenUtils.getUser_Id("User_Id");
 
@@ -74,10 +91,7 @@ public class PInfoEditActivity extends AppCompatActivity {
                     String value = parts[1].trim(); // ':' 뒤의 값을 추출하고 공백을 제거하여 할당
 
                     // 변수 값에 따라 처리
-                    if (key.equals("이름")) {
-                        String beforepname = value;
-                        et_id.setText(beforepname);
-                    } else if (key.equals("생년월일")) {
+                    if (key.equals("생년월일")) {
                         String beforepbirthDate = value.replaceAll("\\D", "");
                         et_date.setText(beforepbirthDate);
                     } else if (key.equals("질환")) {
@@ -92,16 +106,6 @@ public class PInfoEditActivity extends AppCompatActivity {
                     } else if (key.equals("성격")) {
                         String beforepersonal = value;
                         et_personal.setText(beforepersonal);
-                    } else if (key.equals("성별")) {
-                        if (value.equals("남성")) {
-                            btn_man.setChecked(true);
-                        } else if (value.equals("여성")) {
-                            btn_woman.setChecked(true);
-                        } else {
-                            // 라디오 버튼이 선택되지 않은 경우에 대한 처리
-                            btn_woman.setChecked(false);
-                            btn_man.setChecked(false);
-                        }
                     }
                     Log.d("Value", "Key: " + key + ", Value: " + value);
                 }

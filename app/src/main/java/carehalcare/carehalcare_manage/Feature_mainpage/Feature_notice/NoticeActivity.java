@@ -1,5 +1,7 @@
 package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
+import static carehalcare.carehalcare_manage.Feature_carereport.DateUtils.formatDateTime;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -20,7 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.messaging.FirebaseMessaging;
+//import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,7 +115,9 @@ public class NoticeActivity extends AppCompatActivity {
                 dialog.show();
 
                 TextView notidetail = dialog.findViewById(R.id.tv_notidetail);
+                TextView detaildate = dialog.findViewById(R.id.tv_detaildate);
                 notidetail.setText(notice.getContent());
+                detaildate.setText(formatDateTime(notice.getModifiedDate()));
 
                 Button btn_out = dialog.findViewById(R.id.btn_out);
                 Button btn_del = dialog.findViewById(R.id.btn_del);
