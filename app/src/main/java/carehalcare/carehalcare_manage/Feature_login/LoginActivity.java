@@ -93,18 +93,24 @@ public class LoginActivity extends AppCompatActivity {
                                 TokenUtils.setAccessToken(response.body().getAccessToken());
                                 TokenUtils.setRefreshToken(response.body().getRefreshToken());
                                 TokenUtils.setUser_Id(userEmail);
-                                Toast.makeText(getApplicationContext(), String.format("보호자님 환영합니다."), Toast.LENGTH_SHORT).show();
                                 findCaregiverApi.getData(TokenUtils.getUser_Id("User_Id")).enqueue(new Callback<UserDTO>() {
                                     @Override
                                     public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                                         if (response.isSuccessful()){
                                             if (response.body()!=null){
                                                 cuserid = response.body().getCuserId();
+                                                int code = response.body().getCode();
+                                                if (code != 1){
+                                                    Toast.makeText(getApplicationContext(), String.format("간병인용 앱 ID입니다.\n간병인용앱에서" +
+                                                            "로그인 해주세요."), Toast.LENGTH_SHORT).show();
+                                                    return;
+                                                }
                                                 if (cuserid==null){
                                                     Log.e("null이자나!!!!!","ㅇ;");
                                                     Intent intent = new Intent(LoginActivity.this, FindCaregiverActivity.class);
                                                     intent.putExtra("cuserid",cuserid);
                                                     startActivity(intent);
+                                                    Toast.makeText(getApplicationContext(), String.format("보호자님 환영합니다."), Toast.LENGTH_SHORT).show();
                                                     finish();
                                                     return;
                                                 }
