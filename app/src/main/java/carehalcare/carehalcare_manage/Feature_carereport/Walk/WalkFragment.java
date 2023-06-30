@@ -33,6 +33,8 @@ import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_adapter;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,8 +69,8 @@ public class WalkFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listview_layout,container,false);
 
-        userid = this.getArguments().getString("userid1");
-        puserid = this.getArguments().getString("puserid1");
+        userid = this.getArguments().getString("userid");
+        puserid = this.getArguments().getString("puserid");
 
 
         RecyclerView mrecyclerView= (RecyclerView) view.findViewById(R.id.recyclerview_list);
@@ -89,9 +91,11 @@ public class WalkFragment extends Fragment {
             public void onItemClick(View v, int position) {
 
                 Walk_ResponseDTO detail_walk_text = walkArrayList.get(position);
-                Walk_API walk_service = retrofit.create(Walk_API.class);
+//                Walk_API walk_service = retrofit.create(Walk_API.class);
+                Walk_API walk_service = Retrofit_client.createService(Walk_API.class, TokenUtils.getAccessToken("Access_Token"));
 
-                walk_service.getDataWalk("userid1", "puserid1").enqueue(new Callback<List<Walk_ResponseDTO>>() {
+
+                walk_service.getDataWalk(userid, puserid).enqueue(new Callback<List<Walk_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Walk_ResponseDTO>> call, Response<List<Walk_ResponseDTO>> response) {
                         if (response.body() != null) {
@@ -145,8 +149,10 @@ public class WalkFragment extends Fragment {
     }
 
     public void getmeallsit(){
-        Walk_API walk_service = retrofit.create(Walk_API.class);
-        walk_service.getDataWalk("userid1", "puserid1").enqueue(new Callback<List<Walk_ResponseDTO>>() {
+//        Walk_API walk_service = retrofit.create(Walk_API.class);
+        Walk_API walk_service = Retrofit_client.createService(Walk_API.class, TokenUtils.getAccessToken("Access_Token"));
+
+        walk_service.getDataWalk(userid, puserid).enqueue(new Callback<List<Walk_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Walk_ResponseDTO>> call, Response<List<Walk_ResponseDTO>> response) {
                 if (response.body() != null) {

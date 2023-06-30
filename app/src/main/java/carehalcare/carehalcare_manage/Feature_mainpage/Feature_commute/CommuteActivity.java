@@ -35,7 +35,10 @@ import java.util.Date;
 import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
+import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,18 +48,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CommuteActivity extends AppCompatActivity {
     public MaterialCalendarView calendarView;
     public TextView diaryTextView,tv_hello,tv_bye;
-    Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
-
+    String userid,puserid;
+    Button btn_home;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_commute);
+
+        btn_home = (Button)findViewById(R.id.btn_home);
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_home = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent_home);
+                finish();
+            }
+        });
         calendarView=findViewById(R.id.calendarView);
         diaryTextView=findViewById(R.id.tv_date);
         tv_hello=findViewById(R.id.tv_hello);
@@ -66,7 +73,12 @@ public class CommuteActivity extends AppCompatActivity {
         diaryTextView.setText("날짜를 선택하세요");
         diaryTextView.setTextSize(30);
         diaryTextView.setVisibility(View.VISIBLE);
-        CommuteAPI commuteAPI = retrofit.create(CommuteAPI.class);
+
+        userid = TokenUtils.getCUser_Id("CUser_Id");
+        puserid = TokenUtils.getUser_Id("User_Id");
+
+        CommuteAPI commuteAPI = Retrofit_client.createService(CommuteAPI.class, TokenUtils.getAccessToken("Access_Token"));
+
         for (int iday = 1; iday < 31;iday++){
             long now = System.currentTimeMillis();
             Date mDate = new Date(now);
@@ -78,7 +90,7 @@ public class CommuteActivity extends AppCompatActivity {
             int days = iday;
             String dtext = years+"-"+months+"-"+iday;
 
-            commuteAPI.getDataCommute(dtext,"userid1","puserid1").enqueue(new Callback<List<CommuteResponseDto>>() {
+            commuteAPI.getDataCommute(dtext,userid,puserid).enqueue(new Callback<List<CommuteResponseDto>>() {
                 @Override
                 public void onResponse(Call<List<CommuteResponseDto>> call, Response<List<CommuteResponseDto>> response) {
                     if(response.isSuccessful()){
@@ -109,7 +121,7 @@ public class CommuteActivity extends AppCompatActivity {
                     int days = iday;
                     String dtext = years+"-"+months+"-"+iday;
 
-                    commuteAPI.getDataCommute(dtext,"userid1","puserid1").enqueue(new Callback<List<CommuteResponseDto>>() {
+                    commuteAPI.getDataCommute(dtext,userid,puserid).enqueue(new Callback<List<CommuteResponseDto>>() {
                         @Override
                         public void onResponse(Call<List<CommuteResponseDto>> call, Response<List<CommuteResponseDto>> response) {
                             if(response.isSuccessful()){
@@ -160,11 +172,12 @@ public class CommuteActivity extends AppCompatActivity {
 
                 String smonth;
                 if(month < 10){int mmont = month; smonth = "0"+mmont;} else{smonth = ""+month;}
-                String dtext = year+"-"+smonth+"-"+"0"+dayOfMonth;
+                String dtext = year+"-"+month+"-"+dayOfMonth;
+                Log.e("dtext는",dtext);
+                Log.e("달력날짜 변동",years+"-"+months+"-"+days);
 
 
-                CommuteAPI commuteAPI = retrofit.create(CommuteAPI.class);
-                commuteAPI.getDataCommute(dtext,"userid1","puserid1").enqueue(new Callback<List<CommuteResponseDto>>() {
+                commuteAPI.getDataCommute(dtext,userid,puserid).enqueue(new Callback<List<CommuteResponseDto>>() {
                     @Override
                     public void onResponse(Call<List<CommuteResponseDto>> call, Response<List<CommuteResponseDto>> response) {
                         if(response.isSuccessful()){
@@ -179,10 +192,12 @@ public class CommuteActivity extends AppCompatActivity {
 //                                        check_Btn.setText("기록할 수 없습니다");
 //                                        check_Btn.setBackgroundResource(R.drawable.nfc_enable_design);
                                     }
-                                    Log.e("출퇴근여부 : " + i, response.body().get(i).getCategory()+" "+response.body().get(i).getDate() +
+                                    Log.e("출퇴근 가져오기 성공 : " + i, response.body().get(i).getCategory()+" "+response.body().get(i).getDate() +
                                             " "+response.body().get(i).getTime());
                                 }
                             }
+                        } else{
+                            Log.e("출퇴근실패 : " ,response.code()+""+response.body());
                         }
                     }
                     @Override

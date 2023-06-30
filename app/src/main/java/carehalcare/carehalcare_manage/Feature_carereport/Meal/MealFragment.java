@@ -27,9 +27,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_API;
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,8 +67,8 @@ public class MealFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listview_layout,container,false);
 
-        userid = this.getArguments().getString("userid1");
-        puserid = this.getArguments().getString("puserid1");
+        userid = this.getArguments().getString("userid");
+        puserid = this.getArguments().getString("puserid");
 
 
         RecyclerView mrecyclerView= (RecyclerView) view.findViewById(R.id.recyclerview_list);
@@ -86,9 +89,11 @@ public class MealFragment extends Fragment {
             public void onItemClick(View v, int position) {
 
                 Meal_ResponseDTO detail_meal_text = mealArrayList.get(position);
-                Meal_API meal_service = retrofit.create(Meal_API.class);
+//                Meal_API meal_service = retrofit.create(Meal_API.class);
+                Meal_API meal_service = Retrofit_client.createService(Meal_API.class, TokenUtils.getAccessToken("Access_Token"));
 
-                meal_service.getDatameal("userid1", "puserid1").enqueue(new Callback<List<Meal_ResponseDTO>>() {
+
+                meal_service.getDatameal(userid, puserid).enqueue(new Callback<List<Meal_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
                         if (response.body() != null) {
@@ -147,8 +152,10 @@ public class MealFragment extends Fragment {
     }
 
     public void getmeallsit(){
-        Meal_API meal_service = retrofit.create(Meal_API.class);
-        meal_service.getDatameal("userid1", "puserid1").enqueue(new Callback<List<Meal_ResponseDTO>>() {
+//        Meal_API meal_service = retrofit.create(Meal_API.class);
+        Meal_API meal_service = Retrofit_client.createService(Meal_API.class, TokenUtils.getAccessToken("Access_Token"));
+
+        meal_service.getDatameal(userid, puserid).enqueue(new Callback<List<Meal_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
                 if (response.body() != null) {
@@ -167,7 +174,7 @@ public class MealFragment extends Fragment {
                             filePath = images.get(0).getFilePath();
                         }
                         Meal_ResponseDTO dict_0 = new Meal_ResponseDTO(datas.get(i).getContent(),
-                                times, datas.get(i).getId(), images, "puserid1", "userid1");
+                                times, datas.get(i).getId(), images, puserid, userid);
 
                         mealArrayList.add(dict_0);
                         mealAdapter.notifyItemInserted(0);

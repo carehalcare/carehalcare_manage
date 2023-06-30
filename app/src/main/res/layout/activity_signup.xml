@@ -125,6 +125,7 @@
             android:ems="10"
             android:hint="0000/00/00"
             android:inputType="date"
+            android:maxLength="8"
             android:background="@drawable/et_round"/>
 
         <TextView
@@ -143,6 +144,7 @@
             android:ems="10"
             android:hint="전화번호를 입력하세요"
             android:inputType="phone"
+            android:maxLength="11"
             android:background="@drawable/et_round" />
 
         <TextView

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.session.MediaSession;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,7 +56,10 @@ import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Wash.Wash_adapter;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
+import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
+import carehalcare.carehalcare_manage.Retrofit_client;
+import carehalcare.carehalcare_manage.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,7 +69,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RecordActivity extends AppCompatActivity {
     private FrameLayout container;
 
-    LoadingDialog loadingDialog;
     Long ids;
     private String userid , puserid;
 
@@ -86,16 +89,7 @@ public class RecordActivity extends AppCompatActivity {
     private ArrayList<Medicine_text> medicineArrayList;
     private ArrayList<Meal_ResponseDTO> mealArrayList;
     private ArrayList<Walk_ResponseDTO> walkArrayList;
-
-    Gson gson = new GsonBuilder()
-            .setLenient()
-            .create();
-
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(API_URL.URL)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
-
+    Button btn_home;
     public void deleteview(){
         container.removeAllViews();
     }
@@ -107,20 +101,27 @@ public class RecordActivity extends AppCompatActivity {
         container = (FrameLayout) findViewById(R.id.container_menu);
 
         Intent intent = getIntent();
-        userid = intent.getStringExtra("userid1");
-        puserid = intent.getStringExtra("puserid1");
+        userid = TokenUtils.getCUser_Id("CUser_Id");
+        puserid = TokenUtils.getUser_Id("User_Id");
 
-        loadingDialog = new LoadingDialog(this);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        loadingDialog.setCancelable(false);
+        btn_home = (Button)findViewById(R.id.btn_home);
+        btn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent_home = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent_home);
+                finish();
+            }
+        });
+
     }
 
 
     //투약정보
     public void onMedicine(View view) {
         deleteview();
-        loadingDialog.show();
-        Medicine_API medicineApi = retrofit.create(Medicine_API.class);
+//        Medicine_API medicineApi = retrofit.create(Medicine_API.class);
+        Medicine_API medicineApi = Retrofit_client.createService(Medicine_API.class, TokenUtils.getAccessToken("Access_Token"));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout,container,true);
@@ -135,7 +136,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        medicineApi.getDatamedicine("userid1","puserid1").enqueue(new Callback<List<Medicine_text>>() {
+        medicineApi.getDatamedicine(userid,puserid).enqueue(new Callback<List<Medicine_text>>() {
             @Override
             public void onResponse(Call<List<Medicine_text>> call, Response<List<Medicine_text>> response) {
                 if (response.isSuccessful()) {
@@ -166,12 +167,11 @@ public class RecordActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    loadingDialog.dismiss();}
+                    }
             }
             @Override
             public void onFailure(Call<List<Medicine_text>> call, Throwable t) {
                 Log.e("medi get 실패", t.getMessage());
-                loadingDialog.dismiss();
             }
         });
 
@@ -218,8 +218,8 @@ public class RecordActivity extends AppCompatActivity {
     //Sclean
     public void onClean(View view) {
         deleteview();
-        loadingDialog.show();
-        Clean_API cleanApi = retrofit.create(Clean_API.class);
+//        Clean_API cleanApi = retrofit.create(Clean_API.class);
+        Clean_API cleanApi = Retrofit_client.createService(Clean_API.class, TokenUtils.getAccessToken("Access_Token"));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout,container,true);
@@ -235,7 +235,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        cleanApi.getDataClean("userid1","puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
+        cleanApi.getDataClean(userid,puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                 if (response.isSuccessful()) {
@@ -257,13 +257,12 @@ public class RecordActivity extends AppCompatActivity {
                             }
                             Log.e("getSleep success", "======================================");
                         }
-                    }loadingDialog.dismiss();}
+                    }}
             }
 
             @Override
             public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
                 Log.e("getSleep fail", "======================================");
-                loadingDialog.dismiss();
             }
         });
 
@@ -276,7 +275,7 @@ public class RecordActivity extends AppCompatActivity {
                 String sheet_cloth_ventilation = detail_clean_text.getCleanliness();
                 String content_detail = detail_clean_text.getContent();
 
-                cleanApi.getDataClean("userid1", "puserid1").enqueue(new Callback<List<Clean_ResponseDTO>>() {
+                cleanApi.getDataClean(userid, puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                         if (response.isSuccessful()) {
@@ -354,8 +353,9 @@ public class RecordActivity extends AppCompatActivity {
     //Pclean
     public void onWash(View view) {
         deleteview();
-        loadingDialog.show();
-        Wash_API washApi = retrofit.create(Wash_API.class);
+//        Wash_API washApi = retrofit.create(Wash_API.class);
+        Wash_API washApi = Retrofit_client.createService(Wash_API.class, TokenUtils.getAccessToken("Access_Token"));
+
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout, container,true);
@@ -372,7 +372,7 @@ public class RecordActivity extends AppCompatActivity {
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        washApi.getDataWash("userid1","puserid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
+        washApi.getDataWash(userid,puserid).enqueue(new Callback<List<Wash_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Wash_ResponseDTO>> call, Response<List<Wash_ResponseDTO>> response) {
                 if(response.isSuccessful()){
@@ -404,11 +404,10 @@ public class RecordActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    loadingDialog.dismiss();}
+                }
             }
             @Override
             public void onFailure(Call<List<Wash_ResponseDTO>> call, Throwable t) {
-                loadingDialog.dismiss();
             }
         });
 
@@ -421,7 +420,7 @@ public class RecordActivity extends AppCompatActivity {
                 String part = detail_wash_text.getPart();
                 String content_detail = detail_wash_text.getContent();
 
-                washApi.getDataWash("userid1","puserid1").enqueue(new Callback<List<Wash_ResponseDTO>>() {
+                washApi.getDataWash(userid,puserid).enqueue(new Callback<List<Wash_ResponseDTO>>() {
                     @Override
                     public void onResponse(Call<List<Wash_ResponseDTO>> call, Response<List<Wash_ResponseDTO>> response) {
                         if(response.isSuccessful()){
@@ -524,9 +523,9 @@ public class RecordActivity extends AppCompatActivity {
     //Bowel
     public void onToilet(View view) {
         deleteview();
-        loadingDialog.show();
 
-        Bowel_API bowelApi = retrofit.create(Bowel_API.class);
+//        Bowel_API bowelApi = retrofit.create(Bowel_API.class);
+        Bowel_API bowelApi = Retrofit_client.createService(Bowel_API.class, TokenUtils.getAccessToken("Access_Token"));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout,container,true);
@@ -542,7 +541,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        bowelApi.getDataBowel("userid1","puserid1").enqueue(new Callback<List<Bowel_text>>() {
+        bowelApi.getDataBowel(userid,puserid).enqueue(new Callback<List<Bowel_text>>() {
             @Override
             public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
                 if (response.isSuccessful()) {
@@ -562,12 +561,11 @@ public class RecordActivity extends AppCompatActivity {
                             }
                             Log.e("getSleep success", "======================================");
                         }
-                    }loadingDialog.dismiss();}
+                    }}
             }
             @Override
             public void onFailure(Call<List<Bowel_text>> call, Throwable t) {
                 Log.e("getSleep fail", "======================================");
-                loadingDialog.dismiss();
             }
         });
 
@@ -576,7 +574,7 @@ public class RecordActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Bowel_text detail_bowel_text = bowelArrayList.get(position);
 
-                bowelApi.getDataBowel("userid1","puserid1").enqueue(new Callback<List<Bowel_text>>() {
+                bowelApi.getDataBowel(userid,puserid).enqueue(new Callback<List<Bowel_text>>() {
                     @Override
                     public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
                         if (response.isSuccessful()) {
@@ -630,8 +628,8 @@ public class RecordActivity extends AppCompatActivity {
     //Active
     public void onActive(View view) {
         deleteview();
-        loadingDialog.show();
-        Active_API activeApi = retrofit.create(Active_API.class);
+//        Active_API activeApi = retrofit.create(Active_API.class);
+        Active_API activeApi = Retrofit_client.createService(Active_API.class, TokenUtils.getAccessToken("Access_Token"));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout,container,true);
@@ -651,7 +649,7 @@ public class RecordActivity extends AppCompatActivity {
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        activeApi.getDataActive("userid1","puserid1").enqueue(new Callback<List<Active_text>>() {
+        activeApi.getDataActive(userid,puserid).enqueue(new Callback<List<Active_text>>() {
             @Override
             public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
                 if (response.isSuccessful()) {
@@ -671,11 +669,10 @@ public class RecordActivity extends AppCompatActivity {
                             Log.e("getActive success", "======================================");
                         }
                     }
-                    loadingDialog.dismiss();}
+               }
             }
             @Override
             public void onFailure(Call<List<Active_text>> call, Throwable t) {
-                loadingDialog.dismiss();
             }
         });
 
@@ -683,7 +680,7 @@ public class RecordActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Active_text detail_active_text = activeArrayList.get(position);
-                activeApi.getDataActive("userid1","puserid1").enqueue(new Callback<List<Active_text>>() {
+                activeApi.getDataActive(userid,puserid).enqueue(new Callback<List<Active_text>>() {
                     @Override
                     public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
                         if (response.isSuccessful()) {
@@ -732,9 +729,9 @@ public class RecordActivity extends AppCompatActivity {
     //Sleep
     public void onSleep(View view) {
         deleteview();
-        loadingDialog.show();
 
-        Sleep_API sleepApi = retrofit.create(Sleep_API.class);
+//        Sleep_API sleepApi = retrofit.create(Sleep_API.class);
+        Sleep_API sleepApi = Retrofit_client.createService(Sleep_API.class, TokenUtils.getAccessToken("Access_Token"));
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.listview_layout,container,true);
@@ -750,7 +747,7 @@ public class RecordActivity extends AppCompatActivity {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 mLinearLayoutManager.getOrientation());
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-        sleepApi.getDataSleep("userid1","puserid1").enqueue(new Callback<List<Sleep_text>>() {
+        sleepApi.getDataSleep(userid,puserid).enqueue(new Callback<List<Sleep_text>>() {
             @Override
             public void onResponse(Call<List<Sleep_text>> call, Response<List<Sleep_text>> response) {
                 if (response.isSuccessful()) {
@@ -770,12 +767,12 @@ public class RecordActivity extends AppCompatActivity {
                             Log.e("getSleep success", "======================================");
                         }
                     }
-                    loadingDialog.dismiss();}
+                 }
             }
             @Override
             public void onFailure(Call<List<Sleep_text>> call, Throwable t) {
                 Log.e("getSleep fail", "======================================");
-                loadingDialog.dismiss();
+
             }
 
 
@@ -787,7 +784,7 @@ public class RecordActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 Sleep_text detail_sleep_text = sleepArrayList.get(position);
 
-                sleepApi.getDataSleep("userid1","puserid1").enqueue(new Callback<List<Sleep_text>>() {
+                sleepApi.getDataSleep(userid,puserid).enqueue(new Callback<List<Sleep_text>>() {
                     @Override
                     public void onResponse(Call<List<Sleep_text>> call, Response<List<Sleep_text>> response) {
                         if (response.isSuccessful()) {

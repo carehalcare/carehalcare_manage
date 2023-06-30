@@ -12,7 +12,7 @@ public interface Wash_API {
     @Headers("Content-Type: application/json")
 
     @GET("pcleanliness/{id}")
-    Call<Wash_ResponseDTO> getDataWash_detail(@Query("id") Long id);
+    Call<Wash_ResponseDTO> getDataWash_detail(@Path("id") Long id);
 
     @GET("pcleanliness/list/{userId}/{puserId}")
     Call<List<Wash_ResponseDTO>> getDataWash(

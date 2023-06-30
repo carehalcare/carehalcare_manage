@@ -1,40 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    tools:context=".Feature_carereport.RecordActivity"
-    android:orientation="horizontal"
-    android:elevation="4dp"
-    android:padding="4dp"
+    android:background="@drawable/item_border"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     >
 
+
+    <ImageView
+        android:id="@+id/Img"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/medicine" />
     <TextView
         android:id="@+id/tv_todayMedicine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="#aadbff"
-        android:textAlignment="center"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="약 복용"
+        android:layout_marginStart="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        app:layout_constraintStart_toEndOf="@+id/Img"
+        app:layout_constraintTop_toTopOf="@+id/Img"
+        tools:text="약"/>
 
     <TextView
         android:id="@+id/tv_todayMedicineResult"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_gravity="center"
-        android:padding="5dp"
-        android:text="result"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:layout_marginStart="5dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/Img"
+        app:layout_constraintStart_toStartOf="@+id/tv_todayMedicine"
+        tools:text="기록확인하기" />
 
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

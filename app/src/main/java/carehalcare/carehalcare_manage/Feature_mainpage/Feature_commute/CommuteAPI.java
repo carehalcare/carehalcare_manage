@@ -16,7 +16,7 @@ public interface CommuteAPI {
             @Body CommuteSaveRequestDto commuteSaveRequestDto
     );
 
-    @GET("/commutes/{date}/{uid}/{pid}")
+    @GET("commutes/{date}/{uid}/{pid}")
     Call<List<CommuteResponseDto>>getDataCommute(
             @Path("date") String date,
             @Path("uid") String userId,
