@@ -27,6 +27,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_findcid.FindCaregiverActivity;
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_pinfo.PInfoApi;
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_pinfo.PatientInfo;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import carehalcare.carehalcare_manage.Retrofit_client;
@@ -40,7 +43,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 public class NoticeActivity extends AppCompatActivity {
-
+    private AlertDialog dialog;
     private ImageButton btn_home;
     private Button btn_ok;
     private RecyclerView notiview;
@@ -57,18 +60,44 @@ public class NoticeActivity extends AppCompatActivity {
 
         userid = TokenUtils.getUser_Id("User_Id");
         cuserid = TokenUtils.getUser_Id("CUser_Id");
+        btn_ok = (Button) findViewById(R.id.notice_insert);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl(API_URL.URL)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create()) //파싱등록
-                .build();
+        PInfoApi pInfoApi = Retrofit_client.createService(PInfoApi.class,TokenUtils.getAccessToken("Access_Token"));
+        pInfoApi.getDataInfo(userid).enqueue(new Callback<PatientInfo>() {
+            @Override
+            public void onResponse(Call<PatientInfo> call, Response<PatientInfo> response) {
+                if (response.isSuccessful()){
+                    if (response.body()!=null){
+                        Log.e("환자정보는", response.body().getPname());
+                    }
+                    else{
+                        Log.e("else 환자정보는", response.body().getPname());
+                        Log.e("통신성공노 환자정보는", "null?");
+                        AlertDialog.Builder builder = new AlertDialog.Builder(NoticeActivity.this);
+                        dialog = builder.setMessage("환자정보를 먼저 등록해주세요 입력하세요.").setPositiveButton("확인", null).create();
+                        dialog.show();
+                        btn_ok.setEnabled(false);
+                    }
+                } else{
+                    Log.e("통신성공노 환자정보는", "null?");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NoticeActivity.this);
+                    dialog = builder.setMessage("환자정보를 먼저 등록해주세요.").setPositiveButton("확인", null).create();
+                    dialog.show();
+                    btn_ok.setEnabled(false);
 
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PatientInfo> call, Throwable t) {
+                Log.e("통신오류",t.toString());
+
+            }
+        });
         //noticeApi = retrofit.create(NoticeApi.class);
         noticeApi = Retrofit_client.createService(NoticeApi.class, TokenUtils.getAccessToken("Token_Access"));
 
         btn_home = (ImageButton) findViewById(R.id.btn_homenoti);
-        btn_ok = (Button) findViewById(R.id.notice_insert);
         notiview = (RecyclerView) findViewById(R.id.notice_list);
 
 
@@ -269,23 +298,6 @@ public class NoticeActivity extends AppCompatActivity {
                             Log.d("post 연결 성공", "Status Code : " + response.code());
                             getNoticeList();
                             dialog.dismiss();
-//                            PushmsgAPI pushmsgAPI = Retrofit_client.createService(PushmsgAPI.class,TokenUtils.getAccessToken("Token_Access"));
-//                            pushmsgAPI.postMSG(cuserid, FirebaseMessaging.getInstance().getToken().getResult()).enqueue(new Callback<Object>() {
-//                                @Override
-//                                public void onResponse(Call<Object> call, Response<Object> response) {
-//                                    if (response.isSuccessful()){
-//                                        Log.e("msg 연결 성공", "Status Code : " + response.code());
-//                                        //Log.e("msg 연결 성공", "Status Code : " + response.body().toString());
-//                                    } else{
-//                                        Log.e("msg 연결 실패", "Status Code : " + response.code());
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<Object> call, Throwable t) {
-//                                    Log.e("통신오류","");
-//                                }
-//                            });
 
                         } else {
                             // POST 요청이 실패한 경우의 동작을 정의

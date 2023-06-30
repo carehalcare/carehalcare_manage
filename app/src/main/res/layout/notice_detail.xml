@@ -17,11 +17,8 @@
                 android:id="@+id/tv_notidetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:textSize="8pt"
-                android:layout_gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/black" />
 
     </LinearLayout>
 

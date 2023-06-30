@@ -13,7 +13,7 @@ public interface Medicine_API {
     @Headers("Content-Type: application/json")
 
     @GET("administrations/{id}")
-    Call<Medicine_text>getDatamedicine_detail(@Query("id") Long id);
+    Call<Medicine_text>getDatamedicine_detail(@Path("id") Long id);
 
     @GET("administrations/list/{userId}/{puserId}")
     Call<List<Medicine_text>> getDatamedicine(

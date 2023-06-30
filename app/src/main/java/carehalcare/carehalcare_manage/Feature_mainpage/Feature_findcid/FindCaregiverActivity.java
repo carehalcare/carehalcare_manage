@@ -141,7 +141,7 @@ public class FindCaregiverActivity extends AppCompatActivity {
                 //아이디 중복체크 했는지 확인
                 if (!validate) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FindCaregiverActivity.this);
-                    dialog = builder.setMessage("보호자 아이디가 있는지 확인하세요.").setNegativeButton("확인", null).create();
+                    dialog = builder.setMessage("간병인 아이디가 있는지 확인하세요.").setNegativeButton("확인", null).create();
                     dialog.show();
                     return;
                 }
@@ -149,7 +149,7 @@ public class FindCaregiverActivity extends AppCompatActivity {
                 //한 칸이라도 입력 안했을 경우
                 if (cuserId.equals("")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(FindCaregiverActivity.this);
-                    dialog = builder.setMessage("보호자 아이디를 입력해주세요").setNegativeButton("확인", null).create();
+                    dialog = builder.setMessage("간병인 아이디를 입력해주세요").setNegativeButton("확인", null).create();
                     dialog.show();
                     return;
                 }
@@ -165,7 +165,7 @@ public class FindCaregiverActivity extends AppCompatActivity {
                             // TODO: 처리할 로직 작성
                             Log.e("보낸다 ========",response.body()+"");
                             TokenUtils.setCUser_Id(cuserId);
-                            Toast.makeText(getApplicationContext(), String.format("보호자 등록이 완료되었습니다"),
+                            Toast.makeText(getApplicationContext(), String.format("간병인 등록이 완료되었습니다"),
                                     Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(FindCaregiverActivity.this, MainActivity.class);
                             startActivity(intent);

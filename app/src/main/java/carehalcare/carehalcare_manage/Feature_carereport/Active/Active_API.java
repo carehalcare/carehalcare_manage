@@ -12,7 +12,7 @@ public interface Active_API {
        @Headers("Content-Type: application/json")
 
     @GET("activities/{id}")
-    Call<Active_text> getDataActive_detail(@Query("id") Long id);
+    Call<Active_text> getDataActive_detail(@Path("id") Long id);
 
     @GET("activities/list/{userId}/{puserId}")
     Call<List<Active_text>> getDataActive(

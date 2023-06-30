@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn = (Button) findViewById(R.id.btn_login);
         newuserbtn = (Button) findViewById(R.id.btn_newuser);
         kakaobtn = (ImageButton) findViewById(R.id.btn_kakao);
+        kakaobtn.setVisibility(View.INVISIBLE);
 
         login_id = (EditText)findViewById(R.id.loginidInput);
         login_pw = (EditText)findViewById(R.id.loginpw);
