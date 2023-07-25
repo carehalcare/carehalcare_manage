@@ -42,15 +42,15 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_margin="10dp"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_meal_detail"
-        android:background="#64a5ff"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:text="닫기"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_margin="10dp"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_meal_detail"
+            android:background="@drawable/button_radius"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:text="닫기"/>
 
     </LinearLayout>
 </LinearLayout>

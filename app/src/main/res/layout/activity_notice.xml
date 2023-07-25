@@ -58,9 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:textSize="8pt"
             android:text="전달사항 작성"
-            android:textColor="@color/black"
-            android:textSize="8pt" />
+            android:textColor="@color/black" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -102,11 +102,14 @@
                     android:id="@+id/notice_insert"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_margin="10dp"
                     app:layout_constraintVertical_weight="1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/notice_list"
+                    android:background="@drawable/button_radius"
+                    android:textSize="8pt"
                     android:text="전달사항 등록하기"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

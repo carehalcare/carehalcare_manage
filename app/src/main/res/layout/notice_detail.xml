@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/dialog_radius"
     android:elevation="4dp">
@@ -10,15 +10,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_notidetail"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="8pt"
-                android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/tv_detaildate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_notidetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:ems="14"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="9pt"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -35,7 +50,7 @@
             android:id="@+id/btn_del"
             android:text="삭제"
             android:textStyle="bold"
-            android:background="@drawable/et_border"
+            android:background="@drawable/button_radius"
             android:backgroundTint="#FF0000"
             android:layout_gravity="center" />
 
@@ -45,10 +60,9 @@
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:id="@+id/btn_change"
-            android:background="@drawable/et_border"
             android:text="수정"
-            android:backgroundTint="#86A1FF"
             android:textStyle="bold"
+            android:background="@drawable/button_radius"
             android:layout_gravity="center" />
 
     </LinearLayout>
@@ -58,9 +72,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:id="@+id/btn_out"
-        android:background="@drawable/et_border"
         android:text="닫기"
         android:textStyle="bold"
+        android:background="@drawable/button_radius"
+        android:backgroundTint="#CCCCCC"
         android:layout_gravity="center" />
 
 </LinearLayout>

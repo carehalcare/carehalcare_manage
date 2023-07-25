@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#53ACFF">
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal"
-        android:background="@color/white">
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btn_homeinfo"
@@ -27,34 +31,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="환자 정보"
-            android:textSize="10pt"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="10pt" />
 
     </RelativeLayout>
 
-    <LinearLayout
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="\n\n"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="\n\n" />
-    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@drawable/radius_rec"
         android:gravity="center|top"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <TextView
             android:layout_width="wrap_content"
@@ -67,11 +76,16 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="450dp"
             android:layout_margin="30dp"
             android:background="@drawable/dialog_radius"
             android:backgroundTint="#EAEEFF"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbarDefaultDelayBeforeFade="500000"
+            android:scrollbarFadeDuration="0"
+            android:scrollbarSize="10dp"
+            android:scrollbarThumbVertical="@color/black">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,16 +101,18 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="이름 :"
+                        android:layout_gravity="center"
+                        android:layout_weight="2"
+                        android:text="이름"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_id"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="40dp"
+                        android:layout_weight="4"
                         android:background="@drawable/et_border"
-                        android:ems="10"
+                        android:ems="8"
                         android:hint="환자의 이름을 입력하세요"
                         android:inputType="textPersonName" />
                 </LinearLayout>
@@ -110,18 +126,21 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="생년월일 :"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="생년월일"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_date"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="40dp"
+                        android:layout_weight="4"
                         android:background="@drawable/et_border"
-                        android:hint="8자리로 입력해주세요"
-                        android:maxLength="8"
-                        android:inputType="date" />
+                        android:ems="8"
+                        android:hint="YYYYMMDD"
+                        android:inputType="date"
+                        android:maxLength="8" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,14 +152,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:layout_gravity="center"
-                        android:text="성별 :"
+                        android:layout_weight="2"
+                        android:text="성별"
                         android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="200dp"
                         android:layout_height="50dp"
+                        android:layout_weight="3"
                         android:orientation="horizontal">
 
                         <RadioGroup
@@ -175,19 +195,19 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:layout_gravity="center"
-                        android:text="질환 :"
+                        android:layout_weight="2"
+                        android:text="질환"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_disease"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="4"
                         android:background="@drawable/et_border"
-                        android:hint="질환에 대해 입력해주세요"
-                        android:inputType="none" />
+                        android:ems="8"
+                        android:hint="질환을 입력하세요" />
 
                 </LinearLayout>
 
@@ -200,18 +220,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:layout_gravity="center"
-                        android:text="담당병원 :"
+                        android:layout_weight="1"
+                        android:text="담당병원"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_hospital"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"                        android:background="@drawable/et_border"
-                        android:hint="담당 병원을 입력해주세요"
-                        android:inputType="none" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_weight="4"
+                        android:background="@drawable/et_border"
+                        android:ems="8"
+                        android:hint="담당병원을 입력하세요"
+                        android:inputType="text" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -223,19 +245,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:text="투약정보 :"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="투약정보"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_medicine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
-                        android:background="@drawable/et_border"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:hint="복용 중인 약을 입력해주세요 "
-                        android:inputType="none" />
+                        android:layout_weight="4"
+                        android:background="@drawable/et_border"
+                        android:ems="8"
+                        android:hint="투약정보를 입력하세요" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -247,7 +270,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="성격"
                         android:textStyle="bold" />
 
@@ -255,11 +278,9 @@
                     <EditText
                         android:id="@+id/et_personal"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"
+                        android:layout_height="100dp"
                         android:background="@drawable/et_border"
-                        android:hint="성격에 대해 입력해주세요"
-                        android:inputType="none" />
+                        android:hint="성격" />
 
                 </LinearLayout>
 
@@ -275,4 +296,4 @@
             android:text="등록" />
 
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

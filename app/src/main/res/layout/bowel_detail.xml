@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    >
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/dialog_radius"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
@@ -16,8 +16,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:background="@drawable/detail_list"
             android:layout_width="100dp"
@@ -41,7 +45,10 @@
         android:background="@drawable/detail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:background="@drawable/detail_list"
             android:layout_width="100dp"
@@ -50,6 +57,7 @@
             android:text="특이사항"
             android:textStyle="bold"
             android:textColor="@color/black"/>
+
         <TextView
             android:background="@drawable/detail_list"
             android:textStyle="bold"
@@ -64,17 +72,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_boweldetail"
-        android:text="닫기"
-        android:background="#64a5ff"
-        android:textStyle="bold"
-        android:layout_gravity="center" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:id="@+id/btn_boweldetail"
+            android:text="닫기"
+            android:background="@drawable/button_radius"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
     </LinearLayout>
 
 </LinearLayout>
