@@ -32,10 +32,11 @@
             android:textStyle="bold"
             android:textSize="15dp"
             android:textColor="@android:color/black"
+            android:ems="14"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:id="@+id/tv_notititle"/>
 
     </LinearLayout>
-
-
 
 </LinearLayout>

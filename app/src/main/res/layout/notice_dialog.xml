@@ -1,37 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout5"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:orientation="vertical"
     android:background="@drawable/dialog_radius"
     android:elevation="4dp">
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="공지사항 작성"
-        android:textColor="@color/black" />
+        android:layout_marginTop="10dp"
+        android:text="전달사항 작성"
+        android:textColor="@color/black"
+        android:textSize="10pt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/et_notice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
+        android:id="@+id/et_notice"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="30dp"
         android:background="@drawable/et_border"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:textColor="@color/black"
         android:hint="내용을 입력하세요."
-        android:id="@+id/et_notice"/>
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:layout_margin="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_register"
-        android:background="@drawable/et_border"
-        android:backgroundTint="#86A1FF"
-        android:text="등록"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="등록"
+        app:layout_constraintTop_toBottomOf="@+id/et_notice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/button_radius" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

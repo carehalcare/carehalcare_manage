@@ -33,29 +33,39 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:text="ID"
             android:textColor="@color/white"
             android:textSize="16dp"
             android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/et_id"
+        <LinearLayout
+            android:id="@+id/input2"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:hint="ID를 입력하세요"
-            android:inputType="textPersonName"
-            android:background="@drawable/et_round"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_idcheck"
-            android:layout_width="70dp"
-            android:layout_height="40dp"
-            android:background="@color/black"
-            android:textColor="@color/white"
-            android:text="중복확인"
-            android:textSize="5pt"
-            android:layout_gravity="right"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_id"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:hint="ID를 입력하세요"
+                android:inputType="textPersonName"
+                android:background="@drawable/et_round"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_idcheck"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="5"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                android:text="중복확인"
+                android:textSize="5pt"
+                android:layout_gravity="right"/>
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -123,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:ems="10"
-            android:hint="0000/00/00"
+            android:hint="8자리로 입력하세요(YYYYMMDD)"
             android:inputType="date"
             android:maxLength="8"
             android:background="@drawable/et_round"/>

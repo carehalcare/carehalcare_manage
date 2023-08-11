@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout6"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:orientation="vertical"
     android:background="@drawable/dialog_radius"
     android:elevation="4dp">
 
     <TextView
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="공지사항 수정"
-        android:textColor="@color/black" />
+        android:layout_marginTop="10dp"
+        android:text="전달사항 수정"
+        android:textColor="@color/black"
+        android:textSize="10pt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/et_notice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <EditText
+        android:id="@+id/et_notice"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="30dp"
         android:background="@drawable/et_border"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:textColor="@color/black"
         android:hint="내용을 입력하세요."
-        android:id="@+id/et_notice"/>
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_layout"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
 
     <LinearLayout
+        android:id="@+id/btn_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:orientation="horizontal" >
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_notice"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/btn_undo"
-            android:background="@drawable/et_border"
-            android:text="돌아가기"/>
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_radius"
+            android:backgroundTint="#CCCCCC"
+            android:text="돌아가기" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_margin="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/et_border"
             android:id="@+id/btn_change"
-            android:backgroundTint="#86A1FF"
-            android:text="수정"/>
-
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_radius"
+            android:text="수정" />
     </LinearLayout>
 
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

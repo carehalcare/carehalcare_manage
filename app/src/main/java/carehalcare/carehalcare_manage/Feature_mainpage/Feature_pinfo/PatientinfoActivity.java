@@ -28,7 +28,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class PatientinfoActivity extends AppCompatActivity {
     private ImageButton btn_home;
     private Button btn_edit, btn_add;
-    private TextView tv_info;
+    private TextView tv_info, tv_name;
     Call <PatientInfo> call;
 
     @Override
@@ -40,6 +40,7 @@ public class PatientinfoActivity extends AppCompatActivity {
         btn_add = (Button) findViewById(R.id.btn_add);
         btn_edit = (Button) findViewById(R.id.btn_edit);
         tv_info = (TextView) findViewById(R.id.tv_info);
+        tv_name = (TextView) findViewById(R.id.tv_name);
 
         btn_home.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +57,10 @@ public class PatientinfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(PatientinfoActivity.this, PInfoEditActivity.class);
 
                 String intent_pinfo = tv_info.getText().toString();
+                String intent_pname = tv_name.getText().toString();
+
                 intent.putExtra("intent_pinfo", intent_pinfo);
+                intent.putExtra("intent_pname", intent_pname);
                 //Log.d("인텐트값1", intent_pinfo);
 
                 startActivity(intent);
@@ -101,8 +105,6 @@ public class PatientinfoActivity extends AppCompatActivity {
                         String personal = patientInfo.getRemark();
 
                         String content = "";
-                        content += "이름: " + pname + "\n\n";
-
                         //생년월일 출력 방식 변경 0000-00-00 -> 0000년 00월 00일
                         String birthDate = patientInfo.getPbirthDate();
                         if (birthDate.isEmpty() || birthDate.length() != 8) {
@@ -119,19 +121,22 @@ public class PatientinfoActivity extends AppCompatActivity {
                         String gender = patientInfo.getPsex();
                         //String gender = "";
                         if (gender.equals("F")) {
-                            gender = "여성";
+                            gender = "여";
                         } else if (gender.equals("M")) {
-                            gender = "남성";
+                            gender = "남";
                         } else {
                             gender = "성별 정보 없음";
                         }
-                        content += "성별: " + gender + "\n\n";
+
+                        String name = "";
+                        name += pname +" (" + gender + ")";
                         content += "질환: " + disease + "\n\n";
                         content += "담당병원: " + hospital + "\n\n";
                         content += "투약정보: " + medicine + "\n\n";
                         content += "성격: " + personal + "\n\n";
 
                         tv_info.setText(content);
+                        tv_name.setText(name);
 
                     } else {
                         tv_info.setText("등록된 정보가 없습니다.\n 정보를 입력해주세요.");

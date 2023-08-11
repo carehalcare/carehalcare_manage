@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#ffffff"
-    >
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/dialog_radius"
+    android:orientation="vertical">
+
     <LinearLayout
+        android:background="@drawable/detail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
+
         <TextView
+            android:background="@drawable/detail_list"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="세신부위"
             android:textStyle="bold"
-            android:background="@drawable/detail_list"
             android:gravity="center"
             android:textColor="@color/black"/>
+
         <TextView
             android:gravity="center"
             android:textStyle="bold"
             android:text="-"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@drawable/detail_list"
             android:textColor="@color/black"
             android:id="@+id/tv_washpart_allmenu"/>
     </LinearLayout>
+
     <LinearLayout
+        android:background="@drawable/detail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="환자청결 상태"
             android:background="@drawable/detail_list"
             android:textStyle="bold"
@@ -44,17 +56,19 @@
             android:textStyle="bold"
             android:text="-"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="@drawable/detail_list"
             android:textColor="@color/black"
             android:id="@+id/tv_washdetail_allmenu"/>
     </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/detail_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:background="@drawable/detail_list"
             android:layout_width="100dp"
@@ -63,31 +77,36 @@
             android:text="특이사항"
             android:textStyle="bold"
             android:textColor="@color/black"/>
+
         <TextView
             android:background="@drawable/detail_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
             android:textColor="@color/black"
             android:text="-"
             android:id="@+id/tv_washallmenu_et"/>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_wash_detail_allmenu"
-        android:text="닫기"
-        android:background="#64a5ff"
-        android:textStyle="bold"
-        android:layout_gravity="center"
 
-        />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:id="@+id/btn_wash_detail_allmenu"
+            android:text="닫기"
+            android:background="@drawable/button_radius"
+            android:textStyle="bold"
+            android:layout_gravity="center" />
     </LinearLayout>
 
 </LinearLayout>
