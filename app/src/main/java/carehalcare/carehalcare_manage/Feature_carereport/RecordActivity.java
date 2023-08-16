@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_carereport.Active.ActiveFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_text;
@@ -628,102 +629,16 @@ public class RecordActivity extends AppCompatActivity {
     //Active
     public void onActive(View view) {
         deleteview();
-//        Active_API activeApi = retrofit.create(Active_API.class);
-        Active_API activeApi = Retrofit_client.createService(Active_API.class, TokenUtils.getAccessToken("Access_Token"));
+        ActiveFragment activeFragment = new ActiveFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.listview_layout,container,true);
+        activeFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, activeFragment);
+        transaction.commit();
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_list);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-
-        activeArrayList = new ArrayList<>();
-
-        activeAdapter = new Active_adapter( activeArrayList);
-        mRecyclerView.setAdapter(activeAdapter);
-
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLinearLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-        activeApi.getDataActive(userid,puserid).enqueue(new Callback<List<Active_text>>() {
-            @Override
-            public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<Active_text> datas = response.body();
-                        if (datas != null) {
-                            activeArrayList.clear();
-                            for (int i = 0; i < datas.size(); i++) {
-                                Active_text dict_0 = new Active_text(response.body().get(i).getCreatedDateTime(),
-                                        response.body().get(i).getId(), response.body().get(i).getPosition(),
-                                        response.body().get(i).getPuserId(), response.body().get(i).getRehabilitation(),
-                                        response.body().get(i).getUserId(), response.body().get(i).getWalkingAssistance());
-                                activeArrayList.add(dict_0);
-                                activeAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getPosition()+" "+datas.get(i).getId() + ""+"어댑터카운터"+activeAdapter.getItemCount());
-                            }
-                            Log.e("getActive success", "======================================");
-                        }
-                    }
-               }
-            }
-            @Override
-            public void onFailure(Call<List<Active_text>> call, Throwable t) {
-            }
-        });
-
-        activeAdapter.setOnItemClickListener (new Active_adapter.OnItemClickListener () {
-            @Override
-            public void onItemClick(View v, int position) {
-                Active_text detail_active_text = activeArrayList.get(position);
-                activeApi.getDataActive(userid,puserid).enqueue(new Callback<List<Active_text>>() {
-                    @Override
-                    public void onResponse(Call<List<Active_text>> call, Response<List<Active_text>> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                List<Active_text> datas = response.body();
-                                if (datas != null) {
-                                    ids = response.body().get(position).getId();
-                                    Log.e("지금 position : ",position+"이고 DB ID는 : " + ids);
-                                }
-                            }}
-                    }
-                    @Override
-                    public void onFailure(Call<List<Active_text>> call, Throwable t) {
-                    }
-                });
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(RecordActivity.this);
-                View view = LayoutInflater.from(RecordActivity.this)
-                        .inflate(R.layout.active_detail, null, false);
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.show();
-
-                final TextView activedetail_jahal = dialog.findViewById(R.id.tv_activedetail_jahal);
-                final TextView activedetail_bohang = dialog.findViewById(R.id.tv_activedetail_bohang);
-                final TextView activedetail_change = dialog.findViewById(R.id.tv_activedetail_change);
-
-                activedetail_jahal.setText(detail_active_text.getRehabilitation());
-                activedetail_bohang.setText(detail_active_text.getWalkingAssistance());
-                activedetail_change.setText(detail_active_text.getPosition());
-
-                final Button btn_active_detail = dialog.findViewById(R.id.btn_active_detail);
-
-                btn_active_detail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
     }
 
     //Sleep

@@ -119,7 +119,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="@mipmap/image_logo" />
+                android:background="@drawable/pinfo_image" />
 
             <TextView
                 android:id="@+id/tv_name"
