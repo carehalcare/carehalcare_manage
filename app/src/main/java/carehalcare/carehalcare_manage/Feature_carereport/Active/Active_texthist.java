@@ -16,7 +16,7 @@ public class Active_texthist {
     @SerializedName("position")    String position;
     @SerializedName("category")    String category;
 
-    @SerializedName("revNum")    String revNum;
+    @SerializedName("revNum")    int revNum;
 
     public Active_texthist(Long id, String userId, String puserId, String rehabilitation, String walkingAssistance,
                            String position, String category, String createdDateTime, String modifiedDateTime ) {

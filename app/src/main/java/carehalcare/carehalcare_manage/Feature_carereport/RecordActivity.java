@@ -34,9 +34,11 @@ import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_text;
 import carehalcare.carehalcare_manage.Feature_carereport.Allmenu.AllmenuFragment;
+import carehalcare.carehalcare_manage.Feature_carereport.Bowel.BowelFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_adapter;
 import carehalcare.carehalcare_manage.Feature_carereport.Bowel.Bowel_text;
+import carehalcare.carehalcare_manage.Feature_carereport.Clean.CleanFragment;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_API;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_ResponseDTO;
 import carehalcare.carehalcare_manage.Feature_carereport.Clean.Clean_adapter;
@@ -79,10 +81,6 @@ public class RecordActivity extends AppCompatActivity {
     private Bowel_adapter bowelAdapter;
     private Wash_adapter washAdapter;
     private Sleep_adapter sleepAdapter;
-    private Meal_adapter mealAdapter;
-    private Walk_adapter walkAdapter;
-
-    private ArrayList<Active_text> activeArrayList;
     private ArrayList<Clean_ResponseDTO> cleanArrayList;
     private ArrayList<Wash_ResponseDTO> washArrayList;
     private ArrayList<Sleep_text> sleepArrayList;
@@ -219,134 +217,15 @@ public class RecordActivity extends AppCompatActivity {
     //Sclean
     public void onClean(View view) {
         deleteview();
-//        Clean_API cleanApi = retrofit.create(Clean_API.class);
-        Clean_API cleanApi = Retrofit_client.createService(Clean_API.class, TokenUtils.getAccessToken("Access_Token"));
+        CleanFragment cFragment = new CleanFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.listview_layout,container,true);
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_list);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        cleanArrayList = new ArrayList<>();
-        cleanAdapter = new Clean_adapter(cleanArrayList);
-        mRecyclerView.setAdapter(cleanAdapter);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLinearLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-        cleanApi.getDataClean(userid,puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
-            @Override
-            public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<Clean_ResponseDTO> datas = response.body();
-                        if (datas != null) {
-                            cleanArrayList.clear();
-                            for (int i = 0; i < datas.size(); i++) {
-
-                                Clean_ResponseDTO dict_0 = new Clean_ResponseDTO(
-                                        datas.get(i).getCleanliness(), datas.get(i).getContent(),
-                                        datas.get(i).getCreatedDateTime(), datas.get(i).getId(),
-                                        datas.get(i).getPuserId(), datas.get(i).getUserId()
-                                );
-                                cleanArrayList.add(dict_0);
-                                cleanAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getCleanliness()+" "+datas.get(i).getId() + ""+"어댑터카운터"+cleanAdapter.getItemCount());
-
-                            }
-                            Log.e("getSleep success", "======================================");
-                        }
-                    }}
-            }
-
-            @Override
-            public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
-                Log.e("getSleep fail", "======================================");
-            }
-        });
-
-
-        cleanAdapter.setOnItemClickListener (new Clean_adapter.OnItemClickListener () {
-            @Override
-            public void onItemClick(View v, int position) {
-                Clean_ResponseDTO detail_clean_text = cleanArrayList.get(position);
-
-                String sheet_cloth_ventilation = detail_clean_text.getCleanliness();
-                String content_detail = detail_clean_text.getContent();
-
-                cleanApi.getDataClean(userid, puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
-                    @Override
-                    public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                List<Clean_ResponseDTO> datas = response.body();
-                                if (datas != null) {
-                                    ids = response.body().get(position).getId();
-                                    Log.e("지금 position : ", position + "이고 DB ID는 : " + ids);
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
-                        Log.e("getSleep fail", "======================================");
-                    }
-                });
-                AlertDialog.Builder builder = new AlertDialog.Builder(RecordActivity.this);
-
-                View view = LayoutInflater.from(RecordActivity.this)
-                        .inflate(R.layout.clean_detail, null, false);
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.show();
-
-                final TextView detail_sheet = dialog.findViewById(R.id.tv_cleandatail_sheet);
-                final TextView detail_cloth = dialog.findViewById(R.id.tv_cleandatail_cloth);
-                final TextView detail_ventilation = dialog.findViewById(R.id.tv_cleandatail_ventilation);
-                final TextView et_detail_clean = dialog.findViewById(R.id.tv_cleandetail_et);
-
-                if (sheet_cloth_ventilation != null && !sheet_cloth_ventilation.isEmpty()) {
-                    if (sheet_cloth_ventilation.contains("시트변경완료")) {
-                        detail_sheet.setText("시트변경완료");
-                    } else {
-                        detail_sheet.setText("해당사항 없음");
-                    }
-
-                    if (sheet_cloth_ventilation.contains("환의교체완료")) {
-                        detail_cloth.setText("환의교체완료");
-                    } else {
-                        detail_cloth.setText("해당사항 없음");
-                    }
-
-                    if (sheet_cloth_ventilation.contains("환기완료")) {
-                        detail_ventilation.setText("환기완료");
-                    } else {
-                        detail_ventilation.setText("해당사항 없음");
-                    }
-                } else {
-                    detail_sheet.setText("해당사항 없음");
-                    detail_cloth.setText("해당사항 없음");
-                    detail_ventilation.setText("해당사항 없음");
-                }
-                if (content_detail.equals("-"))
-                    et_detail_clean.setText("없음");
-                else et_detail_clean.setText(content_detail);
-
-                final Button btn_cleandetail = dialog.findViewById(R.id.btn_cleandtail);
-
-                btn_cleandetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
+        cFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, cFragment);
+        transaction.commit();
     }
 
 
@@ -524,105 +403,15 @@ public class RecordActivity extends AppCompatActivity {
     //Bowel
     public void onToilet(View view) {
         deleteview();
+        BowelFragment bFragment = new BowelFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("userid",userid);
+        bundle.putString("puserid",puserid);
 
-//        Bowel_API bowelApi = retrofit.create(Bowel_API.class);
-        Bowel_API bowelApi = Retrofit_client.createService(Bowel_API.class, TokenUtils.getAccessToken("Access_Token"));
-
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.listview_layout,container,true);
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_list);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        bowelArrayList = new ArrayList<>();
-        bowelAdapter = new Bowel_adapter(bowelArrayList);
-        mRecyclerView.setAdapter(bowelAdapter);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
-                mLinearLayoutManager.getOrientation());
-        mRecyclerView.addItemDecoration(dividerItemDecoration);
-        bowelApi.getDataBowel(userid,puserid).enqueue(new Callback<List<Bowel_text>>() {
-            @Override
-            public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<Bowel_text> datas = response.body();
-                        if (datas != null) {
-                            bowelArrayList.clear();
-                            for (int i = 0; i < datas.size(); i++) {
-                                Bowel_text dict_0 = new Bowel_text(response.body().get(i).getCreatedDateTime(),
-                                        response.body().get(i).getUserId(),
-                                        response.body().get(i).getPuserId(),
-                                        response.body().get(i).getId(),
-                                        response.body().get(i).getCount(),response.body().get(i).getContent());
-                                bowelArrayList.add(dict_0);
-                                bowelAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getCount()+" "+datas.get(i).getId() + ""+"어댑터카운터"+bowelAdapter.getItemCount());
-                            }
-                            Log.e("getSleep success", "======================================");
-                        }
-                    }}
-            }
-            @Override
-            public void onFailure(Call<List<Bowel_text>> call, Throwable t) {
-                Log.e("getSleep fail", "======================================");
-            }
-        });
-
-        bowelAdapter.setOnItemClickListener (new Bowel_adapter.OnItemClickListener () {
-            @Override
-            public void onItemClick(View v, int position) {
-                Bowel_text detail_bowel_text = bowelArrayList.get(position);
-
-                bowelApi.getDataBowel(userid,puserid).enqueue(new Callback<List<Bowel_text>>() {
-                    @Override
-                    public void onResponse(Call<List<Bowel_text>> call, Response<List<Bowel_text>> response) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                List<Bowel_text> datas = response.body();
-                                if (datas != null) {
-                                    ids = response.body().get(position).getId();
-                                    Log.e("지금 position : ",position+"이고 DB ID는 : " + ids);
-                                }
-                            }}
-                    }
-                    @Override
-                    public void onFailure(Call<List<Bowel_text>> call, Throwable t) {
-                    }
-                });
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(RecordActivity.this);
-
-                View view = LayoutInflater.from(RecordActivity.this)
-                        .inflate(R.layout.bowel_detail, null, false);
-                builder.setView(view);
-                final AlertDialog dialog = builder.create();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                dialog.show();
-
-                final TextView boweldetail_count = dialog.findViewById(R.id.tv_boweldetail_count);
-                final TextView boweldetail_et = dialog.findViewById(R.id.tv_boweldetail_et);
-                final TextView tv_date = dialog.findViewById(R.id.tv_date);
-                final Button btn_boweldetail = dialog.findViewById(R.id.btn_boweldetail);
-
-                String date = detail_bowel_text.getCreatedDateTime();
-                String newdate = DateUtils.formatDate(date);
-
-                tv_date.setText(newdate);
-                boweldetail_count.setText(String.valueOf(detail_bowel_text.getCount()) + "회");
-                boweldetail_et.setText(detail_bowel_text.getContent());
-
-
-                btn_boweldetail.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-            }
-        });
+        bFragment.setArguments(bundle);
+        transaction.replace(R.id.container_menu, bFragment);
+        transaction.commit();
 
     }
 

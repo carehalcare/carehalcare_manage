@@ -1,13 +1,11 @@
-package carehalcare.carehalcare_manage.Feature_carereport.Active;
+package carehalcare.carehalcare_manage.Feature_carereport.Bowel;
 
-import static carehalcare.carehalcare_manage.Feature_carereport.DateUtils.formatDate;
 import static carehalcare.carehalcare_manage.Feature_carereport.DateUtils.formatDatestring;
 
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +15,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
-public class Active_adapterhist extends RecyclerView.Adapter<Active_adapterhist.CustomViewHolder>{
+public class Bowel_adapterhist extends RecyclerView.Adapter<Bowel_adapterhist.CustomViewHolder>{
 
-    private ArrayList<Active_texthist> mList;
+    private ArrayList<Bowel_texthist> mList;
 
     public interface OnItemClickListener{
         void onItemClick(View v, int position); //뷰와 포지션값
     }
 
     //리스너 객체 참조 변수
-    private Active_adapterhist.OnItemClickListener mListener = null;
+    private Bowel_adapterhist.OnItemClickListener mListener = null;
 
     //리스너 객체 참조를 어댑터에 전달 메서드
-    public void setOnItemClickListener(Active_adapterhist.OnItemClickListener listener) {
+    public void setOnItemClickListener(Bowel_adapterhist.OnItemClickListener listener) {
         this.mListener = listener;
     }
 
@@ -88,24 +84,24 @@ public class Active_adapterhist extends RecyclerView.Adapter<Active_adapterhist.
 
     }
 
-    public Active_adapterhist(ArrayList<Active_texthist> list) {
+    public Bowel_adapterhist(ArrayList<Bowel_texthist> list) {
         this.mList = list;
     }
 
     @Override
-    public Active_adapterhist.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public Bowel_adapterhist.CustomViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.report_changelist, viewGroup, false);
 
-        Active_adapterhist.CustomViewHolder viewHolder = new Active_adapterhist.CustomViewHolder(view);
+        Bowel_adapterhist.CustomViewHolder viewHolder = new Bowel_adapterhist.CustomViewHolder(view);
 
         return viewHolder;
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull Active_adapterhist.CustomViewHolder viewholder, int position) {
+    public void onBindViewHolder(@NonNull Bowel_adapterhist.CustomViewHolder viewholder, int position) {
 
         viewholder.tv_content.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         viewholder.tv_content.setGravity(Gravity.CENTER);
@@ -113,9 +109,6 @@ public class Active_adapterhist extends RecyclerView.Adapter<Active_adapterhist.
         String date = mList.get(position).getModifiedDateTime();
         String dateformat = formatDatestring(date);
 
-        String reh = mList.get(position).getRehabilitation();
-        String walk= mList.get(position).getWalkingAssistance();
-        String pos = mList.get(position).getPosition();
 
         viewholder.tv_content. setText(dateformat + "의 기록 확인하기");
     }
