@@ -177,15 +177,10 @@ public class MedicineFragment extends Fragment {
                                             hdialog.show();
 
                                             final Button btn_close = hdialog.findViewById(R.id.btn_medicine_detail);
-                                            final TextView tv_date = hdialog.findViewById(R.id.tv_medicine_detail_date);
                                             final TextView tv_time = hdialog.findViewById(R.id.tv_medicine_detail_time);
                                             final TextView tv_state = hdialog.findViewById(R.id.tv_medicine_detail_state);
                                             final TextView tv_name = hdialog.findViewById(R.id.tv_medicine_detail_name);
 
-                                            String date = hist.getModifiedDateTime();
-                                            String newdate = DateUtils.formatDate(date);
-
-                                            tv_date.setText(newdate);
                                             tv_time.setText(hist.getTime());
                                             tv_state.setText(hist.getMealStatus());
                                             tv_name.setText(hist.getMedicine());

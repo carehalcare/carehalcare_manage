@@ -275,14 +275,10 @@ public class AllmenuFragment extends Fragment {
                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                             dialog.show();
 
-                            final TextView medicine_detail_date = dialog.findViewById(R.id.tv_medicine_detail_date);
                             final TextView medicine_detail_timne = dialog.findViewById(R.id.tv_medicine_detail_time);
                             final TextView medicine_detail_state = dialog.findViewById(R.id.tv_medicine_detail_state);
                             final TextView medicine_detail_name = dialog.findViewById(R.id.tv_medicine_detail_name);
 
-                            Date today_date = Calendar.getInstance().getTime();
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일", Locale.getDefault());
-                            medicine_detail_date.setText(formatDate(timedate));
                             medicine_detail_timne.setText(gettime);
                             medicine_detail_state.setText(getmealStatus);
                             medicine_detail_name.setText(getmedicine);
