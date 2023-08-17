@@ -29,7 +29,6 @@ public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.Cust
         this.gList = list;
     }
 
-
     // 클릭 리스너 인터페이스 정의
     public interface OnItemClickListener {
         void onItemClick(View v, int position);

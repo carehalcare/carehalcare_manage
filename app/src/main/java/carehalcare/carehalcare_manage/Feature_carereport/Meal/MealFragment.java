@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_carereport.Active.Active_API;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_ResponseDTO;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_adapterhist;
+import carehalcare.carehalcare_manage.Feature_carereport.Meal.Meal_texthist;
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
 import carehalcare.carehalcare_manage.R;
@@ -41,10 +44,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MealFragment extends Fragment {
     String userid,puserid;
-    Long ids;
 
     private ArrayList<Meal_ResponseDTO> mealArrayList;
     private Meal_adapter mealAdapter;
+
+    private ArrayList<Meal_texthist> histArrayList;
+    private Meal_adapterhist histAdapter;
+
     Gson gson = new GsonBuilder()
             .setLenient()
             .create();
@@ -67,9 +73,10 @@ public class MealFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listview_layout,container,false);
 
+        Meal_API mealApi = Retrofit_client.createService(Meal_API.class, TokenUtils.getAccessToken("Access_Token"));
+
         userid = this.getArguments().getString("userid");
         puserid = this.getArguments().getString("puserid");
-
 
         RecyclerView mrecyclerView= (RecyclerView) view.findViewById(R.id.recyclerview_list);
         LinearLayoutManager mlayoutManager = new LinearLayoutManager(getContext());
@@ -88,67 +95,122 @@ public class MealFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
 
-                Meal_ResponseDTO detail_meal_text = mealArrayList.get(position);
-//                Meal_API meal_service = retrofit.create(Meal_API.class);
-                Meal_API meal_service = Retrofit_client.createService(Meal_API.class, TokenUtils.getAccessToken("Access_Token"));
-
-
-                meal_service.getDatameal(userid, puserid).enqueue(new Callback<List<Meal_ResponseDTO>>() {
-                    @Override
-                    public void onResponse(Call<List<Meal_ResponseDTO>> call, Response<List<Meal_ResponseDTO>> response) {
-                        if (response.body() != null) {
-                            List<Meal_ResponseDTO> datas = response.body();
-                            if (datas != null) {
-                                String filePath;
-                                filePath = datas.get(0).getImages().get(0).getFilePath();
-                                ids = datas.get(position).getId();
-
-
-                                Log.e("지금 position : ", position + "이고 DB ID는 : " + ids);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Meal_ResponseDTO>> call, Throwable t) {
-                        Log.e("통신에러", "+" + t.toString());
-                        Toast.makeText(getContext(), "통신에러", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
+                Meal_ResponseDTO meal_text = mealArrayList.get(position);
+                Long clicked = meal_text.getId();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
+                builder.setView(dialogView);
 
-                View view = LayoutInflater.from(getContext())
-                        .inflate(R.layout.meal_detail, null, false);
-                builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.show();
 
-                List<Meal_Image> images = detail_meal_text.getImages();
+                RecyclerView histRecyclerView = dialogView.findViewById(R.id.change_list);
+                LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
+                histRecyclerView.setLayoutManager(histLayoutManager);
 
-                final ImageView iv_meal_detail = dialog.findViewById(R.id.iv_meal_detail);
-                final TextView tv_meal_detail = dialog.findViewById(R.id.tv_meal_detail);
+                // Create and set Meal_adapterhist adapter for the histRecyclerView
+                histArrayList = new ArrayList<>();
+                histAdapter = new Meal_adapterhist(histArrayList);
+                histRecyclerView.setAdapter(histAdapter);
 
+                Button btn_out = dialog.findViewById(R.id.btn_out);
 
-                Glide.with(getContext()).load(detail_meal_text.getImages().get(0).getFilePath()).into(iv_meal_detail);
-
-
-                tv_meal_detail.setText(detail_meal_text.getContent());
-
-
-                final Button btn_meal_detail = dialog.findViewById(R.id.btn_meal_detail);
-                btn_meal_detail.setOnClickListener(new View.OnClickListener() {
+                btn_out.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });
+
+                mealApi.gethistMeal(clicked).enqueue(new Callback<List<Meal_texthist>>() {
+                    @Override
+                    public void onResponse(Call<List<Meal_texthist>> call, Response<List<Meal_texthist>> response) {
+
+                        Log.e("not loaded", response.body() + "======================================");
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+                                List<Meal_texthist> datas = response.body();
+                                if (datas != null) {
+                                    histArrayList.clear();
+                                    histArrayList.addAll(datas); // Populate the correct list
+
+                                    histAdapter.notifyDataSetChanged(); // Notify adapter of data change
+
+                                    Log.e("get Hist success", datas+ "======================================");
+
+                                    histAdapter.setOnItemClickListener(new Meal_adapterhist.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(View v, int pos) {
+                                            Meal_texthist hist = histArrayList.get(pos);
+
+                                            AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
+                                            View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.meal_detail, null, false);
+                                            histBuilder.setView(detailDialog);
+
+                                            final AlertDialog hdialog = histBuilder.create();
+                                            hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                            hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            hdialog.show();
+
+                                            List<Meal_Image> images = meal_text.getImages();
+
+                                            final ImageView iv_meal_detail = hdialog.findViewById(R.id.iv_meal_detail);
+                                            final TextView tv_meal_detail = hdialog.findViewById(R.id.tv_meal_detail);
+
+                                            Glide.with(getContext()).load(images.get(0).getFilePath()).into(iv_meal_detail);
+
+                                            tv_meal_detail.setText(hist.getContent());
+
+                                            Button btn_off = hdialog.findViewById(R.id.btn_meal_detail);
+
+                                            btn_off.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    hdialog.dismiss();
+                                                }
+                                            });
+
+                                            mealApi.gethistMeal_detail(clicked, pos).enqueue(new Callback<List<Meal_texthist>>() {
+                                                @Override
+                                                public void onResponse(Call<List<Meal_texthist>> call, Response<List<Meal_texthist>> response) {
+                                                    if (response.isSuccessful()) {
+                                                        List<Meal_texthist> detail = response.body();
+                                                        if (detail != null) {
+
+                                                            Log.e("Detail OK", detail + "------------");
+                                                        }
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<List<Meal_texthist>> call, Throwable t) {
+                                                    Log.e("Detail Fetch Failure", t.getMessage());
+                                                }
+                                            });
+
+                                        }
+                                    });
+
+                                } else {
+                                    Log.e("not loaded", datas.size() + "======================================");
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Meal_texthist>> call, Throwable t) {
+                        Log.e("Histlist Failure", t.getMessage() + "======================================");
+                    }
+                });
+
             }
         });
         return view;
+
     }
 
     public void getmeallsit(){

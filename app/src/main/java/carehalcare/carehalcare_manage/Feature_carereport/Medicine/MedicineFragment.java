@@ -1,4 +1,4 @@
-package carehalcare.carehalcare_manage.Feature_carereport.Clean;
+package carehalcare.carehalcare_manage.Feature_carereport.Medicine;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -21,9 +21,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
 import carehalcare.carehalcare_manage.R;
 import carehalcare.carehalcare_manage.Retrofit_client;
@@ -32,15 +34,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CleanFragment extends Fragment {
+public class MedicineFragment extends Fragment {
     String userid,puserid;
-    private ArrayList<Clean_ResponseDTO> cleanArrayList;
-    private Clean_adapter cleanAdapter;
-    private ArrayList<Clean_texthist> histArrayList;
-    private Clean_adapterhist histAdapter;
+    private ArrayList<Medicine_text> medicineArrayList;
+    private Medicine_adapter medicineAdapter;
 
+    private ArrayList<Medicine_texthist> histArrayList;
+    private Medicine_adapterhist histAdapter;
 
-    public CleanFragment() {
+    public MedicineFragment() {
         // Required empty public constructor
     }
 
@@ -54,10 +56,8 @@ public class CleanFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.listview_layout,container,false);
 
-        Clean_API cleanApi = Retrofit_client.createService(Clean_API.class, TokenUtils.getAccessToken("Access_Token"));
+        Medicine_API medicineApi = Retrofit_client.createService(Medicine_API.class, TokenUtils.getAccessToken("Access_Token"));
 
-
-        // Clean_API cleanApi = retrofit.create(Clean_API.class);
         userid = this.getArguments().getString("userid");
         puserid = this.getArguments().getString("puserid");
 
@@ -65,52 +65,59 @@ public class CleanFragment extends Fragment {
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        cleanArrayList = new ArrayList<>();
-        cleanAdapter = new Clean_adapter( cleanArrayList);
-        mRecyclerView.setAdapter(cleanAdapter);
+        medicineArrayList = new ArrayList<>();
+        medicineAdapter = new Medicine_adapter( medicineArrayList);
+        mRecyclerView.setAdapter(medicineAdapter);
 
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecorator(ContextCompat.getDrawable(getContext(), R.drawable.divider));
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
 
-        cleanApi.getDataClean(userid,puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
+        medicineApi.getDatamedicine(userid,puserid).enqueue(new Callback<List<Medicine_text>>() {
             @Override
-            public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
+            public void onResponse(Call<List<Medicine_text>> call, Response<List<Medicine_text>> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
-                        List<Clean_ResponseDTO> datas = response.body();
+                        List<Medicine_text> datas = response.body();
                         if (datas != null) {
-                            cleanArrayList.clear();
+                            medicineArrayList.clear();
                             for (int i = 0; i < datas.size(); i++) {
-
-                                Clean_ResponseDTO dict_0 = new Clean_ResponseDTO(
-                                        datas.get(i).getCleanliness(), datas.get(i).getContent(),
-                                        datas.get(i).getCreatedDateTime(), datas.get(i).getId(),
-                                        datas.get(i).getPuserId(), datas.get(i).getUserId()
-                                );
-                                cleanArrayList.add(dict_0);
-                                cleanAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getCleanliness() + " " + datas.get(i).getId() + "" + "어댑터카운터" + cleanAdapter.getItemCount());
-
+                                Medicine_text dict_0 = new Medicine_text(response.body().get(i).getCreatedDateTime(),
+                                        response.body().get(i).gettime(),
+                                        response.body().get(i).getmealStatus(), response.body().get(i).getmedicine(),
+                                        response.body().get(i).getUserid(),
+                                        response.body().get(i).getPuserid(),response.body().get(i).getId());
+                                medicineArrayList.add(dict_0);
+                                medicineAdapter.notifyItemInserted(0);
+                                Log.e("현재id : " + i, datas.get(i).getmedicine()+" "+datas.get(i).getId() + ""+"어댑터카운터"+medicineAdapter.getItemCount());
                             }
-                            Log.e("getSleep success", "======================================");
+                        }
+                    }
+                    else {
+
+                        Log.e("medi 불러오기", "Status Code : " + response.code());
+
+                        try {
+                            String errorBody = response.errorBody().string();
+                            Log.e("서버 오류 메시지", errorBody);
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
                 }
             }
-
             @Override
-            public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
-                Log.e("getSleep fail", "======================================");
+            public void onFailure(Call<List<Medicine_text>> call, Throwable t) {
+                Log.e("medi get 실패", t.getMessage());
             }
         });
 
 
-        cleanAdapter.setOnItemClickListener (new Clean_adapter.OnItemClickListener () {
+        medicineAdapter.setOnItemClickListener (new Medicine_adapter.OnItemClickListener () {
             @Override
             public void onItemClick(View v, int position) {
-                Clean_ResponseDTO detail_clean_text = cleanArrayList.get(position);
-                Long clicked = detail_clean_text.getId();
+                Medicine_text detail_medicine_text = medicineArrayList.get(position);
+                Long clicked = detail_medicine_text.getId();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
@@ -125,9 +132,9 @@ public class CleanFragment extends Fragment {
                 LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
                 histRecyclerView.setLayoutManager(histLayoutManager);
 
-                // Create and set Clean_adapterhist adapter for the histRecyclerView
+                // Create and set medicine_adapterhist adapter for the histRecyclerView
                 histArrayList = new ArrayList<>();
-                histAdapter = new Clean_adapterhist(histArrayList);
+                histAdapter = new Medicine_adapterhist(histArrayList);
                 histRecyclerView.setAdapter(histAdapter);
 
                 Button btn_out = dialog.findViewById(R.id.btn_out);
@@ -139,14 +146,14 @@ public class CleanFragment extends Fragment {
                     }
                 });
 
-                cleanApi.gethistSclean(clicked).enqueue(new Callback<List<Clean_texthist>>() {
+                medicineApi.gethistMedi(clicked).enqueue(new Callback<List<Medicine_texthist>>() {
                     @Override
-                    public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
+                    public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
 
                         Log.e("not loaded", response.body() + "======================================");
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
-                                List<Clean_texthist> datas = response.body();
+                                List<Medicine_texthist> datas = response.body();
                                 if (datas != null) {
                                     histArrayList.clear();
                                     histArrayList.addAll(datas); // Populate the correct list
@@ -155,13 +162,13 @@ public class CleanFragment extends Fragment {
 
                                     Log.e("get Hist success", datas+ "======================================");
 
-                                    histAdapter.setOnItemClickListener(new Clean_adapterhist.OnItemClickListener() {
+                                    histAdapter.setOnItemClickListener(new Medicine_adapterhist.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(View v, int pos) {
-                                            Clean_texthist hist = histArrayList.get(pos);
+                                            Medicine_texthist hist = histArrayList.get(pos);
 
                                             AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
-                                            View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.clean_detail, null, false);
+                                            View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.medicine_detail, null, false);
                                             histBuilder.setView(detailDialog);
 
                                             final AlertDialog hdialog = histBuilder.create();
@@ -169,40 +176,32 @@ public class CleanFragment extends Fragment {
                                             hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                             hdialog.show();
 
-                                            final TextView detail_sheet = hdialog.findViewById(R.id.tv_cleandatail_sheet);
-                                            final TextView detail_cloth = hdialog.findViewById(R.id.tv_cleandatail_cloth);
-                                            final TextView detail_ventilation = hdialog.findViewById(R.id.tv_cleandatail_ventilation);
-                                            final TextView et_detail_clean = hdialog.findViewById(R.id.tv_cleandetail_et);
+                                            final Button btn_close = hdialog.findViewById(R.id.btn_medicine_detail);
+                                            final TextView tv_date = hdialog.findViewById(R.id.tv_medicine_detail_date);
+                                            final TextView tv_time = hdialog.findViewById(R.id.tv_medicine_detail_time);
+                                            final TextView tv_state = hdialog.findViewById(R.id.tv_medicine_detail_state);
+                                            final TextView tv_name = hdialog.findViewById(R.id.tv_medicine_detail_name);
 
-                                            String sheet_cloth_ventilation = hist.getCleanliness();
-                                            String content_detail = hist.getContent();
+                                            String date = hist.getModifiedDateTime();
+                                            String newdate = DateUtils.formatDate(date);
 
-                                            if (sheet_cloth_ventilation.contains("시트변경완료")) detail_sheet.setText("시트변경완료");
-                                            else detail_sheet.setText("해당사항 없음");
+                                            tv_date.setText(newdate);
+                                            tv_time.setText(hist.getTime());
+                                            tv_state.setText(hist.getMealStatus());
+                                            tv_name.setText(hist.getMedicine());
 
-                                            if (sheet_cloth_ventilation.contains("환의교체완료")) detail_cloth.setText("환의교체완료");
-                                            else detail_cloth.setText("해당사항 없음");
-
-                                            if (sheet_cloth_ventilation.contains("환기완료")) detail_ventilation.setText("환기완료");
-                                            else detail_ventilation.setText("해당사항 없음");
-
-                                            if (content_detail.equals("-")) et_detail_clean.setText("없음");
-                                            else et_detail_clean.setText(content_detail);
-
-                                            Button btn_cleandetail = hdialog.findViewById(R.id.btn_cleandtail);
-
-                                            btn_cleandetail.setOnClickListener(new View.OnClickListener() {
+                                            btn_close.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
                                                     hdialog.dismiss();
                                                 }
                                             });
 
-                                            cleanApi.gethistSclean_detail(clicked, pos).enqueue(new Callback<List<Clean_texthist>>() {
+                                            medicineApi.gethistMedi_detail(clicked, pos).enqueue(new Callback<List<Medicine_texthist>>() {
                                                 @Override
-                                                public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
+                                                public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
                                                     if (response.isSuccessful()) {
-                                                        List<Clean_texthist> detail = response.body();
+                                                        List<Medicine_texthist> detail = response.body();
                                                         if (detail != null) {
 
                                                             Log.e("Detail OK", detail + "------------");
@@ -211,7 +210,7 @@ public class CleanFragment extends Fragment {
                                                 }
 
                                                 @Override
-                                                public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
+                                                public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
                                                     Log.e("Detail Fetch Failure", t.getMessage());
                                                 }
                                             });
@@ -227,7 +226,7 @@ public class CleanFragment extends Fragment {
                     }
 
                     @Override
-                    public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
+                    public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
                         Log.e("Histlist Failure", t.getMessage() + "======================================");
                     }
                 });
