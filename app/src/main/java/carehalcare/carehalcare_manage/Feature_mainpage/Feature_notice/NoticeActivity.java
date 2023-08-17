@@ -1,5 +1,7 @@
 package carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice;
 
+import static carehalcare.carehalcare_manage.Feature_carereport.DateUtils.formatDatestring;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -142,7 +144,11 @@ public class NoticeActivity extends AppCompatActivity {
                 dialog.show();
 
                 TextView notidetail = dialog.findViewById(R.id.tv_notidetail);
+                TextView notidate = dialog.findViewById(R.id.tv_detaildate);
+
+                String formdate = formatDatestring(notice.getModifiedDate());
                 notidetail.setText(notice.getContent());
+                notidate.setText(formdate);
 
                 Button btn_out = dialog.findViewById(R.id.btn_out);
                 Button btn_del = dialog.findViewById(R.id.btn_del);

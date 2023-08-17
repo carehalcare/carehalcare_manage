@@ -54,7 +54,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/button_radius"
             android:backgroundTint="#CCCCCC"
-            android:text="돌아가기" />
+            android:text="취소" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_change"
