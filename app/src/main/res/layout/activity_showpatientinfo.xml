@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="환자 정보"
+            android:text="환자정보"
             android:textColor="@color/black"
             android:textSize="10pt" />
 
@@ -65,13 +65,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="환자 상세 정보"
-            android:textColor="@color/black"
-            android:textSize="8pt" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -119,7 +112,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:background="@mipmap/image_logo" />
+                android:background="@drawable/pinfo_image" />
 
             <TextView
                 android:id="@+id/tv_name"

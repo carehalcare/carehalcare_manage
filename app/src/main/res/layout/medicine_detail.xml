@@ -6,21 +6,12 @@
     android:background="@drawable/dialog_radius"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:text="today"
-        android:textStyle="bold"
-        android:id="@+id/tv_medicine_detail_date"
-        android:textColor="@color/black"/>
 
     <LinearLayout
         android:background="@drawable/detail_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal">

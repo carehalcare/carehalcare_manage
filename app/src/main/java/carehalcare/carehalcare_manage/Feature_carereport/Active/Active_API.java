@@ -14,9 +14,21 @@ public interface Active_API {
     @GET("activities/{id}")
     Call<Active_text> getDataActive_detail(@Path("id") Long id);
 
-    @GET("activities/list/{userId}/{puserId}")
+    @GET("activities/list/{uid}/{puid}")
     Call<List<Active_text>> getDataActive(
-            @Path("userId") String userId,
-            @Path("puserId") String puserId
+            @Path("uid") String userId,
+            @Path("puid") String puserId
     );
+
+    //변경 이력 리스트 조회
+    @GET("activityhists/list/{id}")
+    Call<List<Active_texthist>> gethistActive(
+            @Path("id") Long id
+    );
+
+    //상세 조회
+    @GET("activityhists/{id}/{revNum}")
+    Call<List<Active_texthist>> gethistActive_detail(
+            @Path("id") Long id,
+            @Path("revNum") int revNum);
 }

@@ -45,7 +45,7 @@
 
         <TextView
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="60dp"
             android:text="환자청결 상태"
             android:background="@drawable/detail_list"
             android:textStyle="bold"
@@ -56,7 +56,7 @@
             android:textStyle="bold"
             android:text="-"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:background="@drawable/detail_list"
             android:textColor="@color/black"
             android:id="@+id/tv_washdetail_allmenu"/>
