@@ -102,22 +102,21 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_Boweldate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Boweldate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         viewholder.tv_BowelResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         viewholder.tv_Boweldate.setGravity(Gravity.CENTER);
         viewholder.tv_BowelResult.setGravity(Gravity.CENTER);
 
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
         Long count= mList.get(position).getCount();
         if (count.equals("-"))
             count = Long.valueOf(0);
-        String content = mList.get(position).getContent();
 
-        viewholder.tv_Boweldate.setText(formattedDate);
-        viewholder.tv_BowelResult.setText(count + "회 배변");
+        viewholder.tv_Boweldate.setText("배변상태 기록 확인하기");
+        viewholder.tv_BowelResult.setText(formattedDate);
     }
 
     @Override

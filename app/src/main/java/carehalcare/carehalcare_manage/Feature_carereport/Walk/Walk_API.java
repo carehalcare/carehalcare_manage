@@ -13,7 +13,7 @@ public interface Walk_API {
             @Path("userId") String userId,
             @Path("puserId") String puserId);
 
-    @GET("meals/{id}")
+    @GET("walks/{id}")
     Call<Walk_ResponseDTO> getdatawalk2(
             @Path("id") Long id
     );

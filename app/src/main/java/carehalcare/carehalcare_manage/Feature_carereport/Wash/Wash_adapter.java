@@ -44,8 +44,8 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
 
         public CustomViewHolder(View view) {
             super(view);
-            this.tv_Washdate = (TextView) view.findViewById(R.id.tv_todayWash);
-            this.tv_Result = (TextView) view.findViewById(R.id.tv_todayWashResult);
+            this.tv_Result = (TextView) view.findViewById(R.id.tv_todayWash);
+            this.tv_Washdate = (TextView) view.findViewById(R.id.tv_todayWashResult);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -101,14 +101,14 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
         viewholder.tv_Washdate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        viewholder.tv_Result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         viewholder.tv_Washdate.setGravity(Gravity.CENTER);
         viewholder.tv_Result.setGravity(Gravity.CENTER);
 
         // Content 설정
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
         String cleanliness = mList.get(position).getCleanliness();
         String part = mList.get(position).getPart();

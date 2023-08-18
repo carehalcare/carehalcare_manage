@@ -40,14 +40,13 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         protected ImageView iv_mealpic;
-        protected TextView tv_mealcontent, tv_date;
+        protected TextView  tv_date;
 
         public CustomViewHolder(View view) {
             super(view);
 
-            this.tv_date = (TextView) view.findViewById(R.id.iv_meal_title);
             this.iv_mealpic = (ImageView) view.findViewById(R.id.iv_mealpic);
-            this.tv_mealcontent = (TextView) view.findViewById(R.id.tv_mealcontent);
+            this.tv_date = (TextView) view.findViewById(R.id.tv_mealcontent);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -115,16 +114,15 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_mealcontent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
-        viewholder.tv_mealcontent.setGravity(Gravity.CENTER);
-
+        viewholder.tv_date.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_date.setGravity(Gravity.CENTER);
 
         List<Meal_Image> images = mList.get(position).getImages();
 
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
+
         viewholder.tv_date.setText(formattedDate);
-        viewholder.tv_mealcontent.setText(mList.get(position).getContent());
 
         if (images != null && !images.isEmpty()) {
             String filePath = images.get(0).getFilePath();

@@ -180,56 +180,28 @@ public class WashFragment extends Fragment {
                                             final TextView tv_scrub_point  = hdialog.findViewById(R.id.tv_washdetail_scrub_point);
                                             final TextView tv_et  = hdialog.findViewById(R.id.tv_washdetail_et);
 
-                                            String cleantype = hist.getCleanliness();
+                                            String cleantype[] = hist.getCleanliness().split(" ");
                                             String part = hist.getPart();
                                             String content_detail = hist.getContent();
 
                                             tv_scrub_point.setText(part);
 
                                             if (content_detail.equals("-"))
-                                                tv_et.setText("없음");
+                                                tv_et.setText("-");
                                             else tv_et.setText(content_detail);
 
-                                            //조건
-                                            if (cleantype != null && !cleantype.isEmpty()) {
-                                                if (cleantype.contains("세안 완료")) {
-                                                    tv_face.setText("세안 완료");
-                                                } else {
-                                                    tv_face.setText("해당사항 없음");
-                                                }
-
-                                                if (cleantype.contains("구강청결 완료")) {
-                                                    tv_mouth.setText("구강청결 완료");
-                                                } else {
-                                                    tv_mouth.setText("해당사항 없음");
-                                                }
-
-                                                if (cleantype.contains("손발톱관리 완료")) {
-                                                    tv_nail.setText("손발톱관리 완료");
-                                                } else {
-                                                    tv_nail.setText("해당사항 없음");
-                                                }
-
-                                                if (cleantype.contains("세발간호 완료")) {
-                                                    tv_hair.setText("세발간호 완료");
-                                                } else {
-                                                    tv_hair.setText("해당사항 없음");
-                                                }
-                                                if (cleantype.contains("세신 완료")) {
-                                                    tv_scrub.setText("세신 완료");
-                                                } else {
-                                                    tv_scrub.setText("해당사항 없음");
-                                                }
-                                                if (cleantype.contains("면도 완료")) {
-                                                    tv_shave.setText("면도 완료");
-                                                } else {
-                                                    tv_shave.setText("해당사항 없음");
-                                                }
-
-                                            } else {
-                                                tv_face.setText("해당사항 없음"); tv_mouth.setText("해당사항 없음"); tv_nail.setText("해당사항 없음");
-                                                tv_hair.setText("해당사항 없음"); tv_scrub.setText("해당사항 없음"); tv_shave.setText("해당사항 없음");
-                                            }
+                                            if (cleantype[0].equals("Y")) { tv_face.setText("완료");}
+                                            else tv_face.setText("-");
+                                            if (cleantype[1].equals("Y")) {tv_mouth.setText("완료");}
+                                            else tv_mouth.setText("-");
+                                            if (cleantype[2].equals("Y")) tv_nail.setText("완료");
+                                            else tv_nail.setText("-");
+                                            if (cleantype[3].equals("Y")) tv_hair.setText("완료");
+                                            else tv_hair.setText("-");
+                                            if (cleantype[4].equals("Y")) tv_scrub.setText("완료");
+                                            else tv_scrub.setText("-");
+                                            if (cleantype[5].equals("Y")) {tv_shave.setText("완료");}
+                                            else tv_shave.setText("-");
 
                                             final Button btn_washclose = hdialog.findViewById(R.id.btn_wash_detail);
 

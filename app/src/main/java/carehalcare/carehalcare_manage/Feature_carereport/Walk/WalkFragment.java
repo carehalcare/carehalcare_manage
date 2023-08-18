@@ -162,7 +162,7 @@ public class WalkFragment extends Fragment {
                     for (int i = 0; i < datas.size(); i++) {
 
                         List<Walk_Image> images =datas.get(i).getImages();
-                        times = datas.get(i).getCreatedDate();
+                        times = datas.get(i).getCreatedDateTime();
                         Log.e("pic!",datas.get(i).getImages().get(0).getFilePath()+"   "+times);
 
                         filePath = "";
@@ -172,7 +172,7 @@ public class WalkFragment extends Fragment {
                         }
                         Walk_ResponseDTO dict_0 = new Walk_ResponseDTO(datas.get(i).getId(),
                                 datas.get(i).getUserId(),datas.get(i).getPuserId(), images,
-                                datas.get(i).getCreatedDate());
+                                datas.get(i).getCreatedDateTime());
 
                         walkArrayList.add(dict_0);
                         walkAdapter.notifyItemInserted(0);

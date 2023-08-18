@@ -91,7 +91,7 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_Cleandate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Cleandate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         viewholder.tv_CleanResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         viewholder.tv_Cleandate.setGravity(Gravity.CENTER);
@@ -99,13 +99,10 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
 
         // Content 설정
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
-        String cleanliness = mList.get(position).getCleanliness();
-        String content = mList.get(position).getContent();
-
-        viewholder.tv_Cleandate.setText(formattedDate);
-        viewholder.tv_CleanResult.setText("주변청결 기록 확인하기");
+        viewholder.tv_Cleandate.setText("주변청결 기록 확인하기");
+        viewholder.tv_CleanResult.setText(formattedDate);
 
     }
 
