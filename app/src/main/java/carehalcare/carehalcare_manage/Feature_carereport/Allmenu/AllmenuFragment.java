@@ -213,10 +213,7 @@ public class AllmenuFragment extends Fragment {
                     if (response.body() != null) {
                         Active_text datas = response.body();
                         if (datas != null) {
-                            String getRehabilitation = datas.getRehabilitation();
-                            String getPosition = datas.getPosition();
-                            String getWalkingAssistance = datas.getWalkingAssistance();
-                            Log.e("활동기록????",getRehabilitation+getWalkingAssistance+getPosition);
+
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                             View view = LayoutInflater.from(getContext())
                                     .inflate(R.layout.active_detail, null, false);
@@ -230,9 +227,21 @@ public class AllmenuFragment extends Fragment {
                             final TextView activedetail_bohang = dialog.findViewById(R.id.tv_activedetail_bohang);
                             final TextView activedetail_change = dialog.findViewById(R.id.tv_activedetail_change);
 
-                            activedetail_jahal.setText(getRehabilitation);
-                            activedetail_bohang.setText(getWalkingAssistance);
-                            activedetail_change.setText(getPosition);
+                            String getjahal = datas.getRehabilitation();
+                            String getbohang = datas.getWalkingAssistance();
+                            String getchange = datas.getPosition();
+
+                            if(getjahal.equals("Y"))
+                                activedetail_jahal.setText("완료");
+                            else activedetail_jahal.setText("-");
+
+                            if(getbohang.equals("Y"))
+                                activedetail_bohang.setText("완료");
+                            else activedetail_bohang.setText("-");
+
+                            if (getchange.equals("Y"))
+                                activedetail_change.setText("완료");
+                            else activedetail_change.setText("-");
 
                             final Button btn_active_detail = dialog.findViewById(R.id.btn_active_detail);
                             btn_active_detail.setOnClickListener(new View.OnClickListener() {
@@ -356,10 +365,6 @@ public class AllmenuFragment extends Fragment {
                     if (response.body() != null) {
                         Wash_ResponseDTO datas = response.body();
                         if (datas != null) {
-                            String getCleanliness = datas.getCleanliness();
-                            String getContent = datas.getContent();
-                            String getPart = datas.getPart();
-
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                             View view = LayoutInflater.from(getContext())
@@ -374,7 +379,52 @@ public class AllmenuFragment extends Fragment {
                             final TextView tv_washallmenu_et = dialog.findViewById(R.id.tv_washallmenu_et);
                             final TextView tv_washpart_allmenu = dialog.findViewById(R.id.tv_washpart_allmenu);
 
-                            tv_washdetail_allmenu.setText(getCleanliness);
+                            String cleanvalues[] = datas.getCleanliness().split(" ");
+                            String getContent = datas.getContent();
+                            String getPart = datas.getPart();
+
+                            String str_clean = "";
+                            for (int i = 0; i < cleanvalues.length; i++) {
+                                if (cleanvalues[i].equals("Y")) {
+                                    switch (i) {
+                                        case 0:
+                                            str_clean += "세안";
+                                            break;
+                                        case 1:
+                                            str_clean += "구강청결";
+                                            break;
+                                        case 2:
+                                            str_clean += "손발톱관리";
+                                            break;
+                                        case 3:
+                                            str_clean += "세발간호";
+                                            break;
+                                        case 4:
+                                            str_clean += "세신";
+                                            break;
+                                        case 5:
+                                            str_clean += "면도";
+                                            break;
+                                    }
+
+                                    // 다음 요소가 있는 경우에만 콤마 추가
+                                    if (i < cleanvalues.length - 1) {
+                                        boolean nextNotEmpty = false;
+                                        for (int j = i + 1; j < cleanvalues.length; j++) {
+                                            if (cleanvalues[j].equals("Y")) {
+                                                nextNotEmpty = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (nextNotEmpty) {
+                                            str_clean += ", ";
+                                        }
+                                    }
+                                }
+                            }
+
+                            tv_washdetail_allmenu.setText(str_clean +"완료");
                             tv_washallmenu_et.setText(getContent);
                             tv_washpart_allmenu.setText(getPart);
 
@@ -451,9 +501,6 @@ public class AllmenuFragment extends Fragment {
                     if (response.body() != null) {
                         Clean_ResponseDTO datas = response.body();
                         if (datas != null) {
-                            String getChangeSheet = datas.getCleanliness();
-                            String getContent = datas.getContent();
-
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                             View view = LayoutInflater.from(getContext())
@@ -467,7 +514,42 @@ public class AllmenuFragment extends Fragment {
                             final TextView tv_cleandatail_allmenu = dialog.findViewById(R.id.tv_cleandatail_allmenu);
                             final TextView tv_cleandetail_et_allmenu = dialog.findViewById(R.id.tv_cleandetail_et_allmenu);
 
-                            tv_cleandatail_allmenu.setText(getChangeSheet);
+                            String cleanvalues[] = datas.getCleanliness().split(" ");
+                            String getContent = datas.getContent();
+
+                            String str_clean = "";
+
+                            for (int i = 0; i < cleanvalues.length; i++) {
+                                if (cleanvalues[i].equals("Y")) {
+                                    switch (i) {
+                                        case 0:
+                                            str_clean += "시트교체";
+                                            break;
+                                        case 1:
+                                            str_clean += "환의교체";
+                                            break;
+                                        case 2:
+                                            str_clean += "환기";
+                                            break;
+                                    }
+                                    // 다음 요소가 있는 경우에만 콤마 추가
+                                    if (i < cleanvalues.length - 1) {
+                                        boolean nextNotEmpty = false;
+                                        for (int j = i + 1; j < cleanvalues.length; j++) {
+                                            if (cleanvalues[j].equals("Y")) {
+                                                nextNotEmpty = true;
+                                                break;
+                                            }
+                                        }
+
+                                        if (nextNotEmpty) {
+                                            str_clean += ", ";
+                                        }
+                                    }
+                                }
+                            }
+
+                            tv_cleandatail_allmenu.setText(str_clean +"완료");
                             tv_cleandetail_et_allmenu.setText(getContent);
 
                             final Button btn_cleandetail = dialog.findViewById(R.id.btn_cleandtail);
@@ -575,17 +657,4 @@ public class AllmenuFragment extends Fragment {
         });
 
     }
-    private String formatDate(String dateStr) {
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.KOREA);
-        SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
-        String newDate = "";
-        try {
-            Date date = originalFormat.parse(dateStr);
-            newDate = newFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return newDate;
-    }
-
 }

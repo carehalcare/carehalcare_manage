@@ -68,15 +68,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:text="환자 정보 입력"
-            android:textColor="@color/black"
-            android:textSize="8pt" />
+            android:layout_margin="10dp" />
 
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="450dp"
+            android:layout_height="500dp"
             android:layout_margin="30dp"
             android:background="@drawable/dialog_radius"
             android:backgroundTint="#EAEEFF"
@@ -295,6 +292,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_radius"
+            android:textSize="7pt"
             android:text="등록" />
 
     </LinearLayout>

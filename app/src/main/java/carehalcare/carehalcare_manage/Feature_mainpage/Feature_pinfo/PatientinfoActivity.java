@@ -7,12 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.sql.Struct;
 
 import carehalcare.carehalcare_manage.Feature_mainpage.API_URL;
+import carehalcare.carehalcare_manage.Feature_mainpage.Feature_notice.NoticeActivity;
 import carehalcare.carehalcare_manage.Feature_mainpage.MainActivity;
 import carehalcare.carehalcare_manage.R;
 import carehalcare.carehalcare_manage.Retrofit_client;
@@ -30,7 +33,8 @@ public class PatientinfoActivity extends AppCompatActivity {
     private Button btn_edit, btn_add;
     private TextView tv_info, tv_name;
     Call <PatientInfo> call;
-
+    private AlertDialog dialog;
+    String userid,cuserid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,17 +57,14 @@ public class PatientinfoActivity extends AppCompatActivity {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent(PatientinfoActivity.this, PInfoEditActivity.class);
-
                 String intent_pinfo = tv_info.getText().toString();
                 String intent_pname = tv_name.getText().toString();
 
-                intent.putExtra("intent_pinfo", intent_pinfo);
-                intent.putExtra("intent_pname", intent_pname);
-                //Log.d("인텐트값1", intent_pinfo);
-
-                startActivity(intent);
+                if (intent_pinfo.isEmpty() || intent_pname.isEmpty()) {
+                    showDialog();
+                } else {
+                    proceedToEditActivity(intent_pinfo, intent_pname);
+                }
             }
         });
 
@@ -74,6 +75,20 @@ public class PatientinfoActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(PatientinfoActivity.this);
+        builder.setMessage("환자 정보를 먼저 등록하세요.")
+                .setPositiveButton("확인", null)
+                .create()
+                .show();
+    }
+
+    private void proceedToEditActivity(String intent_pinfo, String intent_pname) {
+        Intent intent = new Intent(PatientinfoActivity.this, PInfoEditActivity.class);
+        intent.putExtra("intent_pinfo", intent_pinfo);
+        intent.putExtra("intent_pname", intent_pname);
+        startActivity(intent);
     }
 
     protected void onResume() {
@@ -154,4 +169,6 @@ public class PatientinfoActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

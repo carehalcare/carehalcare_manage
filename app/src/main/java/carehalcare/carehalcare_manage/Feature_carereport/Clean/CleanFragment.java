@@ -174,20 +174,18 @@ public class CleanFragment extends Fragment {
                                             final TextView detail_ventilation = hdialog.findViewById(R.id.tv_cleandatail_ventilation);
                                             final TextView et_detail_clean = hdialog.findViewById(R.id.tv_cleandetail_et);
 
-                                            String sheet_cloth_ventilation = hist.getCleanliness();
-                                            String content_detail = hist.getContent();
+                                            String cleandata[] = hist.getCleanliness().split(" ");
 
-                                            if (sheet_cloth_ventilation.contains("시트변경완료")) detail_sheet.setText("시트변경완료");
-                                            else detail_sheet.setText("해당사항 없음");
+                                            if (cleandata[0].equals("Y")) detail_sheet.setText("완료");
+                                            else detail_sheet.setText("-");
 
-                                            if (sheet_cloth_ventilation.contains("환의교체완료")) detail_cloth.setText("환의교체완료");
-                                            else detail_cloth.setText("해당사항 없음");
+                                            if (cleandata[1].equals("Y")) detail_cloth.setText("완료");
+                                            else detail_cloth.setText("-");
 
-                                            if (sheet_cloth_ventilation.contains("환기완료")) detail_ventilation.setText("환기완료");
-                                            else detail_ventilation.setText("해당사항 없음");
+                                            if (cleandata[2].equals("Y")) detail_ventilation.setText("완료");
+                                            else detail_ventilation.setText("-");
 
-                                            if (content_detail.equals("-")) et_detail_clean.setText("없음");
-                                            else et_detail_clean.setText(content_detail);
+                                            et_detail_clean.setText(hist.getContent());
 
                                             Button btn_cleandetail = hdialog.findViewById(R.id.btn_cleandtail);
 

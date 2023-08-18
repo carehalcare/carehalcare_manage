@@ -55,14 +55,14 @@ public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.Cust
     public void onBindViewHolder(@NonNull Medicine_adapter.CustomViewHolder holder, int position) {
 
         holder.tv_medidate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        holder.tv_result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        holder.tv_result.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         holder.tv_medidate.setGravity(Gravity.CENTER);
         holder.tv_result.setGravity(Gravity.CENTER);
 
         // Content 설정
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
         holder.tv_medidate.setText(formattedDate);
         holder.tv_result.setText("약 복용 기록 확인하기");
@@ -73,8 +73,8 @@ public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.Cust
 
         public CustomViewHolder(View view) {
             super(view);
-            tv_medidate = (TextView) view.findViewById(R.id.tv_todayMedicine);
-            tv_result = (TextView) view.findViewById(R.id.tv_todayMedicineResult);
+            tv_result = (TextView) view.findViewById(R.id.tv_todayMedicine);
+            tv_medidate = (TextView) view.findViewById(R.id.tv_todayMedicineResult);
 
             view.setOnCreateContextMenuListener(this);
             view.setOnClickListener(new View.OnClickListener() {

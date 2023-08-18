@@ -109,21 +109,17 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_Activedate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_Activedate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
         viewholder.tv_ActiveResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         viewholder.tv_Activedate.setGravity(Gravity.CENTER);
         viewholder.tv_ActiveResult.setGravity(Gravity.CENTER);
 
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
-        String reh = mList.get(position).getRehabilitation();
-        String walk= mList.get(position).getWalkingAssistance();
-        String pos = mList.get(position).getPosition();
-
-        viewholder.tv_Activedate.setText(formattedDate);
-        viewholder.tv_ActiveResult.setText("활동 기록 확인하기");
+        viewholder.tv_Activedate.setText("활동 기록 확인하기");
+        viewholder.tv_ActiveResult.setText(formattedDate);
     }
 
     @Override

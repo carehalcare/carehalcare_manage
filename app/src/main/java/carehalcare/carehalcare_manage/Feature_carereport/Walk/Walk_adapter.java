@@ -1,5 +1,7 @@
 package carehalcare.carehalcare_manage.Feature_carereport.Walk;
 
+import static carehalcare.carehalcare_manage.Feature_carereport.DateUtils.formatDatestring;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,6 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Walk_adapter extends RecyclerView.Adapter<Walk_adapter.CustomViewHolder>{
@@ -125,18 +128,17 @@ public class Walk_adapter extends RecyclerView.Adapter<Walk_adapter.CustomViewHo
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
-        viewholder.tv_walkcontent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+        viewholder.tv_walkcontent.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
         viewholder.tv_walkcontent.setGravity(Gravity.CENTER);
 
 
         Glide.with(viewholder.itemView).load(mList.get(position).getImages().get(0).getFilePath()).
                 into(viewholder.iv_walkpic);
 
+        String date = mList.get(position).getCreatedDateTime();
 
-        Date today_date = Calendar.getInstance().getTime();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy년 M월 dd일 : HH시 MM분", Locale.getDefault());
-        String seeText = format.format(today_date);
-        viewholder.tv_walkcontent.setText(seeText);        //      viewholder.iv_mealpic.setImageURI(seePhoto);
+        String formattedDate = DateUtils.formatDatestring(date);
+        viewholder.tv_walkcontent.setText(formattedDate);
 
     }
 

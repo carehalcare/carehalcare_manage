@@ -18,11 +18,13 @@
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:layout_height="300dp"
+        android:layout_marginBottom="25dp"
         android:id="@+id/iv_walk_detail"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 

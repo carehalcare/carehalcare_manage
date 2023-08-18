@@ -37,11 +37,10 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
         protected TextView tv_todaySleepResult;
 
 
-
         public CustomViewHolder(View view) {
             super(view);
-            this.tv_todaySleep = (TextView) view.findViewById(R.id.tv_todaySleep);
-            this.tv_todaySleepResult = (TextView) view.findViewById(R.id.tv_todaySleepResult);
+            this.tv_todaySleepResult = (TextView) view.findViewById(R.id.tv_todaySleep);
+            this.tv_todaySleep = (TextView) view.findViewById(R.id.tv_todaySleepResult);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -82,14 +81,14 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
     public void onBindViewHolder(@NonNull CustomViewHolder viewholder, int position) {
 
         viewholder.tv_todaySleep.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-        viewholder.tv_todaySleepResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+        viewholder.tv_todaySleepResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
 
         viewholder.tv_todaySleep.setGravity(Gravity.CENTER);
         viewholder.tv_todaySleepResult.setGravity(Gravity.CENTER);
 
         // Content 설정
         String date = mList.get(position).getCreatedDateTime();
-        String formattedDate = DateUtils.formatDate(date);
+        String formattedDate = DateUtils.formatDatestring(date);
 
         String state = mList.get(position).getState();
         String content = mList.get(position).getContent();

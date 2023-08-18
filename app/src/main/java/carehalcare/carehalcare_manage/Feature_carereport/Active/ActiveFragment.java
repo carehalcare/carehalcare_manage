@@ -189,16 +189,16 @@ public class ActiveFragment extends Fragment {
                                             String getchange = hist.getPosition();
 
                                             if(getjahal.equals("Y"))
-                                                activedetail_jahal.setText("재활치료 완료");
-                                            else activedetail_jahal.setText("X");
+                                                activedetail_jahal.setText("완료");
+                                            else activedetail_jahal.setText("-");
 
                                             if(getbohang.equals("Y"))
-                                                activedetail_bohang.setText("보행도움 완료");
-                                            else activedetail_bohang.setText("X");
+                                                activedetail_bohang.setText("완료");
+                                            else activedetail_bohang.setText("-");
 
                                             if (getchange.equals("Y"))
-                                                activedetail_change.setText("체위변경 완료");
-                                            else activedetail_change.setText("X");
+                                                activedetail_change.setText("완료");
+                                            else activedetail_change.setText("-");
 
                                             Button btn_off = hdialog.findViewById(R.id.btn_active_detail);
 
@@ -225,54 +225,6 @@ public class ActiveFragment extends Fragment {
                     }
                 });
 
-
-//                histAdapter.setOnItemClickListener(new Active_adapterhist.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(View v, int pos) {
-//                        // Get the clicked item from histArrayList
-//                        Active_texthist hist = histArrayList.get(pos);;
-//
-//                        AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
-//                        View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.active_detail, null, false);
-//
-//                        histBuilder.setView(detailDialog);
-//
-//                        final AlertDialog hdialog = histBuilder.create();
-//                        hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                        hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                        hdialog.show();
-//
-//                        activedetail_jahal = hdialog.findViewById(R.id.tv_activedetail_jahal);
-//                        activedetail_bohang = hdialog.findViewById(R.id.tv_activedetail_bohang);
-//                        activedetail_change = hdialog.findViewById(R.id.tv_activedetail_change);
-//
-//                        String getjahal = hist.getRehabilitation();
-//                        String getbohang = hist.getWalkingAssistance();
-//                        String getchange = hist.getPosition();
-//
-//                        if(getjahal.equals("Y"))
-//                            activedetail_jahal.setText("재활치료 완료");
-//                        else activedetail_jahal.setText("X");
-//
-//                        if(getbohang.equals("Y"))
-//                            activedetail_bohang.setText("보행도움 완료");
-//                        else activedetail_bohang.setText("X");
-//
-//                        if (getchange.equals("Y"))
-//                            activedetail_change.setText("체위변경 완료");
-//                        else activedetail_change.setText("X");
-//
-//                        Button btn_off = hdialog.findViewById(R.id.btn_active_detail);
-//
-//                        btn_off.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                hdialog.dismiss();
-//                            }
-//                        });
-//                    }
-//                });
-//
             }
         });
         return view;
