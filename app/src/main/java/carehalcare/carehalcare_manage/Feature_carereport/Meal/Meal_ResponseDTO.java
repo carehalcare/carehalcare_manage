@@ -21,7 +21,7 @@ public class Meal_ResponseDTO {
     String createdDateTime;
 
     Bitmap image;
-    public Meal_ResponseDTO(String content, String createdDateTime, Long id, List<Meal_Image> images, String puserId, String userId)
+    public Meal_ResponseDTO( Long id, String userId, String puserId, String content, List<Meal_Image> images, String createdDateTime)
     {
         this.content = content;
         this.createdDateTime = createdDateTime;

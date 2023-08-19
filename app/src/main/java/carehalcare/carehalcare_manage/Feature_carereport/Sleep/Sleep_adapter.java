@@ -18,7 +18,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomViewHolder>{
-    private ArrayList<Sleep_text> mList;
+    private ArrayList<Sleep_text_modified> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -33,14 +33,13 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_todaySleep;
-        protected TextView tv_todaySleepResult;
-
+        protected TextView tv_todaySleep, tv_todaySleepResult, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
             this.tv_todaySleepResult = (TextView) view.findViewById(R.id.tv_todaySleep);
             this.tv_todaySleep = (TextView) view.findViewById(R.id.tv_todaySleepResult);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -63,7 +62,7 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
         }
     }
 
-    public Sleep_adapter(ArrayList<Sleep_text> list) {
+    public Sleep_adapter(ArrayList<Sleep_text_modified> list) {
         this.mList = list;
     }
 
@@ -90,11 +89,16 @@ public class Sleep_adapter extends RecyclerView.Adapter<Sleep_adapter.CustomView
         String date = mList.get(position).getCreatedDateTime();
         String formattedDate = DateUtils.formatDatestring(date);
 
-        String state = mList.get(position).getState();
-        String content = mList.get(position).getContent();
-
         viewholder.tv_todaySleep.setText(formattedDate);
         viewholder.tv_todaySleepResult.setText( "수면 기록 확인하기");
+
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
+
 
     }
 

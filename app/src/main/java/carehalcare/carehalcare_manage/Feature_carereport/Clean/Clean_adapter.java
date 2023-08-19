@@ -18,7 +18,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomViewHolder>{
-    private ArrayList<Clean_ResponseDTO> mList;
+    private ArrayList<Clean_text_modified> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -34,7 +34,7 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         protected TextView tv_Cleandate;
-        protected TextView tv_CleanResult;
+        protected TextView tv_CleanResult, tv_update;
 
 
 
@@ -42,6 +42,7 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
             super(view);
             this.tv_Cleandate = (TextView) view.findViewById(R.id.tv_todayClean);
             this.tv_CleanResult = (TextView) view.findViewById(R.id.tv_todayCleanResult);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -70,7 +71,7 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
 
     }
 
-    public Clean_adapter(ArrayList<Clean_ResponseDTO> list) {
+    public Clean_adapter(ArrayList<Clean_text_modified> list) {
         this.mList = list;
     }
 
@@ -103,6 +104,14 @@ public class Clean_adapter extends RecyclerView.Adapter<Clean_adapter.CustomView
 
         viewholder.tv_Cleandate.setText("주변청결 기록 확인하기");
         viewholder.tv_CleanResult.setText(formattedDate);
+
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
+
 
     }
 

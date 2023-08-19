@@ -2,6 +2,7 @@ package carehalcare.carehalcare_manage.Feature_mainpage.Feature_findcid;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,7 +33,6 @@ import retrofit2.Response;
 
 public class FindCaregiverActivity extends AppCompatActivity {
     AppCompatButton btn_findId, btn_ok;
-    ImageButton btn_home;
     TextView tv_result,tv_findpid_welcomemsg;
     EditText et_getid;
     String cuserId;
@@ -48,7 +48,6 @@ public class FindCaregiverActivity extends AppCompatActivity {
 
         btn_findId = (AppCompatButton) findViewById(R.id.btn_idsearch);
         btn_ok = (AppCompatButton) findViewById(R.id.btn_ok);
-        btn_home = (ImageButton) findViewById(R.id.btn_home);
         tv_result = (TextView) findViewById(R.id.tv_findresult);
         et_getid = (EditText) findViewById(R.id.et_getid);
         tv_findpid_welcomemsg = (TextView)findViewById(R.id.tv_findpid_welcomemsg);
@@ -103,14 +102,31 @@ public class FindCaregiverActivity extends AppCompatActivity {
                                     str = "아이디 조회 결과 " + "'" + pdatas.getUsername() + "'" + " 님이 맞습니까?";
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(FindCaregiverActivity.this);
-                                    dialog = builder.setMessage(str).setPositiveButton("확인", null).create();
-                                    dialog.show();
-                                    et_getid.setEnabled(false); //아이디값 고정
-                                    validate = true; //검증 완료
-                                    btn_findId.setEnabled(false);
-                                    btn_findId.setBackgroundColor(Color.parseColor("#808080"));
+                                    dialog = builder
+                                            .setMessage(str)
+                                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
 
-                                } //tv_result.setText(str);
+                                                    et_getid.setEnabled(false);
+                                                    validate = true;
+                                                    btn_findId.setEnabled(false);
+                                                    btn_findId.setBackgroundColor(Color.parseColor("#808080"));
+                                                }
+                                            })
+                                            .setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                    et_getid.setEnabled(true);
+                                                    validate = false;
+                                                    btn_findId.setEnabled(true);
+
+                                                }
+                                            })
+                                            .create();
+                                    dialog.show();
+                                }
                             }
                         }
                         else {
@@ -183,12 +199,5 @@ public class FindCaregiverActivity extends AppCompatActivity {
             }
         });
 
-        btn_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FindCaregiverActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

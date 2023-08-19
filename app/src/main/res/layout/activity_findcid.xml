@@ -21,7 +21,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:contentDescription="홈으로 이동"
-            android:background="@drawable/home_btn" />
+            android:background="@drawable/home_btn"
+            android:visibility="invisible"/>
 
         <View
             android:layout_width="0dp"

@@ -20,7 +20,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomViewHolder> {
-    private ArrayList<Active_text> mList;
+    private ArrayList<Active_text_modified> mList;
     private Context mContext;
 
     public interface OnItemClickListener{
@@ -34,14 +34,13 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_Activedate;
-        protected TextView tv_ActiveResult;
-
+        protected TextView tv_Activedate, tv_ActiveResult, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
             this.tv_Activedate = (TextView) view.findViewById(R.id.tv_todayActive);
             this.tv_ActiveResult = (TextView) view.findViewById(R.id.tv_todayActiveResult);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -90,7 +89,7 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
 
     }
 
-    public Active_adapter(ArrayList<Active_text> list) {
+    public Active_adapter(ArrayList<Active_text_modified> list) {
         this.mList = list;
     }
 
@@ -120,6 +119,14 @@ public class Active_adapter extends RecyclerView.Adapter<Active_adapter.CustomVi
 
         viewholder.tv_Activedate.setText("활동 기록 확인하기");
         viewholder.tv_ActiveResult.setText(formattedDate);
+
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
+
     }
 
     @Override

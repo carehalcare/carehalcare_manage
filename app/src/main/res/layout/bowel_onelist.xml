@@ -45,6 +45,16 @@
         app:layout_constraintStart_toStartOf="@+id/tv_todayBowel"
         tools:text="기록확인하기" />
 
+    <TextView
+        android:id="@+id/tv_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Img"
+        android:textColor="#53ACFF"
+        tools:text="수정됨"/>
 
 
 
