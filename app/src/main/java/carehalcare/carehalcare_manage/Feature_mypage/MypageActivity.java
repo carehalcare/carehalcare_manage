@@ -49,7 +49,7 @@ public class MypageActivity extends AppCompatActivity {
                     if (response.body()!=null){
                         MypageDTO name = response.body();
 
-                        tv_setname.setText(name.getUsername());
+                        tv_setname.setText(name.getUsername() + " 님");
 
                     } else{
                         Log.e("토큰받아오기 실패 ","user_name");

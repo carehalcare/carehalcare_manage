@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        >
+    <item android:state_pressed="true">
         <shape android:shape="oval">
             <corners android:radius="100dp"/>
-            <solid android:color="#EAEEFF"/>
+            <solid android:color="#77B0FF"/> <!-- Change this color for the pressed state -->
         </shape>
     </item>
-
+    <item android:state_selected="true">
+        <shape android:shape="oval">
+            <corners android:radius="100dp"/>
+            <solid android:color="#77B0FF"/> <!-- Change this color for the selected state -->
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <corners android:radius="100dp"/>
+            <solid android:color="#EAEEFF"/> <!-- Change this color for the default state -->
+        </shape>
+    </item>
 </selector>
