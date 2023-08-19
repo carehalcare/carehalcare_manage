@@ -2,6 +2,8 @@ package carehalcare.carehalcare_manage.Feature_carereport.Clean;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.time.LocalDateTime;
+
 public class Clean_ResponseDTO {
     //간병인아이디
     @SerializedName("userId") String userId = "";
@@ -12,7 +14,8 @@ public class Clean_ResponseDTO {
     @SerializedName("content") String content;
     @SerializedName("createdDateTime") String createdDateTime;
 
-    public Clean_ResponseDTO(String cleanliness, String content, String createdDateTime, Long id, String puserId, String userId) {
+
+    public Clean_ResponseDTO(Long id, String userId, String puserId, String cleanliness, String content, String createdDateTime) {
         this.cleanliness = cleanliness;
         this.content = content;
         this.createdDateTime = createdDateTime;

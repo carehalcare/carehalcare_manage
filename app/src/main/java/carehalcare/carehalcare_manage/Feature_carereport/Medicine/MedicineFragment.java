@@ -23,8 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import carehalcare.carehalcare_manage.Feature_carereport.Medicine.Medicine_text_modified;
+import carehalcare.carehalcare_manage.Feature_carereport.Medicine.Medicine_texthist;
 import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
 import carehalcare.carehalcare_manage.R;
@@ -36,11 +40,13 @@ import retrofit2.Response;
 
 public class MedicineFragment extends Fragment {
     String userid,puserid;
-    private ArrayList<Medicine_text> medicineArrayList;
+    private ArrayList<Medicine_text_modified> medicineArrayList;
     private Medicine_adapter medicineAdapter;
 
     private ArrayList<Medicine_texthist> histArrayList;
     private Medicine_adapterhist histAdapter;
+
+    private Button btn_off, btn_update;
 
     public MedicineFragment() {
         // Required empty public constructor
@@ -66,7 +72,7 @@ public class MedicineFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         medicineArrayList = new ArrayList<>();
-        medicineAdapter = new Medicine_adapter( medicineArrayList);
+        medicineAdapter = new Medicine_adapter(medicineArrayList);
         mRecyclerView.setAdapter(medicineAdapter);
 
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecorator(ContextCompat.getDrawable(getContext(), R.drawable.divider));
@@ -81,17 +87,56 @@ public class MedicineFragment extends Fragment {
                         List<Medicine_text> datas = response.body();
                         if (datas != null) {
                             medicineArrayList.clear();
+                            List<Medicine_text_modified> tempList = new ArrayList<>();
+
                             for (int i = 0; i < datas.size(); i++) {
-                                Medicine_text dict_0 = new Medicine_text(response.body().get(i).getCreatedDateTime(),
-                                        response.body().get(i).gettime(),
-                                        response.body().get(i).getmealStatus(), response.body().get(i).getmedicine(),
-                                        response.body().get(i).getUserid(),
-                                        response.body().get(i).getPuserid(),response.body().get(i).getId());
-                                medicineArrayList.add(dict_0);
-                                medicineAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getmedicine()+" "+datas.get(i).getId() + ""+"어댑터카운터"+medicineAdapter.getItemCount());
+                                Long mediId = datas.get(i).getId();
+                                int finalI = i;
+
+                                medicineApi.gethistMedi(mediId).enqueue(new Callback<List<Medicine_texthist>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
+                                        if (response.isSuccessful()) {
+                                            List<Medicine_texthist> histDatas = response.body();
+                                            boolean isModified = (histDatas != null && histDatas.size() > 1);
+
+                                            Medicine_text_modified modifiedItem = new Medicine_text_modified(
+                                                    datas.get(finalI).getId(),
+                                                    datas.get(finalI).getUserId(),
+                                                    datas.get(finalI).getPuserId(),
+                                                    datas.get(finalI).gettime(),
+                                                    datas.get(finalI).getmealStatus(),
+                                                    datas.get(finalI).getmedicine(),
+                                                    datas.get(finalI).getCreatedDateTime(),
+                                                    isModified
+                                            );
+
+                                            tempList.add(modifiedItem);
+
+                                            if (tempList.size() == datas.size()) {
+                                                Collections.sort(tempList, new Comparator<Medicine_text_modified>() {
+                                                    @Override
+                                                    public int compare(Medicine_text_modified item1, Medicine_text_modified item2) {
+                                                        return item2.getCreatedDateTime().compareTo(item1.getCreatedDateTime());
+                                                    }
+                                                });
+
+                                                medicineArrayList.clear();
+                                                medicineArrayList.addAll(tempList);
+
+                                                medicineAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
+                                        // 처리 실패 시의 로직
+                                    }
+                                });
                             }
                         }
+
                     }
                     else {
 
@@ -120,112 +165,151 @@ public class MedicineFragment extends Fragment {
                 Long clicked = detail_medicine_text.getId();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
-                builder.setView(dialogView);
-
+                View view = LayoutInflater.from(getContext())
+                        .inflate(R.layout.medicine_detail, null, false);
+                builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.show();
 
-                RecyclerView histRecyclerView = dialogView.findViewById(R.id.change_list);
-                LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
-                histRecyclerView.setLayoutManager(histLayoutManager);
+                final TextView tv_time = dialog.findViewById(R.id.tv_medicine_detail_time);
+                final TextView tv_state = dialog.findViewById(R.id.tv_medicine_detail_state);
+                final TextView tv_name = dialog.findViewById(R.id.tv_medicine_detail_name);
 
-                // Create and set medicine_adapterhist adapter for the histRecyclerView
-                histArrayList = new ArrayList<>();
-                histAdapter = new Medicine_adapterhist(histArrayList);
-                histRecyclerView.setAdapter(histAdapter);
+                tv_time.setText(detail_medicine_text.gettime());
+                tv_state.setText(detail_medicine_text.getmealStatus());
+                tv_name.setText(detail_medicine_text.getmedicine());
 
-                Button btn_out = dialog.findViewById(R.id.btn_out);
 
-                btn_out.setOnClickListener(new View.OnClickListener() {
+                btn_off = dialog.findViewById(R.id.btn_medicine_detail);
+                btn_update = dialog.findViewById(R.id.btn_update_report);
+                btn_off.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });
 
-                medicineApi.gethistMedi(clicked).enqueue(new Callback<List<Medicine_texthist>>() {
+                btn_update.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
+                    public void onClick(View view) {
 
-                        Log.e("not loaded", response.body() + "======================================");
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                List<Medicine_texthist> datas = response.body();
-                                if (datas != null) {
-                                    histArrayList.clear();
-                                    histArrayList.addAll(datas); // Populate the correct list
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
+                        builder.setView(dialogView);
 
-                                    histAdapter.notifyDataSetChanged(); // Notify adapter of data change
+                        final AlertDialog dialog = builder.create();
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.show();
 
-                                    Log.e("get Hist success", datas+ "======================================");
+                        RecyclerView histRecyclerView = dialogView.findViewById(R.id.change_list);
+                        LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
+                        histRecyclerView.setLayoutManager(histLayoutManager);
 
-                                    histAdapter.setOnItemClickListener(new Medicine_adapterhist.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View v, int pos) {
-                                            Medicine_texthist hist = histArrayList.get(pos);
+                        // Create and set medicine_adapterhist adapter for the histRecyclerView
+                        histArrayList = new ArrayList<>();
+                        histAdapter = new Medicine_adapterhist(histArrayList);
+                        histRecyclerView.setAdapter(histAdapter);
 
-                                            AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
-                                            View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.medicine_detail, null, false);
-                                            histBuilder.setView(detailDialog);
+                        Button btn_out = dialog.findViewById(R.id.btn_out);
 
-                                            final AlertDialog hdialog = histBuilder.create();
-                                            hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                            hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                            hdialog.show();
+                        btn_out.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
 
-                                            final Button btn_close = hdialog.findViewById(R.id.btn_medicine_detail);
-                                            final TextView tv_time = hdialog.findViewById(R.id.tv_medicine_detail_time);
-                                            final TextView tv_state = hdialog.findViewById(R.id.tv_medicine_detail_state);
-                                            final TextView tv_name = hdialog.findViewById(R.id.tv_medicine_detail_name);
+                        medicineApi.gethistMedi(clicked).enqueue(new Callback<List<Medicine_texthist>>() {
+                            @Override
+                            public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
 
-                                            tv_time.setText(hist.getTime());
-                                            tv_state.setText(hist.getMealStatus());
-                                            tv_name.setText(hist.getMedicine());
+                                Log.e("not loaded", response.body() + "======================================");
+                                if (response.isSuccessful()) {
+                                    if (response.body() != null) {
+                                        List<Medicine_texthist> datas = response.body();
+                                        if (datas != null && datas.size() >1) {
+                                            histArrayList.clear();
+                                            histArrayList.addAll(datas); // Populate the correct list
 
-                                            btn_close.setOnClickListener(new View.OnClickListener() {
+                                            histAdapter.notifyDataSetChanged(); // Notify adapter of data change
+
+                                            Log.e("get Hist success", datas + "======================================");
+
+                                            histAdapter.setOnItemClickListener(new Medicine_adapterhist.OnItemClickListener() {
                                                 @Override
-                                                public void onClick(View view) {
-                                                    hdialog.dismiss();
-                                                }
-                                            });
+                                                public void onItemClick(View v, int pos) {
+                                                    Medicine_texthist hist = histArrayList.get(pos);
 
-                                            medicineApi.gethistMedi_detail(clicked, pos).enqueue(new Callback<List<Medicine_texthist>>() {
-                                                @Override
-                                                public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
-                                                    if (response.isSuccessful()) {
-                                                        List<Medicine_texthist> detail = response.body();
-                                                        if (detail != null) {
+                                                    AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
+                                                    View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.medicine_detail, null, false);
+                                                    histBuilder.setView(detailDialog);
 
-                                                            Log.e("Detail OK", detail + "------------");
+                                                    final AlertDialog hdialog = histBuilder.create();
+                                                    hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                                    hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    hdialog.show();
+
+                                                    final Button btn_close = hdialog.findViewById(R.id.btn_medicine_detail);
+                                                    final TextView tv_time = hdialog.findViewById(R.id.tv_medicine_detail_time);
+                                                    final TextView tv_state = hdialog.findViewById(R.id.tv_medicine_detail_state);
+                                                    final TextView tv_name = hdialog.findViewById(R.id.tv_medicine_detail_name);
+
+                                                    tv_time.setText(hist.getTime());
+                                                    tv_state.setText(hist.getMealStatus());
+                                                    tv_name.setText(hist.getMedicine());
+
+                                                    btn_close.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            hdialog.dismiss();
                                                         }
-                                                    }
-                                                }
+                                                    });
 
-                                                @Override
-                                                public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
-                                                    Log.e("Detail Fetch Failure", t.getMessage());
+                                                    medicineApi.gethistMedi_detail(clicked, pos).enqueue(new Callback<List<Medicine_texthist>>() {
+                                                        @Override
+                                                        public void onResponse(Call<List<Medicine_texthist>> call, Response<List<Medicine_texthist>> response) {
+                                                            if (response.isSuccessful()) {
+                                                                List<Medicine_texthist> detail = response.body();
+                                                                if (detail != null) {
+
+                                                                    Log.e("Detail OK", detail + "------------");
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
+                                                            Log.e("Detail Fetch Failure", t.getMessage());
+                                                        }
+                                                    });
+
                                                 }
                                             });
+
+                                        } else {
+
+                                            AlertDialog.Builder noHistBuilder = new AlertDialog.Builder(getContext());
+                                            noHistBuilder.setMessage("수정된 기록이 없습니다.")
+                                                    .setPositiveButton("확인", null)
+                                                    .create()
+                                                    .show();
 
                                         }
-                                    });
-
-                                } else {
-                                    Log.e("not loaded", datas.size() + "======================================");
+                                    }
                                 }
                             }
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
-                        Log.e("Histlist Failure", t.getMessage() + "======================================");
+                            @Override
+                            public void onFailure(Call<List<Medicine_texthist>> call, Throwable t) {
+                                Log.e("Histlist Failure", t.getMessage() + "======================================");
+                            }
+                        });
+
                     }
                 });
-
             }
         });
         return view;

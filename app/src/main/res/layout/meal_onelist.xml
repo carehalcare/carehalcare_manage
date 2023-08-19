@@ -15,10 +15,18 @@
         android:layout_gravity="center"
         android:id="@+id/iv_mealpic"
         android:src="@mipmap/ic_launcher"/>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_weight="1"
         android:layout_gravity="center_vertical">
 
@@ -28,8 +36,21 @@
             android:text="식사 기록 확인하기"
             android:textStyle="bold"
             android:textSize="20dp"
+            android:layout_weight="1"
             android:textColor="@android:color/black"
             android:id="@+id/iv_meal_title"/>
+
+        <TextView
+            android:id="@+id/tv_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"
+            android:textColor="#53ACFF"
+            android:layout_gravity="center"
+            android:text="수정됨"/>
+
+    </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +59,6 @@
             android:id="@+id/tv_mealcontent"/>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

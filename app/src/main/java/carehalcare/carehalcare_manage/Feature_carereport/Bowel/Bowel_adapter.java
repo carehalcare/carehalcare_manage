@@ -20,7 +20,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomViewHolder>{
-    private ArrayList<Bowel_text> mList;
+    private ArrayList<Bowel_text_modified> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -35,13 +35,13 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_Boweldate;
-        protected TextView tv_BowelResult;
+        protected TextView tv_Boweldate, tv_BowelResult, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
             this.tv_Boweldate = (TextView) view.findViewById(R.id.tv_todayBowel);
             this.tv_BowelResult = (TextView) view.findViewById(R.id.tv_todayBowelResult);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -85,7 +85,7 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
 
     }
 
-    public Bowel_adapter(ArrayList<Bowel_text> list) {
+    public Bowel_adapter(ArrayList<Bowel_text_modified> list) {
         this.mList = list;
     }
 
@@ -111,12 +111,16 @@ public class Bowel_adapter extends RecyclerView.Adapter<Bowel_adapter.CustomView
         String date = mList.get(position).getCreatedDateTime();
         String formattedDate = DateUtils.formatDatestring(date);
 
-        Long count= mList.get(position).getCount();
-        if (count.equals("-"))
-            count = Long.valueOf(0);
 
         viewholder.tv_Boweldate.setText("배변상태 기록 확인하기");
         viewholder.tv_BowelResult.setText(formattedDate);
+
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
     }
 
     @Override

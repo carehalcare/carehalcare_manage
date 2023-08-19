@@ -14,13 +14,13 @@ public class Sleep_text {
     @SerializedName("createdDateTime") String createdDateTime;
 
 
-    public Sleep_text(String content, String createdDateTime, Long id, String puserId, String state, String userId) {
+    public Sleep_text(Long id, String userId, String puserId, String state, String content, String createdDateTime) {
+        this.id = id;
         this.userId = userId;
         this.puserId = puserId;
         this.state = state;
         this.content = content;
         this.createdDateTime = createdDateTime;
-        this.id = id;
     }
 
     public String getCreatedDateTime() { return createdDateTime; }

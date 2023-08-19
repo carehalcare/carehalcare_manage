@@ -20,10 +20,10 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHolder>{
-    private ArrayList<Wash_ResponseDTO> mList;
+    private ArrayList<Wash_text_modified> mList;
     private Context mContext;
 
-    public Wash_adapter(ArrayList<Wash_ResponseDTO> list) {
+    public Wash_adapter(ArrayList<Wash_text_modified> list) {
         this.mList = list;
     }
 
@@ -39,13 +39,13 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
-        protected TextView tv_Washdate;
-        protected TextView tv_Result;
+        protected TextView tv_Washdate, tv_Result, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
             this.tv_Result = (TextView) view.findViewById(R.id.tv_todayWash);
             this.tv_Washdate = (TextView) view.findViewById(R.id.tv_todayWashResult);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -117,6 +117,12 @@ public class Wash_adapter extends RecyclerView.Adapter<Wash_adapter.CustomViewHo
         viewholder.tv_Washdate.setText(formattedDate);
         viewholder.tv_Result.setText("청결 기록 확인하기");
 
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
     }
 
     @Override

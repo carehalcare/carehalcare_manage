@@ -198,7 +198,7 @@ public class AllmenuFragment extends Fragment {
             }
         });
 
-    return view;
+        return view;
     }
 
     public void showactive( int position){
@@ -216,7 +216,7 @@ public class AllmenuFragment extends Fragment {
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                             View view = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.active_detail, null, false);
+                                    .inflate(R.layout.active_detail_hist, null, false);
                             builder.setView(view);
                             final AlertDialog dialog = builder.create();
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -277,7 +277,7 @@ public class AllmenuFragment extends Fragment {
                             Log.e("투약기록????",gettime+getmealStatus+getmedicine);
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                             View view = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.medicine_detail, null, false);
+                                    .inflate(R.layout.medicine_detail_hist, null, false);
                             builder.setView(view);
                             final AlertDialog dialog = builder.create();
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -326,7 +326,7 @@ public class AllmenuFragment extends Fragment {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                             View view = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.bowel_detail, null, false);
+                                    .inflate(R.layout.bowel_detail_hist, null, false);
                             builder.setView(view);
                             final AlertDialog dialog = builder.create();
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -461,7 +461,7 @@ public class AllmenuFragment extends Fragment {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                             View view = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.sleep_detail, null, false);
+                                    .inflate(R.layout.sleep_detail_hist, null, false);
                             builder.setView(view);
                             final AlertDialog dialog = builder.create();
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -628,7 +628,7 @@ public class AllmenuFragment extends Fragment {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
                             View view = LayoutInflater.from(getContext())
-                                    .inflate(R.layout.meal_detail, null, false);
+                                    .inflate(R.layout.meal_detail_hist, null, false);
                             builder.setView(view);
                             final AlertDialog dialog = builder.create();
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -11,7 +11,7 @@ public class Bowel_text {
     @SerializedName("count")    Long count;
     @SerializedName("content")    String content;
 
-    public Bowel_text(String createdDateTime, String userId,String puserId,Long id, Long count, String content) {
+    public Bowel_text(Long id, String userId,String puserId, Long count, String content, String createdDateTime) {
         this.id = id;
         this.userId = userId;
         this.puserId = puserId;

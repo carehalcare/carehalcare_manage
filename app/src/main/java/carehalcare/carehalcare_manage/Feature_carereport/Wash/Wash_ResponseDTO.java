@@ -24,7 +24,7 @@ public class Wash_ResponseDTO {
     @SerializedName("createdDateTime")
     String createdDateTime;
 
-    public Wash_ResponseDTO(String cleanliness, String content, String createdDateTime, Long id, String part, String puserId, String userId) {
+    public Wash_ResponseDTO(Long id, String userId, String puserId, String cleanliness, String part, String content, String createdDateTime) {
         this.cleanliness = cleanliness;
         this.content = content;
         this.createdDateTime = createdDateTime;

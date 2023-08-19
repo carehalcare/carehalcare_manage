@@ -1,6 +1,5 @@
 package carehalcare.carehalcare_manage.Feature_carereport.Clean;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -22,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import carehalcare.carehalcare_manage.Feature_carereport.DividerItemDecorator;
@@ -34,11 +32,14 @@ import retrofit2.Response;
 
 public class CleanFragment extends Fragment {
     String userid,puserid;
-    private ArrayList<Clean_ResponseDTO> cleanArrayList;
+    Long ids;
+    private ArrayList<Clean_text_modified> cleanArrayList;
     private Clean_adapter cleanAdapter;
     private ArrayList<Clean_texthist> histArrayList;
     private Clean_adapterhist histAdapter;
 
+    private TextView detail_sheet, detail_cloth, detail_ventilation, et_detail_clean;
+    private Button btn_off, btn_update;
 
     public CleanFragment() {
         // Required empty public constructor
@@ -56,8 +57,6 @@ public class CleanFragment extends Fragment {
 
         Clean_API cleanApi = Retrofit_client.createService(Clean_API.class, TokenUtils.getAccessToken("Access_Token"));
 
-
-        // Clean_API cleanApi = retrofit.create(Clean_API.class);
         userid = this.getArguments().getString("userid");
         puserid = this.getArguments().getString("puserid");
 
@@ -66,14 +65,13 @@ public class CleanFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         cleanArrayList = new ArrayList<>();
-        cleanAdapter = new Clean_adapter( cleanArrayList);
+        cleanAdapter = new Clean_adapter(cleanArrayList);
         mRecyclerView.setAdapter(cleanAdapter);
 
         RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecorator(ContextCompat.getDrawable(getContext(), R.drawable.divider));
         mRecyclerView.addItemDecoration(dividerItemDecoration);
 
-
-        cleanApi.getDataClean(userid,puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
+        cleanApi.getDataClean(userid, puserid).enqueue(new Callback<List<Clean_ResponseDTO>>() {
             @Override
             public void onResponse(Call<List<Clean_ResponseDTO>> call, Response<List<Clean_ResponseDTO>> response) {
                 if (response.isSuccessful()) {
@@ -81,19 +79,55 @@ public class CleanFragment extends Fragment {
                         List<Clean_ResponseDTO> datas = response.body();
                         if (datas != null) {
                             cleanArrayList.clear();
+                            List<Clean_text_modified> tempList = new ArrayList<>();
+
                             for (int i = 0; i < datas.size(); i++) {
+                                Long activeId = datas.get(i).getId();
+                                int finalI = i;
 
-                                Clean_ResponseDTO dict_0 = new Clean_ResponseDTO(
-                                        datas.get(i).getCleanliness(), datas.get(i).getContent(),
-                                        datas.get(i).getCreatedDateTime(), datas.get(i).getId(),
-                                        datas.get(i).getPuserId(), datas.get(i).getUserId()
-                                );
-                                cleanArrayList.add(dict_0);
-                                cleanAdapter.notifyItemInserted(0);
-                                Log.e("현재id : " + i, datas.get(i).getCleanliness() + " " + datas.get(i).getId() + "" + "어댑터카운터" + cleanAdapter.getItemCount());
+                                cleanApi.gethistSclean(activeId).enqueue(new Callback<List<Clean_texthist>>() {
+                                    @Override
+                                    public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
+                                        if (response.isSuccessful()) {
+                                            List<Clean_texthist> histDatas = response.body();
+                                            boolean isModified = (histDatas != null && histDatas.size() > 1);
 
+                                            Clean_text_modified modifiedItem = new Clean_text_modified(
+                                                    datas.get(finalI).getId(),
+                                                    datas.get(finalI).getUserId(),
+                                                    datas.get(finalI).getPuserId(),
+                                                    datas.get(finalI).getCleanliness(),
+                                                    datas.get(finalI).getContent(),
+                                                    datas.get(finalI).getCreatedDateTime(),
+                                                    isModified
+                                            );
+
+                                            tempList.add(modifiedItem);
+
+                                            if (tempList.size() == datas.size()) {
+                                                Collections.sort(tempList, new Comparator<Clean_text_modified>() {
+                                                    @Override
+                                                    public int compare(Clean_text_modified item1, Clean_text_modified item2) {
+                                                        return item2.getCreatedDateTime().compareTo(item1.getCreatedDateTime());
+                                                    }
+                                                });
+
+                                                cleanArrayList.clear();
+                                                cleanArrayList.addAll(tempList);
+
+                                                cleanAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
+                                        // 처리 실패 시의 로직
+                                    }
+                                });
                             }
-                            Log.e("getSleep success", "======================================");
+
+                            Log.e("get success", "======================================");
                         }
                     }
                 }
@@ -101,7 +135,7 @@ public class CleanFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Clean_ResponseDTO>> call, Throwable t) {
-                Log.e("getSleep fail", "======================================");
+                // 실패 시의 처리 로직
             }
         });
 
@@ -113,123 +147,175 @@ public class CleanFragment extends Fragment {
                 Long clicked = detail_clean_text.getId();
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
-                builder.setView(dialogView);
 
+                View view = LayoutInflater.from(getContext())
+                        .inflate(R.layout.clean_detail, null, false);
+                builder.setView(view);
                 final AlertDialog dialog = builder.create();
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.show();
 
-                RecyclerView histRecyclerView = dialogView.findViewById(R.id.change_list);
-                LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
-                histRecyclerView.setLayoutManager(histLayoutManager);
+                detail_sheet = dialog.findViewById(R.id.tv_cleandetail_sheet);
+                detail_cloth = dialog.findViewById(R.id.tv_cleandetail_cloth);
+                detail_ventilation = dialog.findViewById(R.id.tv_cleandetail_ventilation);
+                et_detail_clean = dialog.findViewById(R.id.tv_cleandetail_et);
 
-                // Create and set Clean_adapterhist adapter for the histRecyclerView
-                histArrayList = new ArrayList<>();
-                histAdapter = new Clean_adapterhist(histArrayList);
-                histRecyclerView.setAdapter(histAdapter);
+                String cleandata[] = detail_clean_text.getCleanliness().split(" ");
 
-                Button btn_out = dialog.findViewById(R.id.btn_out);
+                if (cleandata[0].equals("Y")) detail_sheet.setText("완료");
+                else detail_sheet.setText("-");
 
-                btn_out.setOnClickListener(new View.OnClickListener() {
+                if (cleandata[1].equals("Y")) detail_cloth.setText("완료");
+                else detail_cloth.setText("-");
+
+                if (cleandata[2].equals("Y")) detail_ventilation.setText("완료");
+                else detail_ventilation.setText("-");
+
+                et_detail_clean.setText(detail_clean_text.getContent());
+
+                btn_update = dialog.findViewById(R.id.btn_update_report);
+                btn_off = dialog.findViewById(R.id.btn_cleandetail);
+
+                btn_off.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
                 });
 
-                cleanApi.gethistSclean(clicked).enqueue(new Callback<List<Clean_texthist>>() {
+                btn_update.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
+                    public void onClick(View view) {
 
-                        Log.e("not loaded", response.body() + "======================================");
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                List<Clean_texthist> datas = response.body();
-                                if (datas != null) {
-                                    histArrayList.clear();
-                                    histArrayList.addAll(datas); // Populate the correct list
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.report_change, null, false);
+                        builder.setView(dialogView);
 
-                                    histAdapter.notifyDataSetChanged(); // Notify adapter of data change
+                        final AlertDialog dialog = builder.create();
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.show();
 
-                                    Log.e("get Hist success", datas+ "======================================");
+                        RecyclerView histRecyclerView = dialogView.findViewById(R.id.change_list);
+                        LinearLayoutManager histLayoutManager = new LinearLayoutManager(getContext());
+                        histRecyclerView.setLayoutManager(histLayoutManager);
 
-                                    histAdapter.setOnItemClickListener(new Clean_adapterhist.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(View v, int pos) {
-                                            Clean_texthist hist = histArrayList.get(pos);
+                        histArrayList = new ArrayList<>();
+                        histAdapter = new Clean_adapterhist(histArrayList);
+                        histRecyclerView.setAdapter(histAdapter);
 
-                                            AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
-                                            View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.clean_detail, null, false);
-                                            histBuilder.setView(detailDialog);
+                        Button btn_out = dialog.findViewById(R.id.btn_out);
 
-                                            final AlertDialog hdialog = histBuilder.create();
-                                            hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                            hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                            hdialog.show();
+                        btn_out.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
 
-                                            final TextView detail_sheet = hdialog.findViewById(R.id.tv_cleandatail_sheet);
-                                            final TextView detail_cloth = hdialog.findViewById(R.id.tv_cleandatail_cloth);
-                                            final TextView detail_ventilation = hdialog.findViewById(R.id.tv_cleandatail_ventilation);
-                                            final TextView et_detail_clean = hdialog.findViewById(R.id.tv_cleandetail_et);
+                        cleanApi.gethistSclean(clicked).enqueue(new Callback<List<Clean_texthist>>() {
+                            @Override
+                            public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
 
-                                            String cleandata[] = hist.getCleanliness().split(" ");
+                                Log.e("not loaded", response.body() + "======================================");
+                                if (response.isSuccessful()) {
+                                    if (response.body() != null) {
+                                        List<Clean_texthist> datas = response.body();
+                                        if (datas != null && datas.size() > 1) {
+                                            histArrayList.clear();
+                                            histArrayList.addAll(datas); // Populate the correct list
 
-                                            if (cleandata[0].equals("Y")) detail_sheet.setText("완료");
-                                            else detail_sheet.setText("-");
+                                            histAdapter.notifyDataSetChanged(); // Notify adapter of data change
 
-                                            if (cleandata[1].equals("Y")) detail_cloth.setText("완료");
-                                            else detail_cloth.setText("-");
+                                            Log.e("get Hist success", datas + "======================================");
 
-                                            if (cleandata[2].equals("Y")) detail_ventilation.setText("완료");
-                                            else detail_ventilation.setText("-");
-
-                                            et_detail_clean.setText(hist.getContent());
-
-                                            Button btn_cleandetail = hdialog.findViewById(R.id.btn_cleandtail);
-
-                                            btn_cleandetail.setOnClickListener(new View.OnClickListener() {
+                                            histAdapter.setOnItemClickListener(new Clean_adapterhist.OnItemClickListener() {
                                                 @Override
-                                                public void onClick(View view) {
-                                                    hdialog.dismiss();
-                                                }
-                                            });
+                                                public void onItemClick(View v, int pos) {
+                                                    Clean_texthist hist = histArrayList.get(pos);
 
-                                            cleanApi.gethistSclean_detail(clicked, pos).enqueue(new Callback<List<Clean_texthist>>() {
-                                                @Override
-                                                public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
-                                                    if (response.isSuccessful()) {
-                                                        List<Clean_texthist> detail = response.body();
-                                                        if (detail != null) {
+                                                    AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
+                                                    View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.clean_detail_hist, null, false);
+                                                    histBuilder.setView(detailDialog);
 
-                                                            Log.e("Detail OK", detail + "------------");
+                                                    final AlertDialog hdialog = histBuilder.create();
+                                                    hdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                                    hdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                                    hdialog.show();
+
+                                                    detail_sheet = hdialog.findViewById(R.id.tv_cleandetail_sheet);
+                                                    detail_cloth = hdialog.findViewById(R.id.tv_cleandetail_cloth);
+                                                    detail_ventilation = hdialog.findViewById(R.id.tv_cleandetail_ventilation);
+                                                    et_detail_clean = hdialog.findViewById(R.id.tv_cleandetail_et);
+
+                                                    String cleandata[] = hist.getCleanliness().split(" ");
+
+                                                    if (cleandata[0].equals("Y"))
+                                                        detail_sheet.setText("완료");
+                                                    else detail_sheet.setText("-");
+
+                                                    if (cleandata[1].equals("Y"))
+                                                        detail_cloth.setText("완료");
+                                                    else detail_cloth.setText("-");
+
+                                                    if (cleandata[2].equals("Y"))
+                                                        detail_ventilation.setText("완료");
+                                                    else detail_ventilation.setText("-");
+
+                                                    et_detail_clean.setText(hist.getContent());
+
+                                                    btn_off = hdialog.findViewById(R.id.btn_cleandetail);
+
+                                                    btn_off.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            hdialog.dismiss();
                                                         }
-                                                    }
-                                                }
+                                                    });
 
-                                                @Override
-                                                public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
-                                                    Log.e("Detail Fetch Failure", t.getMessage());
+                                                    cleanApi.gethistSclean_detail(clicked, pos).enqueue(new Callback<List<Clean_texthist>>() {
+                                                        @Override
+                                                        public void onResponse(Call<List<Clean_texthist>> call, Response<List<Clean_texthist>> response) {
+                                                            if (response.isSuccessful()) {
+                                                                List<Clean_texthist> detail = response.body();
+                                                                if (detail != null) {
+
+                                                                    Log.e("Detail OK", detail + "------------");
+                                                                }
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
+                                                            Log.e("Detail Fetch Failure", t.getMessage());
+                                                        }
+                                                    });
+
                                                 }
                                             });
+
+                                        } else {
+
+                                            AlertDialog.Builder noHistBuilder = new AlertDialog.Builder(getContext());
+                                            noHistBuilder.setMessage("수정된 기록이 없습니다.")
+                                                    .setPositiveButton("확인", null)
+                                                    .create()
+                                                    .show();
 
                                         }
-                                    });
-
-                                } else {
-                                    Log.e("not loaded", datas.size() + "======================================");
+                                    }
                                 }
                             }
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
-                        Log.e("Histlist Failure", t.getMessage() + "======================================");
+                            @Override
+                            public void onFailure(Call<List<Clean_texthist>> call, Throwable t) {
+                                Log.e("Histlist Failure", t.getMessage() + "======================================");
+                            }
+                        });
+
                     }
                 });
-
             }
         });
         return view;

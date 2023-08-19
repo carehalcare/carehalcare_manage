@@ -24,7 +24,7 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHolder>{
-    private ArrayList<Meal_ResponseDTO> mList;
+    private ArrayList<Meal_text_modified> mList;
     private Context mContext;
 
     //아이템 클릭 리스너 인터페이스
@@ -40,13 +40,14 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         protected ImageView iv_mealpic;
-        protected TextView  tv_date;
+        protected TextView  tv_date, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
 
             this.iv_mealpic = (ImageView) view.findViewById(R.id.iv_mealpic);
             this.tv_date = (TextView) view.findViewById(R.id.tv_mealcontent);
+            this.tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             //2. OnCreateContextMenuListener 리스너를 현재 클래스에서 구현한다고 설정해둡니다.
@@ -94,7 +95,7 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         };
 
     }
-    public Meal_adapter(ArrayList<Meal_ResponseDTO> list) {
+    public Meal_adapter(ArrayList<Meal_text_modified> list) {
         this.mList = list;
     }
 
@@ -130,6 +131,14 @@ public class Meal_adapter extends RecyclerView.Adapter<Meal_adapter.CustomViewHo
         } else {
             // 이미지가 없는 경우 기본 이미지 설정 또는 처리 로직 추가
         }
+
+        if (mList.get(position).isModified() == true) {
+            viewholder.tv_update.setText("수정됨");
+            viewholder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            viewholder.tv_update.setText("");
+        }
+
     }
 
 

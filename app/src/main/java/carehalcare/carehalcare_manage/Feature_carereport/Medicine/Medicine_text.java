@@ -29,7 +29,7 @@ public class Medicine_text {
         this.id = id;
     }
 
-    public Medicine_text(String createdDateTime, String time, String mealStatus, String medicine, String userId, String puserId, Long id) {
+    public Medicine_text(Long id, String userId, String puserId, String time, String mealStatus, String medicine, String createdDateTime) {
         this.createdDateTime = createdDateTime;
         this.time = time;
         this.mealStatus = mealStatus;
@@ -44,19 +44,19 @@ public class Medicine_text {
         this.createdDateTime = createdDateTime;
     }
 
-    public String getUserid() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserid(String userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public String getPuserid() {
+    public String getPuserId() {
         return puserId;
     }
 
-    public void setPuserid(String puserId) {
+    public void setPuserId(String puserId) {
         this.puserId = puserId;
     }
 

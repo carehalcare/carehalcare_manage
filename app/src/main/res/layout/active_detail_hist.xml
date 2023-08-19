@@ -1,34 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:layout_margin="10dp"
-android:background="@drawable/dialog_radius"
-android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/dialog_radius"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:id="@+id/tv_date"
-        android:textColor="@color/black"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        android:id="@+id/btn_update_report"
-        android:text="변경기록"
-        android:background="@drawable/button_radius"
-        android:backgroundTint="#CCCCCC"
-        android:textStyle="bold"
-        android:layout_gravity="right" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal">
@@ -37,7 +18,7 @@ android:orientation="vertical">
             android:background="@drawable/detail_list"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:text="수면상태"
+            android:text="재활치료"
             android:textStyle="bold"
             android:gravity="center"
             android:textColor="@color/black"/>
@@ -50,7 +31,7 @@ android:orientation="vertical">
             android:layout_height="30dp"
             android:background="@drawable/detail_list"
             android:textColor="@color/black"
-            android:id="@+id/tv_sleepdetail_state"/>
+            android:id="@+id/tv_activedetail_jahal"/>
     </LinearLayout>
 
     <LinearLayout
@@ -63,27 +44,55 @@ android:orientation="vertical">
 
         <TextView
             android:background="@drawable/detail_list"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:text="특이사항"
             android:textStyle="bold"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="보행도움"
+            android:textColor="@color/black"/>
+        <TextView
+            android:textStyle="bold"
+            android:text="-"
+            android:background="@drawable/detail_list"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
+            android:id="@+id/tv_activedetail_bohang"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@drawable/detail_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textStyle="bold"
+            android:background="@drawable/detail_list"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="체위변경"
             android:textColor="@color/black"/>
 
         <TextView
-            android:background="@drawable/detail_list"
             android:textStyle="bold"
+            android:background="@drawable/detail_list"
+            android:text="-"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="30dp"
             android:textColor="@color/black"
-            android:text="-"
-            android:id="@+id/tv_sleepdetail_et"/>
+            android:id="@+id/tv_activedetail_change"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -91,11 +100,12 @@ android:orientation="vertical">
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            android:id="@+id/btn_sleep_detail"
+            android:id="@+id/btn_active_detail"
             android:text="닫기"
             android:background="@drawable/button_radius"
             android:textStyle="bold"
             android:layout_gravity="center" />
-    </LinearLayout>
 
     </LinearLayout>
+
+</LinearLayout>

@@ -19,15 +19,10 @@ import carehalcare.carehalcare_manage.Feature_carereport.DateUtils;
 import carehalcare.carehalcare_manage.R;
 
 public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.CustomViewHolder>{
-    private ArrayList<Medicine_text> mList;
-    private List<Medicine_text> gList;
+    private ArrayList<Medicine_text_modified> mList;
     private Context mContext;
 
-    public Medicine_adapter (ArrayList<Medicine_text> list) { this.mList = list;}
-    public Medicine_adapter(Context mContext, List<Medicine_text> list) {
-        this.mContext = mContext;
-        this.gList = list;
-    }
+    public Medicine_adapter (ArrayList<Medicine_text_modified> list) { this.mList = list;}
 
     // 클릭 리스너 인터페이스 정의
     public interface OnItemClickListener {
@@ -66,15 +61,24 @@ public class Medicine_adapter extends RecyclerView.Adapter<Medicine_adapter.Cust
 
         holder.tv_medidate.setText(formattedDate);
         holder.tv_result.setText("약 복용 기록 확인하기");
+
+        if (mList.get(position).isModified() == true) {
+            holder.tv_update.setText("수정됨");
+            holder.tv_update.setVisibility(View.VISIBLE);
+        } else {
+            holder.tv_update.setText("");
+        }
+
     }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
-        TextView tv_medidate, tv_result;
+        protected TextView tv_medidate, tv_result, tv_update;
 
         public CustomViewHolder(View view) {
             super(view);
             tv_result = (TextView) view.findViewById(R.id.tv_todayMedicine);
             tv_medidate = (TextView) view.findViewById(R.id.tv_todayMedicineResult);
+            tv_update = (TextView) view.findViewById(R.id.tv_update);
 
             view.setOnCreateContextMenuListener(this);
             view.setOnClickListener(new View.OnClickListener() {
