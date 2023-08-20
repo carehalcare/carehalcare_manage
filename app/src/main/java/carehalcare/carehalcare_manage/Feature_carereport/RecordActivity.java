@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,8 +42,9 @@ import retrofit2.Response;
 
 public class RecordActivity extends AppCompatActivity {
     private FrameLayout container;
-
     private String userid , puserid;
+
+    private ImageButton btn_all, btn_meal, btn_walk, btn_clean, btn_wash, btn_bowel, btn_active, btn_medicine, btn_sleep;
     Button btn_home;
     public void deleteview(){
         container.removeAllViews();
@@ -84,6 +86,34 @@ public class RecordActivity extends AppCompatActivity {
         transaction.replace(R.id.container_menu, MFragment);
         transaction.commit();
 
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(true);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
+
+
     }
 
     //Sclean
@@ -98,6 +128,33 @@ public class RecordActivity extends AppCompatActivity {
         cFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, cFragment);
         transaction.commit();
+
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(true);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
     }
 
 
@@ -114,6 +171,33 @@ public class RecordActivity extends AppCompatActivity {
         washFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, washFragment);
         transaction.commit();
+
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(true);
     }
 
     //Bowel
@@ -128,6 +212,33 @@ public class RecordActivity extends AppCompatActivity {
         bFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, bFragment);
         transaction.commit();
+
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(true);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
 
     }
 
@@ -144,6 +255,32 @@ public class RecordActivity extends AppCompatActivity {
         transaction.replace(R.id.container_menu, activeFragment);
         transaction.commit();
 
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(true);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
     }
 
     //Sleep
@@ -158,6 +295,33 @@ public class RecordActivity extends AppCompatActivity {
         sleepFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, sleepFragment);
         transaction.commit();
+
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(true);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
     }
 
     public void onWalk(View view) {
@@ -172,6 +336,32 @@ public class RecordActivity extends AppCompatActivity {
         transaction.replace(R.id.container_menu, walkFragment);
         transaction.commit();
 
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(true);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
     }
 
     //Meal
@@ -187,6 +377,33 @@ public class RecordActivity extends AppCompatActivity {
         transaction.replace(R.id.container_menu, mealFragment);
         transaction.commit();
 
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(false);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(true);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
+
     }
 
     public void onall(View view) {
@@ -200,6 +417,33 @@ public class RecordActivity extends AppCompatActivity {
         allmenuFragment.setArguments(bundle);
         transaction.replace(R.id.container_menu, allmenuFragment);
         transaction.commit();
+
+        btn_all = findViewById(R.id.btn_all);
+        btn_all.setSelected(true);
+
+        btn_walk = findViewById(R.id.btn_walk);
+        btn_walk.setSelected(false);
+
+        btn_meal = findViewById(R.id.btn_meal);
+        btn_meal.setSelected(false);
+
+        btn_active = findViewById(R.id.btn_active);
+        btn_active.setSelected(false);
+
+        btn_bowel = findViewById(R.id.btn_toilet);
+        btn_bowel.setSelected(false);
+
+        btn_sleep = findViewById(R.id.btn_sleep);
+        btn_sleep.setSelected(false);
+
+        btn_medicine = findViewById(R.id.btn_medicine);
+        btn_medicine.setSelected(false);
+
+        btn_clean = findViewById(R.id.btn_clean);
+        btn_clean.setSelected(false);
+
+        btn_wash = findViewById(R.id.btn_wash);
+        btn_wash.setSelected(false);
 
     }
 }
