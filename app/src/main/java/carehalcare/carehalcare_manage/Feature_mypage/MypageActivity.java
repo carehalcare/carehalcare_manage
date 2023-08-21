@@ -80,7 +80,7 @@ public class MypageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MypageActivity.this, SplashActivity.class);
                 startActivity(intent);
-                finish();
+                finishAffinity();
 
             }
         });
