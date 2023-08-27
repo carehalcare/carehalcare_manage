@@ -165,7 +165,6 @@ public class WashFragment extends Fragment {
                 final TextView tv_scrub_point = dialog.findViewById(R.id.tv_washdetail_scrub_point);
                 final TextView tv_et = dialog.findViewById(R.id.tv_washdetail_et);
 
-                String cleantype[] = detail_wash_text.getCleanliness().split(" ");
                 String part = detail_wash_text.getPart();
                 String content_detail = detail_wash_text.getContent();
 
@@ -175,22 +174,22 @@ public class WashFragment extends Fragment {
                     tv_et.setText("-");
                 else tv_et.setText(content_detail);
 
-                if (cleantype[0].equals("Y")) {
+                if (detail_wash_text.getCleanliness().substring(0,1).equals("Y")) {
                     tv_face.setText("완료");
                 } else tv_face.setText("-");
-                if (cleantype[1].equals("Y")) {
+                if (detail_wash_text.getCleanliness().substring(1,2).equals("Y")) {
                     tv_mouth.setText("완료");
                 } else tv_mouth.setText("-");
-                if (cleantype[2].equals("Y"))
+                if (detail_wash_text.getCleanliness().substring(2,3).equals("Y"))
                     tv_nail.setText("완료");
                 else tv_nail.setText("-");
-                if (cleantype[3].equals("Y"))
+                if (detail_wash_text.getCleanliness().substring(3,4).equals("Y"))
                     tv_hair.setText("완료");
                 else tv_hair.setText("-");
-                if (cleantype[4].equals("Y"))
+                if (detail_wash_text.getCleanliness().substring(4,5).equals("Y"))
                     tv_scrub.setText("완료");
                 else tv_scrub.setText("-");
-                if (cleantype[5].equals("Y")) {
+                if (detail_wash_text.getCleanliness().substring(5,6).equals("Y")) {
                     tv_shave.setText("완료");
                 } else tv_shave.setText("-");
 
@@ -275,7 +274,6 @@ public class WashFragment extends Fragment {
                                                     final TextView tv_scrub_point = hdialog.findViewById(R.id.tv_washdetail_scrub_point);
                                                     final TextView tv_et = hdialog.findViewById(R.id.tv_washdetail_et);
 
-                                                    String cleantype[] = hist.getCleanliness().split(" ");
                                                     String part = hist.getPart();
                                                     String content_detail = hist.getContent();
 
@@ -285,22 +283,22 @@ public class WashFragment extends Fragment {
                                                         tv_et.setText("-");
                                                     else tv_et.setText(content_detail);
 
-                                                    if (cleantype[0].equals("Y")) {
+                                                    if (hist.getCleanliness().substring(0,1).equals("Y")) {
                                                         tv_face.setText("완료");
                                                     } else tv_face.setText("-");
-                                                    if (cleantype[1].equals("Y")) {
+                                                    if (hist.getCleanliness().substring(1,2).equals("Y")) {
                                                         tv_mouth.setText("완료");
                                                     } else tv_mouth.setText("-");
-                                                    if (cleantype[2].equals("Y"))
+                                                    if (hist.getCleanliness().substring(2,3).equals("Y"))
                                                         tv_nail.setText("완료");
                                                     else tv_nail.setText("-");
-                                                    if (cleantype[3].equals("Y"))
+                                                    if (hist.getCleanliness().substring(3,4).equals("Y"))
                                                         tv_hair.setText("완료");
                                                     else tv_hair.setText("-");
-                                                    if (cleantype[4].equals("Y"))
+                                                    if (hist.getCleanliness().substring(4,5).equals("Y"))
                                                         tv_scrub.setText("완료");
                                                     else tv_scrub.setText("-");
-                                                    if (cleantype[5].equals("Y")) {
+                                                    if (hist.getCleanliness().substring(5,6).equals("Y")) {
                                                         tv_shave.setText("완료");
                                                     } else tv_shave.setText("-");
 

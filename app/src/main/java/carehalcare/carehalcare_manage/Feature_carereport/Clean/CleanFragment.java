@@ -161,15 +161,13 @@ public class CleanFragment extends Fragment {
                 detail_ventilation = dialog.findViewById(R.id.tv_cleandetail_ventilation);
                 et_detail_clean = dialog.findViewById(R.id.tv_cleandetail_et);
 
-                String cleandata[] = detail_clean_text.getCleanliness().split(" ");
-
-                if (cleandata[0].equals("Y")) detail_sheet.setText("완료");
+                if (detail_clean_text.getCleanliness().substring(0,1).equals("Y")) detail_sheet.setText("완료");
                 else detail_sheet.setText("-");
 
-                if (cleandata[1].equals("Y")) detail_cloth.setText("완료");
+                if (detail_clean_text.getCleanliness().substring(1,2).equals("Y")) detail_cloth.setText("완료");
                 else detail_cloth.setText("-");
 
-                if (cleandata[2].equals("Y")) detail_ventilation.setText("완료");
+                if (detail_clean_text.getCleanliness().substring(2,3).equals("Y")) detail_ventilation.setText("완료");
                 else detail_ventilation.setText("-");
 
                 et_detail_clean.setText(detail_clean_text.getContent());
@@ -249,23 +247,21 @@ public class CleanFragment extends Fragment {
                                                     detail_ventilation = hdialog.findViewById(R.id.tv_cleandetail_ventilation);
                                                     et_detail_clean = hdialog.findViewById(R.id.tv_cleandetail_et);
 
-                                                    String cleandata[] = hist.getCleanliness().split(" ");
-
-                                                    if (cleandata[0].equals("Y"))
+                                                    if (hist.getCleanliness().substring(0,1).equals("Y"))
                                                         detail_sheet.setText("완료");
                                                     else detail_sheet.setText("-");
 
-                                                    if (cleandata[1].equals("Y"))
+                                                    if (hist.getCleanliness().substring(1,2).equals("Y"))
                                                         detail_cloth.setText("완료");
                                                     else detail_cloth.setText("-");
 
-                                                    if (cleandata[2].equals("Y"))
+                                                    if (hist.getCleanliness().substring(2,3).equals("Y"))
                                                         detail_ventilation.setText("완료");
                                                     else detail_ventilation.setText("-");
 
                                                     et_detail_clean.setText(hist.getContent());
 
-                                                    btn_off = hdialog.findViewById(R.id.btn_cleandetail);
+                                                    btn_off = hdialog.findViewById(R.id.btn_cleandtail);
 
                                                     btn_off.setOnClickListener(new View.OnClickListener() {
                                                         @Override

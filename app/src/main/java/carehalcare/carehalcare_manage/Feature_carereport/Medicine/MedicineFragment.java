@@ -244,7 +244,7 @@ public class MedicineFragment extends Fragment {
                                                     Medicine_texthist hist = histArrayList.get(pos);
 
                                                     AlertDialog.Builder histBuilder = new AlertDialog.Builder(getContext());
-                                                    View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.medicine_detail, null, false);
+                                                    View detailDialog = LayoutInflater.from(getContext()).inflate(R.layout.medicine_detail_hist, null, false);
                                                     histBuilder.setView(detailDialog);
 
                                                     final AlertDialog hdialog = histBuilder.create();
