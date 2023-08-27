@@ -82,6 +82,8 @@ public class ActiveFragment extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Active_text> datas = response.body();
+                        Log.e("getActive data보기", datas.size()+"");
+
                         if (datas != null) {
                             activeArrayList.clear();
                             List<Active_text_modified> tempList = new ArrayList<>();
@@ -122,6 +124,8 @@ public class ActiveFragment extends Fragment {
                                                 activeArrayList.addAll(tempList);
 
                                                 activeAdapter.notifyDataSetChanged();
+                                                Log.e("getActive success1", "======================================"+userid+","+puserid);
+
                                             }
                                         }
                                     }
@@ -133,7 +137,7 @@ public class ActiveFragment extends Fragment {
                                 });
                             }
 
-                            Log.e("getActive success", "======================================");
+                            Log.e("getActive success", "======================================"+userid+","+puserid);
                         }
                     }
                 }
