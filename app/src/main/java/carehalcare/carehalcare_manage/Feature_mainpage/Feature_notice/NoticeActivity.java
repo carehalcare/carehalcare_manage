@@ -176,7 +176,7 @@ public class NoticeActivity extends AppCompatActivity {
                                             public void onResponse(Call<List<Notice>> call, Response<List<Notice>> response) {
                                                 if (response.isSuccessful()) {
                                                     // 삭제 요청이 성공적으로 처리되었을 경우의 동작을 정의합니다.
-                                                    Toast.makeText(NoticeActivity.this, "공지가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(NoticeActivity.this, "전달사항이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                                                     // 공지 목록 갱신
                                                     getNoticeList();
                                                 } else {
@@ -239,7 +239,7 @@ public class NoticeActivity extends AppCompatActivity {
                                     public void onResponse(Call<Long> call, Response<Long> response) {
                                         if (response.isSuccessful()) {
                                             // PUT
-                                            Toast.makeText(NoticeActivity.this, "공지가 수정되었습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(NoticeActivity.this, "전달사항이 수정되었습니다.", Toast.LENGTH_SHORT).show();
                                             Log.d("수정 성공", "Status Code : " + response.code());
                                             //상세 dialog를 닫고 리스트 update
                                             dialog.dismiss();
@@ -300,7 +300,7 @@ public class NoticeActivity extends AppCompatActivity {
                         Log.e("보낼때====================", response.body()+"");
                         if (response.isSuccessful()) {
                             // POST 요청이 성공적으로 처리
-                            Toast.makeText(NoticeActivity.this, "공지가 등록되었습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NoticeActivity.this, "전달사항이 등록되었습니다.", Toast.LENGTH_SHORT).show();
                             Log.d("post 연결 성공", "Status Code : " + response.code());
                             getNoticeList();
                             dialog.dismiss();
