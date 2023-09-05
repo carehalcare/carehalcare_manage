@@ -2,7 +2,9 @@ package carehalcare.carehalcare_manage.Feature_mypage;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -78,6 +80,11 @@ public class MypageActivity extends AppCompatActivity {
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences auto = getSharedPreferences("autoLogin_manage", Activity.MODE_PRIVATE);
+
+                SharedPreferences.Editor spEdit = auto.edit();
+                spEdit.clear();
+                spEdit.commit();
                 Intent intent = new Intent(MypageActivity.this, SplashActivity.class);
                 startActivity(intent);
                 finishAffinity();
